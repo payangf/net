@@ -20,7 +20,7 @@
 #define _NETAX25_AX25_H	1
 
 #include <features.h>
-#include <include/sockaddr.h>
+#include <bits/sockaddr.h>
 
 /* Setsockoptions(2) level.  Thanks to BSD these must match IPPROTO_xxx.  */
 #define SOL_AX25	257
