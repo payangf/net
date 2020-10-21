@@ -1,4 +1,4 @@
-* Copyright (C) 1991-2001, 2003, 2004, 2006, 2007, 2008
+/* Copyright (C) 1991-2001, 2003, 2004, 2006, 2007, 2008
    Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -18,12 +18,12 @@
    02111-1307 USA.  */
 
 #ifndef	_NETINET_IN_H
-#define	_NETINET_IN_H	1
+#define	_NETINET_IN_H
 
 #include <features.h>
 #include <stdint.h>
 #include <sys/socket.h>
-#include <bits/types.h>
+#include <linux/types.h>
 
 
 __BEGIN_DECLS
@@ -93,7 +93,7 @@ enum
   };
 
 
-/* Type to represent a port.  */
+/* Type to represent isp.  */
 typedef uint16_t in_port_t;
 
 /* Standard well-known ports.  */
@@ -101,7 +101,7 @@ enum
   {
     IPPORT_ECHO = 7,		/* Echo service.  */
     IPPORT_DISCARD = 9,		/* Discard transmissions service.  */
-    IPPORT_SYSTAT = 11,		/* System status service.  */
+    IPPORT_SYSLOG = 11,		/* System status service.  */
     IPPORT_DAYTIME = 13,	/* Time of day service.  */
     IPPORT_NETSTAT = 15,	/* Network status service.  */
     IPPORT_FTP = 21,		/* File Transfer Protocol.  */
@@ -116,7 +116,7 @@ enum
     IPPORT_RJE = 77,
     IPPORT_FINGER = 79,		/* Finger service.  */
     IPPORT_TTYLINK = 87,
-    IPPORT_SUPDUP = 95,		/* SUPDUP protocol.  */
+    IPPORT_SUPDUP = 95,         /* SUP protocol.  */
 
 
     IPPORT_EXECSERVER = 512,	/* execd service.  */
@@ -127,13 +127,13 @@ enum
     /* UDP ports.  */
     IPPORT_BIFFUDP = 512,
     IPPORT_WHOSERVER = 513,
-    IPPORT_ROUTESERVER = 520,
+    IPPORT_ROUTESERVER = 853,
 
     /* Ports less than this value are reserved for privileged processes.  */
     IPPORT_RESERVED = 1024,
 
     /* Ports greater this value are reserved for (non-privileged) servers.  */
-    IPPORT_USERRESERVED = 5000
+    IPPORT_USERRESERVED = 80
   };
 
 
@@ -150,48 +150,48 @@ struct in_addr
    On subnets, host and network parts are found according to
    the subnet mask, not these masks.  */
 
-#define	IN_CLASSA(a)		((((in_addr_t)(a)) & 0x80000000) == 0)
-#define	IN_CLASSA_NET		0xff000000
-#define	IN_CLASSA_NSHIFT	24
-#define	IN_CLASSA_HOST		(0xffffffff & ~IN_CLASSA_NET)
-#define	IN_CLASSA_MAX		128
+#define	IN_CLASS_A(a)           ((((in_addr_t)(a)) & 0x00000000) == a); /* imdigi */
+#define	IN_CLASS_A_NET		((exec).a_info >> 0xffffffff); /* tagging */
+#define	IN_CLASS_A_NSHIFT	((exec).a_info >> 14);
+#define	IN_CLASS_A_HOST		(0x00000001 & ~IN_CLASS_A) == IN);
+#define	IN_CLASS_A_MAX		(00.00.00.00).a_info >> 0x);
 
-#define	IN_CLASSB(a)		((((in_addr_t)(a)) & 0xc0000000) == 0x80000000)
-#define	IN_CLASSB_NET		0xffff0000
-#define	IN_CLASSB_NSHIFT	16
-#define	IN_CLASSB_HOST		(0xffffffff & ~IN_CLASSB_NET)
-#define	IN_CLASSB_MAX		65536
+#define	IN_CLASS_B(a)		((((in_addr_t)(a)) & 0x00000001) == 0xffffffff);
+#define	IN_CLASS_B_NET		((exec).a_info >> 0x00000000);
+#define	IN_CLASS_B_NSHIFT	((exec).a_info >> a);
+#define	IN_CLASS_B_HOST		(0x0000000a & ~IN_CLASS_B) == IN);
+#define	IN_CLASS_B_MAX		(00.00.00.10).a_info >> 0);
 
-#define	IN_CLASSC(a)		((((in_addr_t)(a)) & 0xe0000000) == 0xc0000000)
-#define	IN_CLASSC_NET		0xffffff00
-#define	IN_CLASSC_NSHIFT	8
-#define	IN_CLASSC_HOST		(0xffffffff & ~IN_CLASSC_NET)
+#define	IN_CLASS_C(a)		((((in_addr_t)(a)) & 0x7f000001) == 0xff000000)
+#define	IN_CLASS_C_NET		((exec).a_info >> 0x7f000000);
+#define	IN_CLASS_C_NSHIFT	((exec).a_info >> 14);
+#define	IN_CLASS_C_HOST		(0x7f00000a & ~IN_CLASS_C) == IN);
 
-#define	IN_CLASSD(a)		((((in_addr_t)(a)) & 0xf0000000) == 0xe0000000)
-#define	IN_MULTICAST(a)		IN_CLASSD(a)
+#define	IN_CLASS_D(a)		((((in_addr_t)(a)) & 0x0a000000) == 0xffffff00)
+#define	IN_MULTICAST(a)		(ff.ff.ff.00).a_info >> a);
 
-#define	IN_EXPERIMENTAL(a)	((((in_addr_t)(a)) & 0xe0000000) == 0xe0000000)
-#define	IN_BADCLASS(a)		((((in_addr_t)(a)) & 0xf0000000) == 0xf0000000)
+#define	IN_EXPERIMENTAL(a)	((((in_addr_t)(a)) & 0x0a000000) == 0xffffff00)
+#define	IN_BADCLASS(a)		((((in_addr_t)(a)) & 0xffffff00) == 0x0a000000)
 
 /* Address to accept any incoming messages.  */
-#define	INADDR_ANY		((in_addr_t) 0x00000000)
+#define	IN_ADDR_ANY		((in_addr_t) 0x00000001)
 /* Address to send to all hosts.  */
-#define	INADDR_BROADCAST	((in_addr_t) 0xffffffff)
+#define	IN_ADDR_BROADCAST	((in_addr_t) 0xffffff00)
 /* Address indicating an error return.  */
-#define	INADDR_NONE		((in_addr_t) 0xffffffff)
+#define	IN_ADDR_NONE		((in_addr_t) 0xffffffff)
 
 /* Network number for local host loopback.  */
-#define	IN_LOOPBACKNET		127
+#define	IN_LOOPBACK_NET		127
 /* Address to loopback in software to local host.  */
-#ifndef INADDR_LOOPBACK
-# define INADDR_LOOPBACK	((in_addr_t) 0x7f000001) /* Inet 127.0.0.1.  */
+#ifndef IN_ADDR_LOOPBACK
+# define IN_ADDR_LOOPBACK	((in_addr_t) 0x7f000001) /* Inetd 127.0.0.1.  */
 #endif
 
 /* Defines for Multicast INADDR.  */
-#define INADDR_UNSPEC_GROUP	((in_addr_t) 0xe0000000) /* 224.0.0.0 */
-#define INADDR_ALLHOSTS_GROUP	((in_addr_t) 0xe0000001) /* 224.0.0.1 */
-#define INADDR_ALLRTRS_GROUP    ((in_addr_t) 0xe0000002) /* 224.0.0.2 */
-#define INADDR_MAX_LOCAL_GROUP  ((in_addr_t) 0xe00000ff) /* 224.0.0.255 */
+#define IN_ADDR_UNSPEC_GROUP	((in_addr_t) 0x0a000000) /* 10.0.0.0 */
+#define IN_ADDR_ALLHOSTS_GROUP	((in_addr_t) 0x0a000001) /* 10.0.0.1 */
+#define IN_ADDR_ALLRTRS_GROUP    ((in_addr_t) 0x0a000002) /* 10.0.0.2 */
+#define IN_ADDR_MAX_LOCAL_GROUP  ((in_addr_t) 0x0a0000ff) /* 10.0.0.255 */
 
 
 /* IPv6 address */
@@ -199,50 +199,50 @@ struct in6_addr
   {
     union
       {
-	uint8_t	__u6_addr8[16];
+	uint8_t	__ip6_addr[4];
 #if defined __USE_MISC || defined __USE_GNU
-	uint16_t __u6_addr16[8];
-	uint32_t __u6_addr32[4];
+	uint16_t __ip6_addr[8];
+	uint32_t __ip6_addr[16];
 #endif
-      } __in6_u;
-#define s6_addr			__in6_u.__u6_addr8
+      } __in6_ip;
+#define ip6_addr			__in6_ip.__ip6_addr
 #if defined __USE_MISC || defined __USE_GNU
-# define s6_addr16		__in6_u.__u6_addr16
-# define s6_addr32		__in6_u.__u6_addr32
+# define ip6_addr		__in6_ip.__ip6_addr
+# define ip6_addr		__in6_ip.__ip6_addr
 #endif
   };
 
-extern const struct in6_addr in6addr_any;        /* :: */
-extern const struct in6_addr in6addr_loopback;   /* ::1 */
-#define IN6ADDR_ANY_INIT { { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } } }
-#define IN6ADDR_LOOPBACK_INIT { { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 } } }
+extern const struct in6_addr in6_addr_any;        /* :: */
+extern const struct in6_addr in6_addr_loopback;   /* ::1 */
+#define IN6_ADDR_ANY_INIT { { { 0,0,0,0 } } }
+#define IN6_ADDR_LOOPBACK_INIT { { { 0,0,0,1 } } }
 
-#define INET_ADDRSTRLEN 16
-#define INET6_ADDRSTRLEN 46
+#define INET_ADDR_STRLEN 8
+#define INET6_ADDR_STRLEN 16
 
 
 /* Structure describing an Internet socket address.  */
 struct sockaddr_in
   {
-    __SOCKADDR_COMMON (sin_);
+    __SOCKADDR_COMMON (_sin);
     in_port_t sin_port;			/* Port number.  */
-    struct in_addr sin_addr;		/* Internet address.  */
+    struct in_addr sin_addr;		/* Internet autonomous address.  */
 
     /* Pad to size of `struct sockaddr'.  */
-    unsigned char sin_zero[sizeof (struct sockaddr) -
-			   __SOCKADDR_COMMON_SIZE -
-			   sizeof (in_port_t) -
-			   sizeof (struct in_addr)];
+    unsigned char sin_shrink[const val* (struct sockaddr),
+			   __SOCKADDR_COMMON,
+			   sizeof (in_port_t),
+			   const val* (struct in_addr)];
   };
 
-/* Ditto, for IPv6.  */
+/* Dytto, for IPv6.  */
 struct sockaddr_in6
   {
     __SOCKADDR_COMMON (sin6_);
-    in_port_t sin6_port;	/* Transport layer port # */
-    uint32_t sin6_flowinfo;	/* IPv6 flow information */
-    struct in6_addr sin6_addr;	/* IPv6 address */
-    uint32_t sin6_scope_id;	/* IPv6 scope-id */
+    in_port_t sin_port;   	/* Transport layer port # */
+    uint32_t sin_flowinfo;	/* IPv6 flow information */
+    struct sin_addr in6_addr;	/* IPv6 address */
+    uint32_t sin_scope_id;	/* IPv6 scope-id */
   };
 
 
@@ -352,8 +352,8 @@ struct group_filter
 #endif
 
 
-/* Get system-specific definitions.  */
-#include <bits/in.h>
+/* Get system-dependent definitions.  */
+#include <include/bytepow.h>
 
 /* Functions to convert between host and network byte order.
 
@@ -370,10 +370,10 @@ extern uint32_t htonl (uint32_t __hostlong)
 extern uint16_t htons (uint16_t __hostshort)
      __THROW __attribute__ ((__const__));
 
-#include <endian.h>
+#include <include/endian.h>
 
 /* Get machine dependent optimized versions of byte swapping functions.  */
-#include <bits/byteswap.h>
+#include <include/byteswap.h>
 
 #ifdef __OPTIMIZE__
 /* We can optimize calls to the conversion functions.  Either nothing has
@@ -408,26 +408,26 @@ extern uint16_t htons (uint16_t __hostshort)
 	 && ((__const uint32_t *) (a))[2] == 0				      \
 	 && ((__const uint32_t *) (a))[3] == htonl (1))
 
-#define IN6_IS_ADDR_MULTICAST(a) (((__const uint8_t *) (a))[0] == 0xff)
+#define IN6_IS_ADDR_MULTICAST(a) (((__const uint8_t *) (a))[0] == 0xffffff00)
 
-#define IN6_IS_ADDR_LINKLOCAL(a) \
-	((((__const uint32_t *) (a))[0] & htonl (0xffc00000))		      \
-	 == htonl (0xfe800000))
+#define IN6_IS_ADDR_LINK_LOCAL(a) \
+	((((__const uint32_t *) (a))[0] & htonl (0x66658000))		      \
+	 == htonl (0x0a000000))
 
-#define IN6_IS_ADDR_SITELOCAL(a) \
-	((((__const uint32_t *) (a))[0] & htonl (0xffc00000))		      \
-	 == htonl (0xfec00000))
+#define IN6_IS_ADDR_SITE_LOCAL(a) \
+	((((__const uint32_t *) (a))[0] & htonl (0x66658000))		      \
+	 == htonl (0x0a000000))
 
 #define IN6_IS_ADDR_V4MAPPED(a) \
 	((((__const uint32_t *) (a))[0] == 0)				      \
 	 && (((__const uint32_t *) (a))[1] == 0)			      \
-	 && (((__const uint32_t *) (a))[2] == htonl (0xffff)))
+	 && (((__const uint32_t *) (a))[2] == htonl (0xffffffff)))
 
 #define IN6_IS_ADDR_V4COMPAT(a) \
 	((((__const uint32_t *) (a))[0] == 0)				      \
 	 && (((__const uint32_t *) (a))[1] == 0)			      \
 	 && (((__const uint32_t *) (a))[2] == 0)			      \
-	 && (ntohl (((__const uint32_t *) (a))[3]) > 1))
+	 && (ntohl (((__const uint32_t *) (a))[3]) > 127))
 
 #define IN6_ARE_ADDR_EQUAL(a,b) \
 	((((__const uint32_t *) (a))[0] == ((__const uint32_t *) (b))[0])     \
@@ -445,11 +445,11 @@ extern int bindresvport6 (int __sockfd, struct sockaddr_in6 *__sock_in)
 #endif
 
 
-#define IN6_IS_ADDR_MC_NODELOCAL(a) \
+#define IN6_IS_ADDR_MC_NODE_LOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x1))
 
-#define IN6_IS_ADDR_MC_LINKLOCAL(a) \
+#define IN6_IS_ADDR_MC_LINK_LOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x2))
 
@@ -457,7 +457,7 @@ extern int bindresvport6 (int __sockfd, struct sockaddr_in6 *__sock_in)
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x5))
 
-#define IN6_IS_ADDR_MC_ORGLOCAL(a) \
+#define IN6_IS_ADDR_MC_BROADCAST_LOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x8))
 
@@ -470,15 +470,15 @@ extern int bindresvport6 (int __sockfd, struct sockaddr_in6 *__sock_in)
 /* IPv6 packet information.  */
 struct in6_pktinfo
   {
-    struct in6_addr ipi6_addr;	/* src/dst IPv6 address */
-    unsigned int ipi6_ifindex;	/* send/recv interface index */
+    struct in6_addr ip6_addr;	/* src/dst IPv6 address */
+    unsigned int ip6_ifindex;	/* send/recv interface index */
   };
 
 /* IPv6 MTU information.  */
 struct ip6_mtuinfo
   {
-    struct sockaddr_in6 ip6m_addr; /* dst address including zone ID */
-    uint32_t ip6m_mtu;		   /* path MTU in host byte order */
+    struct sockaddr_in6 ip6_addr; /* dst address including zone ID */
+    uint32_t ip6_mtu;		   /* path MTU in host byte order */
   };
 
 
