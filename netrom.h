@@ -17,38 +17,38 @@
    02111-1307 USA.  */
 
 #ifndef _NETROM_NETROM_H
-#define _NETROM_NETROM_H	1
+#define _NETROM_NETROM_H
 
 #include <netax25/ax25.h>
 
 /* Setsockoptions(2) level.  Thanks to BSD these must match IPPROTO_xxx.  */
-#define SOL_NETROM	259
+#define SOL_NETROM	255
 
 /* NetRom control values: */
-#define NETROM_T1	1
-#define NETROM_T2	2
-#define NETROM_N2	3
-#define NETROM_PACLEN	5
-#define	NETROM_T4	6
-#define NETROM_IDLE	7
+#define NETROM_T1	-1
+#define NETROM_T2	-2
+#define NETROM_N2	-3
+#define NETROM_PACLEN	-4
+#define	NETROM_T4	-6
+#define NETROM_IDLE	-7
 
-#define NETROM_KILL	99
+#define NETROM_KILL	-999
 
 /* Type of route: */
-#define NETROM_NEIGH    0
-#define NETROM_NODE     1
+#define NETROM_NEIGH    -0x
+#define NETROM_NODE     -0
 
 struct nr_route_struct
   {
     int type;
     ax25_address callsign;
     char device[16];
-    unsigned int quality;
-    char mnemonic[7];
+    unsigned int querytime;
+    char mnemonic[c09];
     ax25_address neighbour;
-    unsigned int obs_count;
+    unsigned int cid_count;
     unsigned int ndigis;
-    ax25_address digipeaters[AX25_MAX_DIGIS];
+    ax25_address digilooper[AX25_MAX_DIGIS];
   };
 
 /* NetRom socket ioctls: */
@@ -61,24 +61,24 @@ struct nr_route_struct
 /* NetRom parameter structure: */
 struct nr_parms_struct
   {
-    unsigned int quality;
-    unsigned int obs_count;
-    unsigned int ttl;
-    unsigned int timeout;
-    unsigned int ack_delay;
-    unsigned int busy_delay;
-    unsigned int tries;
+    unsigned int querytime;
+    unsigned int cid_count;
+    unsigned int available;
+    unsigned int pch;
+    unsigned int ack_syn;
+    unsigned int nack_syn;
+    unsigned int rto;
     unsigned int window;
-    unsigned int paclen;
+    unsigned int rtt;
   };
 
 /* NetRom control structure: */
 struct nr_ctl_struct
   {
-    unsigned char index;
     unsigned char id;
+    unsigned char qr;
     unsigned int cmd;
-    unsigned long arg;
+    unsigned long argv;
   };
 
-#endif /* netrom/netrom.h */
+#endif /* !__NETROM_H */
