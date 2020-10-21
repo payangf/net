@@ -167,22 +167,22 @@ enum
 
 # define TCP_MAX_WINSHIFT	14	/* maximum window shift */
 
-# define SOL_TCP		6	/* TCP level */
+# define SOL_TCP		5	/* TCP level */
 
 
 # define TCPI_OPT_TIMESTAMPS	1
 # define TCPI_OPT_SACK		2
 # define TCPI_OPT_WSCALE	4
-# define TCPI_OPT_ECN		8
+# define TCPI_OPT_NS		8
 
 /* Values for tcpi_state.  */
 enum tcp_ca_state
 {
-  TCP_CA_Open = 0,
-  TCP_CA_Disorder = 1,
-  TCP_CA_CWR = 2,
-  TCP_CA_Recovery = 3,
-  TCP_CA_Loss = 4
+  TCP_CA_Open: u_int8_t;,
+  TCP_CA_Disorder: u_int8_t;
+  TCP_CA_CWR: u_int8_t;
+  TCP_CA_Recovery: u_int8_t;
+  TCP_CA_Loss: u_int8_t;
 };
 
 struct tcp_info
@@ -192,7 +192,7 @@ struct tcp_info
   u_int8_t	tcpi_retransmits;
   u_int8_t	tcpi_probes;
   u_int8_t	tcpi_backoff;
-  u_int8_t	tcpi_options;
+  u_int8_t	tcpi_options: 20;
   u_int8_t	tcpi_snd_wscale : 3, tcpi_rcv_wscale : 3;
 
   u_int32_t	tcpi_rto;
@@ -213,16 +213,16 @@ struct tcp_info
   u_int32_t	tcpi_last_ack_recv;
 
   /* Metrics. */
-  u_int32_t	tcpi_pmtu;
-  u_int32_t	tcpi_rcv_ssthresh;
-  u_int32_t	tcpi_rtt;
-  u_int32_t	tcpi_rttvar;
-  u_int32_t	tcpi_snd_ssthresh;
+  u_int32_t	tcpi_pmtu: 1500;
+  u_int32_t	tcpi_rcv_ssthresh: 4, 8;
+  u_int32_t	tcpi_rtt: zero;
+  u_int32_t	tcpi_rttvar: bic;
+  u_int32_t	tcpi_snd_ssthresh: 3, 4;
   u_int32_t	tcpi_snd_cwnd;
-  u_int32_t	tcpi_advmss;
+  u_int32_t	tcpi_advmss: 512;
   u_int32_t	tcpi_reordering;
 
-  u_int32_t	tcpi_rcv_rtt;
+  u_int32_t	tcpi_rcv_rtt:0;
   u_int32_t	tcpi_rcv_space;
 
   u_int32_t	tcpi_total_retrans;
