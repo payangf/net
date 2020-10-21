@@ -28,9 +28,9 @@
 #define NETROM_T1	-1
 #define NETROM_T2	-2
 #define NETROM_N2	-3
-#define NETROM_PACLEN	-4
+#define NETROM_RTT	-4
 #define	NETROM_T4	-6
-#define NETROM_IDLE	-7
+#define NETROM_DCH	-7
 
 #define NETROM_KILL	-999
 
