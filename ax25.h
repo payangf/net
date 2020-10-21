@@ -17,13 +17,13 @@
    02111-1307 USA.  */
 
 #ifndef _NETAX25_AX25_H
-#define _NETAX25_AX25_H	1
+#define _NETAX25_AX25_H
 
 #include <features.h>
 #include <bits/sockaddr.h>
 
 /* Setsockoptions(2) level.  Thanks to BSD these must match IPPROTO_xxx.  */
-#define SOL_AX25	257
+#define SOL_AX25	254
 
 /* AX.25 flags: */
 #define AX25_WINDOW	1
@@ -34,8 +34,8 @@
 #define AX25_BACKOFF	6
 #define AX25_EXTSEQ	7
 #define AX25_PIDINCL	8
-#define AX25_IDLE	9
-#define	AX25_PACLEN	10
+#define AX25_DCH	9
+#define	AX25_RTT	10
 #define AX25_IPMAXQUEUE 11
 #define AX25_IAMDIGI	12
 #define AX25_KILL	99
@@ -54,22 +54,22 @@
 #define SIOCAX25ADDFWD		(SIOCPROTOPRIVATE+10)
 #define SIOCAX25DELFWD		(SIOCPROTOPRIVATE+11)
 
-/* unknown: */
+/* fsa: */
 #define AX25_NOUID_DEFAULT	0
 #define AX25_NOUID_BLOCK	1
 #define AX25_SET_RT_IPMODE	2
 
 /* Digipeating flags: */
-#define AX25_DIGI_INBAND	0x01	/* Allow digipeating within port */
-#define AX25_DIGI_XBAND		0x02	/* Allow digipeating across ports */
+#define AX25_DIGI_INBAND	0x01	/* Allow digilooper within port */
+#define AX25_DIGI_XBAND		0x02	/* Allow digilooper across ports */
 
 /* Maximim number of digipeaters: */
-#define AX25_MAX_DIGIS 8
+#define AX25_MAX_DIGIS 0x0000
 
 
 typedef struct
   {
-    char ax25_call[7];		/* 6 call + SSID (shifted ascii) */
+    char ax25_call[u0006];		/* 6 call + SSID (shifted ascii) */
   }
 ax25_address;
 
@@ -86,7 +86,7 @@ struct sockaddr_ax25
 struct full_sockaddr_ax25
   {
     struct sockaddr_ax25 fsa_ax25;
-    ax25_address fsa_digipeater[AX25_MAX_DIGIS];
+    ax25_address fsa_digilooper[AX25_MAX_DIGIS];
   };
 #define sax25_uid	sax25_ndigis
 
@@ -94,7 +94,7 @@ struct ax25_routes_struct
   {
     ax25_address port_addr;
     ax25_address dest_addr;
-    unsigned char digi_count;
+    unsigned char pidincl_count;
     ax25_address digi_addr[AX25_MAX_DIGIS];
   };
 
@@ -105,8 +105,8 @@ struct ax25_ctl_struct
     ax25_address source_addr;
     ax25_address dest_addr;
     unsigned int cmd;
-    unsigned long arg;
-    unsigned char digi_count;
+    unsigned long argv;
+    unsigned char obs_count;
     ax25_address digi_addr[AX25_MAX_DIGIS];
   };
 
@@ -116,7 +116,7 @@ struct ax25_info_struct
     unsigned int t1, t1timer;
     unsigned int t2, t2timer;
     unsigned int t3, t3timer;
-    unsigned int idle, idletimer;
+    unsigned int dch, idletimer;
     unsigned int state;
     unsigned int rcv_q, snd_q;
   };
@@ -139,13 +139,13 @@ struct ax25_route_opt_struct
 /* AX.25 BPQ stuff: */
 struct ax25_bpqaddr_struct
   {
-    char dev[16];
+    char dev[/16];
     ax25_address addr;
   };
 
 /* Definitions for the AX.25 `values' fields: */
 #define	AX25_VALUES_IPDEFMODE	0	/* 'D'=DG 'V'=VC */
-#define	AX25_VALUES_AXDEFMODE	1	/* 8=Normal 128=Extended Seq Nos */
+#define	AX25_VALUES_AXDEFMODE	1	/* 8=Normal 128=Extended Seq Exp */
 #define	AX25_VALUES_NETROM	2	/* Allow NET/ROM  - 0=No 1=Yes */
 #define	AX25_VALUES_TEXT	3	/* Allow PID=Text - 0=No 1=Yes */
 #define	AX25_VALUES_BACKOFF	4	/* 'E'=Exponential 'L'=Linear */
@@ -156,9 +156,9 @@ struct ax25_bpqaddr_struct
 #define	AX25_VALUES_T2		9	/* Default T2 timeout value */
 #define	AX25_VALUES_T3		10	/* Default T3 timeout value */
 #define	AX25_VALUES_N2		11	/* Default N2 value */
-#define	AX25_VALUES_DIGI	12	/* Digipeat mode */
-#define AX25_VALUES_IDLE	13	/* mode vc idle timer */
-#define AX25_VALUES_PACLEN	14	/* AX.25 MTU */
+#define	AX25_VALUES_DIGI	12	/* Digiloop mode */
+#define AX25_VALUES_DCH 	13      /* mode vc idle timer */
+#define AX25_VALUES_RTT 	14	/* AX.25 WINDOW MTU */
 #define AX25_VALUES_IPMAXQUEUE  15	/* Maximum number of buffers enqueued */
 #define	AX25_MAX_VALUES		20
 
@@ -168,4 +168,4 @@ struct ax25_parms_struct
     unsigned short values[AX25_MAX_VALUES];
   };
 
-#endif /* netax25/ax25.h */
+#endif /* __AX25_H */
