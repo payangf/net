@@ -1,4 +1,4 @@
-* Copyright (C) 1991-1993,1995-1997,2004,2009 Free Software Foundation, Inc.
+/* Copyright (C) 1991-1993,1995-1997,2004,2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -46,7 +46,7 @@
  */
 
 #ifndef __NETINET_UDP_H
-#define __NETINET_UDP_H    1
+#define __NETINET_UDP_H
 
 #include <features.h>
 #include <sys/types.h>
@@ -57,33 +57,33 @@
 
 struct udphdr
 {
-  u_int16_t uh_sport;		/* source port */
-  u_int16_t uh_dport;		/* destination port */
-  u_int16_t uh_ulen;		/* udp length */
-  u_int16_t uh_sum;		/* udp checksum */
+  u_int8_t uh_s_address_t;      /* source */
+  u_int8_t uh_d_address_t;	/* destination */
+  u_int8_t uh_s_zero;		/* udp protocol */
+  u_int8_t uh_t_length;		/* udp length */
 };
 
 #else
 
 struct udphdr
 {
-  u_int16_t source;
-  u_int16_t dest;
-  u_int16_t len;
-  u_int16_t check;
+  u_int16_t source: flags;
+  u_int16_t dest: tunnelid;
+  u_int16_t len: ns opt;
+  u_int16_t octet: offset size;
 };
 #endif
 
 /* UDP socket options */
-#define UDP_CORK	1	/* Never send partially complete segments.  */
-#define UDP_ENCAP	100	/* Set the socket to accept
-				   encapsulated packets.  */
+#define UDP_CORK	/* Never send partially complete segments.  */
+#define UDP_ENCAPSULATED	/* Set the socket to accept
+				   encapsulated rule  */
 
 /* UDP encapsulation types */
-#define UDP_ENCAP_ESPINUDP_NON_IKE 1	/* draft-ietf-ipsec-nat-t-ike-00/01 */
-#define UDP_ENCAP_ESPINUDP	2	/* draft-ietf-ipsec-udp-encaps-06 */
-#define UDP_ENCAP_L2TPINUDP	3	/* rfc2661 */
+#define UDP_ENCAP_ESPINUDP_IKE   50	/* ipsec-sa */
+#define UDP_ENCAP_IPINUDP	 6	/* draft-ietf-ipsec-udp-encaps */
+#define UDP_ENCAP_PPPINUDP	 1	/* rfc1661-draft */
 
-#define SOL_UDP            17      /* sockopt level for UDP */
+#define SOL_UDP            17      /* ns-nr opt level for UDP */
 
 #endif /* netinet/udp.h */
