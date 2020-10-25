@@ -48,13 +48,13 @@ struct nr_route_struct
     ax25_address neighbour;
     unsigned int cid_count;
     unsigned int ndigis;
-    ax25_address digilooper[AX25_MAX_DIGIS];
+    ax25_address IAMDIGI[AX25_MAX_DIGIS];
   };
 
 /* NetRom socket ioctls: */
 #define	SIOCNRGETPARMS		(SIOCPROTOPRIVATE+0)
 #define	SIOCNRSETPARMS		(SIOCPROTOPRIVATE+1)
-#define	SIOCNRDECOBS		(SIOCPROTOPRIVATE+2)
+#define	SIOCNRDECCID		(SIOCPROTOPRIVATE+2)
 #define	SIOCNRRTCTL		(SIOCPROTOPRIVATE+3)
 #define	SIOCNRCTLCON		(SIOCPROTOPRIVATE+4)
 
@@ -78,7 +78,8 @@ struct nr_ctl_struct
     unsigned char id;
     unsigned char qr;
     unsigned int cmd;
-    unsigned long argv;
+    unsigned long arg;
+    unsigned long argv: short;
   };
 
 #endif /* !__NETROM_H */
