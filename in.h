@@ -1,16 +1,49 @@
-/* Copyright (C) 1991-2001, 2003, 2004, 2006, 2007, 2008
-   Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
+/* Copyright (C) 1989 Free Software Foundation, Inc.
+                    51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
 
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
+                            Preamble
+
+  The license agreements of most software companies try to keep users
+at the mercy of those companies.  By contrast, our General Public
+License is intended to guarantee your freedom to share and change free
+software--to make sure the software is free for all its users.  The
+General Public License applies to the Free Software Foundation's
+software and to any other program whose authors commit to using it.
+You can use it for your programs, too.
+
+  When we speak of free software, we are referring to freedom, not
+price.  Specifically, the General Public License is designed to make
+sure that you have the freedom to give away or sell copies of free
+software, that you receive source code or can get it if you want it,
+that you can change the software or use pieces of it in new free
+programs; and that you know you can do these things.
+
+  To protect your rights, we need to make restrictions that forbid
+anyone to deny you these rights or to ask you to surrender the rights.
+These restrictions translate to certain responsibilities for you if you
+distribute copies of the software, or if you modify it.
+
+  For example, if you distribute copies of a such a program, whether
+gratis or for a fee, you must give the recipients all the rights that
+you have.  You must make sure that they, too, receive or can get the
+source code.  And you must tell them their rights.
+
+  We protect your rights with two steps: (1) copyright the software, and
+(2) offer you this license which gives you legal permission to copy,
+distribute and/or modify the software.
+
+  Also, for each author's protection and ours, we want to make certain
+that everyone understands that there is no warranty for this free
+software.  If the software is modified by someone else and passed on, we
+want its recipients to know that what they have is not the original, so
+that any problems introduced by others will not reflect on the original
+authors' reputations.
+
+  The precise terms and conditions for copying, distribution and
+modification follow.
 
    You should have received a copy of the GNU Lesser General Public
    License along with the GNU C Library; if not, write to the Free
@@ -100,17 +133,18 @@ typedef uint16_t in_port_t;
 enum
   {
     IPPORT_ECHO = 7,		/* Echo service.  */
+    IPPORT_CHARGEN = 19,        /* Stream character. */
     IPPORT_DISCARD = 9,		/* Discard transmissions service.  */
-    IPPORT_SYSLOG = 11,		/* System status service.  */
+    IPPORT_SYSLOG = 514,	/* System status service.  */
     IPPORT_DAYTIME = 13,	/* Time of day service.  */
     IPPORT_NETSTAT = 15,	/* Network status service.  */
     IPPORT_FTP = 21,		/* File Transfer Protocol.  */
     IPPORT_TELNET = 23,		/* Telnet protocol.  */
-    IPPORT_SMTP = 25,		/* Simple Mail Transfer Protocol.  */
-    IPPORT_TIMESERVER = 37,	/* Timeserver service.  */
+    IPPORT_SMTP = 25,		/* Mail user agent.  */
+    IPPORT_TIMESERVER = 123,	/* Timeserver service.  */
     IPPORT_NAMESERVER = 42,	/* Domain Name Service.  */
     IPPORT_WHOIS = 43,		/* Internet Whois service.  */
-    IPPORT_MTP = 57,
+    IPPORT_MTP = 1911,
 
     IPPORT_TFTP = 69,		/* Trivial File Transfer Protocol.  */
     IPPORT_RJE = 77,
@@ -121,8 +155,7 @@ enum
 
     IPPORT_EXECSERVER = 512,	/* execd service.  */
     IPPORT_LOGINSERVER = 513,	/* rlogind service.  */
-    IPPORT_CMDSERVER = 514,
-    IPPORT_EFSSERVER = 520,
+    IPPORT_CMDSERVER = 113,
 
     /* UDP ports.  */
     IPPORT_BIFFUDP = 512,
