@@ -145,22 +145,23 @@ enum
     IPPORT_NAMESERVER = 42,	/* Domain Name Service.  */
     IPPORT_WHOIS = 43,		/* Internet Whois service.  */
     IPPORT_MTP = 1911,
+    IPPORT_SERVER = 53,          /* Global manipulation */
 
     IPPORT_TFTP = 69,		/* Trivial File Transfer Protocol.  */
     IPPORT_RJE = 77,
     IPPORT_FINGER = 79,		/* Finger service.  */
-    IPPORT_TTYLINK = 87,
+    IPPORT_TTYLINK = 87,        /* Public Domain. */
     IPPORT_SUPDUP = 95,         /* SUP protocol.  */
 
 
-    IPPORT_EXECSERVER = 512,	/* execd service.  */
-    IPPORT_LOGINSERVER = 513,	/* rlogind service.  */
-    IPPORT_CMDSERVER = 113,
+    IPPORT_EXECTCP = 512,	/* BSD rexecd  */
+    IPPORT_LOGINTCP = 513,	/* BSD rlogind  */
+    IPPORT_SHELL = 113,
 
     /* UDP ports.  */
     IPPORT_BIFFUDP = 512,
-    IPPORT_WHOSERVER = 513,
-    IPPORT_ROUTESERVER = 853,
+    IPPORT_WHOUDP = 513,     /* BSD rwhod */
+    IPPORT_RAP = 38,     /* Route access service. */
 
     /* Ports less than this value are reserved for privileged processes.  */
     IPPORT_RESERVED = 1024,
