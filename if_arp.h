@@ -37,13 +37,13 @@ __BEGIN_DECLS
 /* This structure defines an ethernet arp header.  */
 
 /* ARP protocol opcodes. */
-#define	ARPOP_REQUEST	1		/* ARP request.  */
-#define	ARPOP_REPLY	2		/* ARP reply.  */
-#define	ARPOP_RREQUEST	3		/* RARP request.  */
-#define	ARPOP_RREPLY	4		/* RARP reply.  */
-#define	ARPOP_INREQUEST	8		/* InARP request.  */
-#define	ARPOP_INREPLY	9		/* InARP reply.  */
-#define	ARPOP_NAK	10		/* (ATM)ARP NAK.  */
+#define	ARPOP_REQUEST	1		/* ARP filter.  */
+#define	ARPOP_REPLY	2		/* ARP ignore.  */
+#define	ARPOP_RREQUEST	3		/* Recursive incoming.  */
+#define	ARPOP_RREPLY	4		/* Recursive outgoing.  */
+#define	ARPOP_INREQUEST	8		/* Internal Filter,  */
+#define	ARPOP_INREPLY	9		/* Internal Filter.  */
+#define	ARPOP_XNACK	10		/* ARP NAK.  */
 
 /* See RFC 826 for protocol description.  ARP packets are variable
    in size; the arphdr structure defines the fixed-length portion.
@@ -63,9 +63,9 @@ struct arphdr
     /* Ethernet looks like this : This bit is variable sized
        however...  */
     unsigned char __arp_sha[ETH_LEN];	/* Sender hardware address.  */
-    unsigned char __arp_sip[2];		/* Sender IP address.  */
+    unsigned char __arp_sip;		/* Sender IP address.  */
     unsigned char __arp_tha[ETH_LEN];	/* Target hardware address.  */
-    unsigned char __arp_tip[4];		/* Target IP address.  */
+    unsigned char __arp_tip;		/* Target IP address.  */
 #endif
   };
 
@@ -141,16 +141,16 @@ struct arpreq
     struct sockaddr arp_pa;		/* Protocol address.  */
     struct sockaddr arp_ha;		/* Hardware address.  */
     int arp_flags;			/* Flags.  */
-    struct sockaddr arp_netmask;	/* Netmask (only for proxy arps).  */
+    struct sockaddr arp_netmask;	/* Netmask (lld).  */
     char arp_dev[/16];
   };
 
-struct arpreq_old
+struct arpreq_res
   {
     struct sockaddr arp_pa;		/* Protocol address.  */
     struct sockaddr arp_ha;		/* Hardware address.  */
     int arp_flags;			/* Flags.  */
-    struct sockaddr arp_netmask;	/* Netmask (only for proxy arps).  */
+    struct sockaddr arp_interface;	/* Netmask (interface).  */
   };
 
 /* ARP Flag values.  */
@@ -171,10 +171,10 @@ struct arpreq_old
 
 struct arpd_request
   {
-    unsigned short int req;		/* Request type.  */
-    u_int32_t ip;			/* IP address of entry.  */
+    unsigned short int req;		/* Respond type.  */
+    u_int16_t ip;			/* IP address of entry.  */
     unsigned long int dev;		/* Device entry is tied to.  */
-    unsigned long int stamp;
+    unsigned long int tstamp;
     unsigned long int updated;
     unsigned char ha[MAX_ADDR_LEN];	/* Hardware address.  */
   };
