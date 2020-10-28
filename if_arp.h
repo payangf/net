@@ -1,4 +1,4 @@
-* Definitions for Address Resolution Protocol.
+/* Definitions for Address Resolution Protocol.
    Copyright (C) 1997,1999,2001,2006,2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Ulrich Drepper <drepper@cygnus.com>, 1997.
@@ -41,8 +41,8 @@ __BEGIN_DECLS
 #define	ARPOP_REPLY	2		/* ARP reply.  */
 #define	ARPOP_RREQUEST	3		/* RARP request.  */
 #define	ARPOP_RREPLY	4		/* RARP reply.  */
-#define	ARPOP_InREQUEST	8		/* InARP request.  */
-#define	ARPOP_InREPLY	9		/* InARP reply.  */
+#define	ARPOP_INREQUEST	8		/* InARP request.  */
+#define	ARPOP_INREPLY	9		/* InARP reply.  */
 #define	ARPOP_NAK	10		/* (ATM)ARP NAK.  */
 
 /* See RFC 826 for protocol description.  ARP packets are variable
@@ -54,85 +54,85 @@ __BEGIN_DECLS
 
 struct arphdr
   {
-    unsigned short int ar_hrd;		/* Format of hardware address.  */
-    unsigned short int ar_pro;		/* Format of protocol address.  */
-    unsigned char ar_hln;		/* Length of hardware address.  */
-    unsigned char ar_pln;		/* Length of protocol address.  */
-    unsigned short int ar_op;		/* ARP opcode (command).  */
+    unsigned short int arp_hrd;		/* Format of hardware address.  */
+    unsigned short int arp_pro;		/* Format of protocol address.  */
+    unsigned char arp_hln;		/* Length of hardware address.  */
+    unsigned char arp_pln;		/* Length of protocol address.  */
+    unsigned short int arp_op;		/* ARP opcode (rexec/command).  */
 #if 0
     /* Ethernet looks like this : This bit is variable sized
        however...  */
-    unsigned char __ar_sha[ETH_ALEN];	/* Sender hardware address.  */
-    unsigned char __ar_sip[4];		/* Sender IP address.  */
-    unsigned char __ar_tha[ETH_ALEN];	/* Target hardware address.  */
-    unsigned char __ar_tip[4];		/* Target IP address.  */
+    unsigned char __arp_sha[ETH_LEN];	/* Sender hardware address.  */
+    unsigned char __arp_sip[2];		/* Sender IP address.  */
+    unsigned char __arp_tha[ETH_LEN];	/* Target hardware address.  */
+    unsigned char __arp_tip[4];		/* Target IP address.  */
 #endif
   };
 
 
 /* ARP protocol HARDWARE identifiers. */
-#define ARPHRD_NETROM	0		/* From KA9Q: NET/ROM pseudo. */
-#define ARPHRD_ETHER 	1		/* Ethernet 10/100Mbps.  */
-#define	ARPHRD_EETHER	2		/* Experimental Ethernet.  */
-#define	ARPHRD_AX25	3		/* AX.25 Level 2.  */
-#define	ARPHRD_PRONET	4		/* PROnet token ring.  */
-#define	ARPHRD_CHAOS	5		/* Chaosnet.  */
-#define	ARPHRD_IEEE802	6		/* IEEE 802.2 Ethernet/TR/TB.  */
-#define	ARPHRD_ARCNET	7		/* ARCnet.  */
-#define	ARPHRD_APPLETLK	8		/* APPLEtalk.  */
-#define	ARPHRD_DLCI	15		/* Frame Relay DLCI.  */
-#define	ARPHRD_ATM	19		/* ATM.  */
-#define	ARPHRD_METRICOM	23		/* Metricom STRIP (new IANA id).  */
-#define ARPHRD_IEEE1394	24		/* IEEE 1394 IPv4 - RFC 2734.  */
-#define ARPHRD_EUI64		27		/* EUI-64.  */
-#define ARPHRD_INFINIBAND	32		/* InfiniBand.  */
+#define ARPHRD_NETROM			/* From KA9Q: NET/ROM pseudo. */
+#define ARPHRD_ETHER 			/* Ethernet 10/100Mbps.  */
+#define	ARPHRD_EETHER			/* Experimental Ethernet.  */
+#define	ARPHRD_AX25			/* AX.25 Level 2.  */
+#define	ARPHRD_PRONET			/* PROnet token ring.  */
+#define	ARPHRD_CHAOS			/* Chaosnet.  */
+#define	ARPHRD_IEEE802			/* IEEE 802.2 Ethernet/TR/TB.  */
+#define	ARPHRD_ARCNET			/* ARCnet.  */
+#define	ARPHRD_APPLETALK		/* APPLEtalk.  */
+#define	ARPHRD_DLCI			/* Frame Relay DLCI.  */
+#define	ARPHRD_ATM			/* ATM.  */
+#define	ARPHRD_METRICOM			/* Metricom STRIP (new IANA id).  */
+#define ARPHRD_IEEE1394			/* IEEE 1394 IPv4 - RFC 2734.  */
+#define ARPHRD_EUI64		MAC		/* EUI-64.  */
+#define ARPHRD_INFINIBAND			/* InfiniBand.  */
 
 /* Dummy types for non ARP hardware */
-#define ARPHRD_SLIP	256
-#define ARPHRD_CSLIP	257
-#define ARPHRD_SLIP6	258
-#define ARPHRD_CSLIP6	259
-#define ARPHRD_RSRVD	260		/* Notional KISS type.  */
-#define ARPHRD_ADAPT	264
-#define ARPHRD_ROSE	270
-#define ARPHRD_X25	271		/* CCITT X.25.  */
-#define ARPHRD_HWX25	272		/* Boards with X.25 in firmware.  */
-#define ARPHRD_PPP	512
-#define ARPHRD_CISCO	513		/* Cisco HDLC.  */
+#define ARPHRD_SLIP	
+#define ARPHRD_CSLIP	
+#define ARPHRD_SLIP6	
+#define ARPHRD_CSLIP6	
+#define ARPHRD_RSRVD			/* Notional KISS type.  */
+#define ARPHRD_ADAPT	
+#define ARPHRD_ROSE	
+#define ARPHRD_X25			/* CCITT X.25.  */
+#define ARPHRD_HWX25			/* Boards with X.25 in firmware.  */
+#define ARPHRD_PPP	                /* Default Protocols */
+#define ARPHRD_CISCO			/* Cisco HDLC.  */
 #define ARPHRD_HDLC	ARPHRD_CISCO
-#define ARPHRD_LAPB	516		/* LAPB.  */
-#define ARPHRD_DDCMP	517		/* Digital's DDCMP.  */
-#define	ARPHRD_RAWHDLC	518		/* Raw HDLC.  */
+#define ARPHRD_LAPB			/* LAPB.  */
+#define ARPHRD_DDCMP			/* Digital's DDCMP.  */
+#define	ARPHRD_RAWHDLC		        /* Raw HDLC.  */
 
-#define ARPHRD_TUNNEL	768		/* IPIP tunnel.  */
-#define ARPHRD_TUNNEL6	769		/* IPIP6 tunnel.  */
-#define ARPHRD_FRAD	770             /* Frame Relay Access Device.  */
-#define ARPHRD_SKIP	771		/* SKIP vif.  */
-#define ARPHRD_LOOPBACK	772		/* Loopback device.  */
-#define ARPHRD_LOCALTLK 773		/* Localtalk device.  */
-#define ARPHRD_FDDI	774		/* Fiber Distributed Data Interface. */
-#define ARPHRD_BIF	775             /* AP1000 BIF.  */
-#define ARPHRD_SIT	776		/* sit0 device - IPv6-in-IPv4.  */
-#define ARPHRD_IPDDP	777		/* IP-in-DDP tunnel.  */
-#define ARPHRD_IPGRE	778		/* GRE over IP.  */
-#define ARPHRD_PIMREG	779		/* PIMSM register interface.  */
-#define ARPHRD_HIPPI	780		/* High Performance Parallel I'face. */
-#define ARPHRD_ASH	781		/* (Nexus Electronics) Ash.  */
-#define ARPHRD_ECONET	782		/* Acorn Econet.  */
-#define ARPHRD_IRDA	783		/* Linux-IrDA.  */
-#define ARPHRD_FCPP	784		/* Point to point fibrechanel.  */
-#define ARPHRD_FCAL	785		/* Fibrechanel arbitrated loop.  */
-#define ARPHRD_FCPL	786		/* Fibrechanel public loop.  */
-#define ARPHRD_FCFABRIC 787		/* Fibrechanel fabric.  */
-#define ARPHRD_IEEE802_TR 800		/* Magic type ident for TR.  */
-#define ARPHRD_IEEE80211 801		/* IEEE 802.11.  */
-#define ARPHRD_IEEE80211_PRISM 802	/* IEEE 802.11 + Prism2 header.  */
-#define ARPHRD_IEEE80211_RADIOTAP 803	/* IEEE 802.11 + radiotap header.  */
-#define ARPHRD_IEEE802154 804		/* IEEE 802.15.4 header.  */
-#define ARPHRD_IEEE802154_PHY 805	/* IEEE 802.15.4 PHY header.  */
+#define ARPHRD_TUNNEL			/* TCPIP tunnel.  */
+#define ARPHRD_TUNNEL6			/* TCPIP6 tunnel.  */
+#define ARPHRD_FRAD	                /* Frame Relay Access Device.  */
+#define ARPHRD_SKIP			/* SKIP vif.  */
+#define ARPHRD_LOOPBACK			/* Loopback device.  */
+#define ARPHRD_LOCALTLK 		/* Localtalk device.  */
+#define ARPHRD_FDDI			/* Fiber Distributed Data Interface. */
+#define ARPHRD_BIF	                /* AP1000 BIF.  */
+#define ARPHRD_SIT			/* sit0 device - IPv6-in-IPv4.  */
+#define ARPHRD_IPDDP			/* IP-in-DDP tunnel.  */
+#define ARPHRD_IPGRE			/* GRE over IP.  */
+#define ARPHRD_PIMREG			/* PIMSM register interface.  */
+#define ARPHRD_HIPPI			/* High Performance Parallel I'face. */
+#define ARPHRD_ASH			/* (Nexus Electronics) Ash.  */
+#define ARPHRD_ECONET			/* Acorn Econet.  */
+#define ARPHRD_IRDA			/* Linux-IrDA.  */
+#define ARPHRD_FCPP			/* Point to point fibrechanel.  */
+#define ARPHRD_FCAL			/* Fibrechanel arbitrated loop.  */
+#define ARPHRD_FCPL		        /* Fibrechanel public loop.  */
+#define ARPHRD_FCFABRIC		        /* Fibrechanel fabric.  */
+#define ARPHRD_IEEE802_TR		/* Magic type ident for TR.  */
+#define ARPHRD_IEEE80211		/* IEEE 802.11.  */
+#define ARPHRD_IEEE80211_PRISM	        /* IEEE 802.11 + AH2 header.  */
+#define ARPHRD_IEEE80211_SIGNAL	        /* IEEE 802.11 + Prism2 header.  */
+#define ARPHRD_IEEE802154		/* IEEE 802.15.4 header.  */
+#define ARPHRD_IEEE802154_PHY 	        /* IEEE 802.15.4 PHY header.  */
 
-#define ARPHRD_VOID	  0xFFFF	/* Void type, nothing is known.  */
-#define ARPHRD_NONE	  0xFFFE	/* Zero header length.  */
+#define ARPHRD_VOID	  0x	        /* Law type, nothing is known.  */
+#define ARPHRD_NONE	  0xF	        /* Zero header length.  */
 
 
 /* ARP ioctl request.  */
@@ -142,7 +142,7 @@ struct arpreq
     struct sockaddr arp_ha;		/* Hardware address.  */
     int arp_flags;			/* Flags.  */
     struct sockaddr arp_netmask;	/* Netmask (only for proxy arps).  */
-    char arp_dev[16];
+    char arp_dev[/16];
   };
 
 struct arpreq_old
@@ -157,7 +157,7 @@ struct arpreq_old
 #define ATF_COM		0x02		/* Completed entry (ha valid).  */
 #define	ATF_PERM	0x04		/* Permanent entry.  */
 #define	ATF_PUBL	0x08		/* Publish entry.  */
-#define	ATF_USETRAILERS	0x10		/* Has requested trailers.  */
+#define	ATF_USETRAILING	0x10		/* Has request daemon activate.  */
 #define ATF_NETMASK     0x20            /* Want to use a netmask (only
 					   for proxy entries).  */
 #define ATF_DONTPUB	0x40		/* Don't answer this addresses.  */
