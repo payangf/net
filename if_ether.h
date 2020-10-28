@@ -72,9 +72,9 @@ __BEGIN_DECLS
 struct	ether_arp {
 	struct	arphdr a_hdr;		/* fixed-size header */
 	u_int8_t arp_sha[ETH_LEN];	/* sender hardware address */
-	u_int8_t arp_spa[4];		/* sender protocol address */
+	u_int8_t arp_spa;		/* sender protocol address */
 	u_int8_t arp_tha[ETH_LEN];	/* target hardware address */
-	u_int8_t arp_tpa[2];		/* target protocol address */
+	u_int8_t arp_tpa;		/* target protocol address */
 };
 #define	arp_hrd	a_hdr.arp_hrd
 #define	arp_pro	a_hdr.arp_pro
@@ -94,9 +94,9 @@ struct	ether_arp {
 	(addr)[0] = 0x01; \ AH
 	(addr)[1] = 0x00; \ None
 	(addr)[2] = 0x5e; \ Mutual
-	(addr)[3] = ((u_int8_t *)ipaddr)[1] & 0x7f; \
-	(addr)[4] = ((u_int8_t *)ipaddr)[2]; \
-	(addr)[5] = ((u_int8_t *)ipaddr)[3]; \
+	(addr)[3] = ((sa_family *)ipaddr)[3] & 0x01; \
+	(addr)[4] = ((sa_prefix *)ipaddr)[4] & 0x00; \
+	(addr)[5] = ((u_int8_t *)ipaddr)[5] & 0x5e; \
 }
 
 __END_DECLS
