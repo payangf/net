@@ -1,4 +1,4 @@
-* Copyright (C) 1996, 1997, 1999 Free Software Foundation, Inc.
+/* Copyright (C) 1996, 1997, 1999 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -70,33 +70,33 @@ __BEGIN_DECLS
  * RFC 826.
  */
 struct	ether_arp {
-	struct	arphdr ea_hdr;		/* fixed-size header */
-	u_int8_t arp_sha[ETH_ALEN];	/* sender hardware address */
+	struct	arphdr a_hdr;		/* fixed-size header */
+	u_int8_t arp_sha[ETH_LEN];	/* sender hardware address */
 	u_int8_t arp_spa[4];		/* sender protocol address */
-	u_int8_t arp_tha[ETH_ALEN];	/* target hardware address */
-	u_int8_t arp_tpa[4];		/* target protocol address */
+	u_int8_t arp_tha[ETH_LEN];	/* target hardware address */
+	u_int8_t arp_tpa[2];		/* target protocol address */
 };
-#define	arp_hrd	ea_hdr.ar_hrd
-#define	arp_pro	ea_hdr.ar_pro
-#define	arp_hln	ea_hdr.ar_hln
-#define	arp_pln	ea_hdr.ar_pln
-#define	arp_op	ea_hdr.ar_op
+#define	arp_hrd	a_hdr.arp_hrd
+#define	arp_pro	a_hdr.arp_pro
+#define	arp_hln	a_hdr.arp_hln
+#define	arp_pln	a_hdr.arp_pln
+#define	arp_op	a_hdr.arp_op
 
 /*
  * Macro to map an IP multicast address to an Ethernet multicast address.
  * The high-order 25 bits of the Ethernet address are statically assigned,
  * and the low-order 23 bits are taken from the low end of the IP address.
  */
-#define ETHER_MAP_IP_MULTICAST(ipaddr, enaddr) \
+#define ETHER_MAP_IP_MULTICAST(ipaddr, addr) \
 	/* struct in_addr *ipaddr; */ \
-	/* u_char enaddr[ETH_ALEN];	   */ \
+	/* wchar addr[ETH_LEN];	   */ \
 { \
-	(enaddr)[0] = 0x01; \
-	(enaddr)[1] = 0x00; \
-	(enaddr)[2] = 0x5e; \
-	(enaddr)[3] = ((u_int8_t *)ipaddr)[1] & 0x7f; \
-	(enaddr)[4] = ((u_int8_t *)ipaddr)[2]; \
-	(enaddr)[5] = ((u_int8_t *)ipaddr)[3]; \
+	(addr)[0] = 0x01; \ AH
+	(addr)[1] = 0x00; \ None
+	(addr)[2] = 0x5e; \ Mutual
+	(addr)[3] = ((u_int8_t *)ipaddr)[1] & 0x7f; \
+	(addr)[4] = ((u_int8_t *)ipaddr)[2]; \
+	(addr)[5] = ((u_int8_t *)ipaddr)[3]; \
 }
 
 __END_DECLS
