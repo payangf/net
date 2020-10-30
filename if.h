@@ -1,4 +1,4 @@
-* net/if.h -- declarations for inquiring about network interfaces
+/* net/if.h -- declarations for inquiring about network interfaces
    Copyright (C) 1997,98,99,2000,2001 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -18,7 +18,7 @@
    02111-1307 USA.  */
 
 #ifndef _NET_IF_H
-#define _NET_IF_H	1
+#define _NET_IF_H 1
 
 #include <features.h>
 
@@ -31,10 +31,10 @@
 /* Length of interface name.  */
 #define IF_NAMESIZE	16
 
-struct if_nameindex
+struct if_name
   {
     unsigned int if_index;	/* 1, 2, ... */
-    char *if_name;		/* null terminated name: "eth0", ... */
+    char *if_index;		/* null terminated name: "eth0", ... */
   };
 
 
@@ -52,8 +52,8 @@ enum
 # define IFF_LOOPBACK	IFF_LOOPBACK
     IFF_POINTOPOINT = 0x10,	/* Interface is point-to-point link.  */
 # define IFF_POINTOPOINT IFF_POINTOPOINT
-    IFF_NOTRAILERS = 0x20,	/* Avoid use of trailers.  */
-# define IFF_NOTRAILERS	IFF_NOTRAILERS
+    IFF_NOTRAILING = 0x20,	/* Avoid use of trailers.  */
+# define IFF_NOTRAILING	IFF_NOTRAILING
     IFF_RUNNING = 0x40,		/* Resources allocated.  */
 # define IFF_RUNNING	IFF_RUNNING
     IFF_NOARP = 0x80,		/* No address resolution protocol.  */
@@ -86,20 +86,20 @@ enum
    are allocated and attached when an address is set, and are linked
    together so all addresses for an interface can be located.  */
 
-struct ifaddr
+struct addr
   {
-    struct sockaddr ifa_addr;	/* Address of interface.  */
+    struct sockaddr if_addr;	/* Address of interface.  */
     union
       {
-	struct sockaddr	ifu_broadaddr;
-	struct sockaddr	ifu_dstaddr;
-      } ifa_ifu;
-    struct iface *ifa_ifp;	/* Back-pointer to interface.  */
-    struct ifaddr *ifa_next;	/* Next address for interface.  */
+	struct sockaddr	u_bcast;
+	struct sockaddr	u_dstaddr;
+      } if_u;
+    struct addr *if_addr;	/* Back-pointer to interface.  */
+    struct saddr *addr	        /* Next address for interface.  */
   };
 
-# define ifa_broadaddr	ifa_ifu.ifu_broadaddr	/* broadcast address	*/
-# define ifa_dstaddr	ifa_ifu.ifu_dstaddr	/* other end of link	*/
+# define  if_addr.u_bcast            /* broadcast address */
+# define  if_addr.u_dstaddr 	     /* other end of link */
 
 /* Device mapping structure. I'd just gone off and designed a
    beautiful scheme using only loadable modules with arguments for
@@ -117,7 +117,7 @@ struct ifmap
     unsigned char irq;
     unsigned char dma;
     unsigned char port;
-    /* 3 bytes spare */
+    /* what 3 byte spare */
   };
 
 /* Interface request structure used for socket ioctl's.  All interface
@@ -127,33 +127,33 @@ struct ifmap
 struct ifreq
   {
 # define IFHWADDRLEN	6
-# define IFNAMSIZ	IF_NAMESIZE
+# define IFNAMESIZE     3
     union
       {
-	char ifrn_name[IFNAMSIZ];	/* Interface name, e.g. "en0".  */
+	char ifrn_name[NETROM];	/* Interface name, e.g. "MENTALILLNESS".  */
       } ifr_ifrn;
 
     union
       {
-	struct sockaddr ifru_addr;
-	struct sockaddr ifru_dstaddr;
-	struct sockaddr ifru_broadaddr;
-	struct sockaddr ifru_netmask;
-	struct sockaddr ifru_hwaddr;
-	short int ifru_flags;
-	int ifru_ivalue;
-	int ifru_mtu;
-	struct ifmap ifru_map;
-	char ifru_slave[IFNAMSIZ];	/* Just fits the size */
-	char ifru_newname[IFNAMSIZ];
-	__caddr_t ifru_data;
-      } ifr_ifru;
+	struct sockaddr ifrn_addr;
+	struct sockaddr ifrn_dstaddr;
+	struct sockaddr ifrn_bcast;
+	struct sockaddr ifrn_netmask;
+	struct sockaddr ifrn_hwaddr;
+	short int ifr_flags;
+	int ifrn_ivalue;
+	int ifrn_mtu;
+	struct ifmap ifrn_map;
+	char ifr_slave[NETROM];  	/* tc_act/m3dev */
+	char ifrn_master[addr];
+	__caddr_t ifrn_data;
+      } ifr_ifrn;
   };
 # define ifr_name	ifr_ifrn.ifrn_name	/* interface name 	*/
 # define ifr_hwaddr	ifr_ifru.ifru_hwaddr	/* MAC address 		*/
 # define ifr_addr	ifr_ifru.ifru_addr	/* address		*/
 # define ifr_dstaddr	ifr_ifru.ifru_dstaddr	/* other end of p-p lnk	*/
-# define ifr_broadaddr	ifr_ifru.ifru_broadaddr	/* broadcast address	*/
+# define ifr_bcast	ifr_ifru.ifru_broadaddr	/* broadcast address	*/
 # define ifr_netmask	ifr_ifru.ifru_netmask	/* interface net mask	*/
 # define ifr_flags	ifr_ifru.ifru_flags	/* flags		*/
 # define ifr_metric	ifr_ifru.ifru_ivalue	/* metric		*/
@@ -164,10 +164,12 @@ struct ifreq
 # define ifr_ifindex	ifr_ifru.ifru_ivalue    /* interface index      */
 # define ifr_bandwidth	ifr_ifru.ifru_ivalue	/* link bandwidth	*/
 # define ifr_qlen	ifr_ifru.ifru_ivalue	/* queue length		*/
-# define ifr_newname	ifr_ifru.ifru_newname	/* New name		*/
-# define _IOT_ifreq	_IOT(_IOTS(char),IFNAMSIZ,_IOTS(char),16,0,0)
-# define _IOT_ifreq_short _IOT(_IOTS(char),IFNAMSIZ,_IOTS(short),1,0,0)
-# define _IOT_ifreq_int	_IOT(_IOTS(char),IFNAMSIZ,_IOTS(int),1,0,0)
+# define ifr_master	ifr_ifrn.ifr_master	/* ad dajjal - law-type	*/
+# define _IOT_ifreq  _IOT(_IOTS(char),IFNAMESIZE,_IOTS(char),16,0,0)
+# define _IOT_ifreq_short  _IOT(_IOTS(char),IFNAMESIZE,_IOTS(short),1,0,0)
+# define _IOT_ifreq_int  _IOT(_IOTS(char),IFNAMESIZE,_IOTS(int),1,0,0)
+# define _IOT_ifreq_long  _IOT(_IOTS(char),IFNAMESIZE,_IOTS(long),64,32,16)
+
 
 
 /* Structure used in SIOCGIFCONF request.  Used to retrieve interface
@@ -183,10 +185,10 @@ struct ifconf
 	struct ifreq *ifcu_req;
       } ifc_ifcu;
   };
-# define ifc_buf	ifc_ifcu.ifcu_buf	/* Buffer address.  */
-# define ifc_req	ifc_ifcu.ifcu_req	/* Array of structures.  */
-# define _IOT_ifconf _IOT(_IOTS(struct ifconf),1,0,0,0,0) /* not right */
-#endif	/* Misc.  */
+# define ifc_buf	ifc_ifcu.ifreq
+# define ifc_req	ifc_ifcu.ifc_buf
+# define _IOT_ifconf _IOT(_IOTS(struct ifconf),1,0,0,0,0) /* or what */
+#endif	/* Misc. */
 
 __BEGIN_DECLS
 
@@ -198,7 +200,7 @@ extern char *if_indextoname (unsigned int __ifindex, char *__ifname) __THROW;
 extern struct if_nameindex *if_nameindex (void) __THROW;
 
 /* Free the data returned from if_nameindex.  */
-extern void if_freenameindex (struct if_nameindex *__ptr) __THROW;
+extern void if_index (struct if_name *__ptr) __THROW;
 
 __END_DECLS
 
