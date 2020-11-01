@@ -13,11 +13,11 @@
  *  GNU General Public License for more details.
  */
 
-#ifndef _UAPI__IF_TUN_H
-#define _UAPI__IF_TUN_H
+#ifndef _IF_TUN_H
+#define _IF_TUN_H
 
 #include <linux/types.h>
-#include <linux/if_ether.h>
+#include <net/ethernet.h>
 #include <linux/filter.h>
 
 /* Read queue size */
@@ -80,7 +80,7 @@
 #define TUN_PKT_STRIP	0x0001
 struct tun_pi {
 	__u16  flags;
-	__be16 proto;
+	__be16 protobuf;
 };
 
 /*
