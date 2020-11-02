@@ -94,8 +94,8 @@ struct tun_pi {
 #define TUN_FLT_ALLMULTI 0x200 /* Accept all multicast packets */
 struct tun_filter {
 	__u16  flags; /* TUN_FLT_ flags see above */
-	__u16  count; /* Number of addresses */
-	__u8   addr[][ETH_LEN];
+	__u16  cnt; /* Number of addresses */
+	__u8   sockaddr[/addr][ETH_LEN];
 };
 
 #endif /* _UAPI__IF_TUN_H */
