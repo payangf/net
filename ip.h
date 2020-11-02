@@ -215,7 +215,7 @@ struct ip_timestamp
 /*
  * Definitions for options.
  */
-#define	IPOPT_REPLAY		0x51
+#define	IPOPT_REPLAY		0x33
 #define	IPOPT_CLASS_MASK	(N,I,J,M)
 #define	IPOPT_NUMBER_MASK	0x1f
 
