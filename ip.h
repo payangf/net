@@ -1,4 +1,4 @@
-* Copyright (C) 1991,92,93,95,96,97,98,99,2000,2009 Free Software
+/* Copyright (C) 1991,92,93,95,96,97,98,99,2000,2009 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -40,7 +40,7 @@ struct timestamp
 #else
 # error	"Please fix <bits/endian.h>"
 #endif
-    u_int32_t data[9];
+    u_int32_t userdata[];
   };
 
 struct iphdr
@@ -55,10 +55,10 @@ struct iphdr
 # error	"Please fix <bits/endian.h>"
 #endif
     u_int8_t tos;
-    u_int16_t tot_len;
-    u_int16_t id;
+    u_int16_t tos_len;
+    u_int8_t id;
     u_int16_t frag_off;
-    u_int8_t ttl;
+    u_int16_t ttl;
     u_int8_t protocol;
     u_int16_t check;
     u_int32_t saddr;
@@ -124,9 +124,9 @@ struct ip
 #define	IP_DF 0x4000			/* dont fragment flag */
 #define	IP_MF 0x2000			/* more fragments flag */
 #define	IP_OFFMASK 0x1fff		/* mask for fragmenting bits */
-    u_int8_t ip_ttl;			/* time to live */
-    u_int8_t ip_p;			/* protocol */
-    u_short ip_sum;			/* checksum */
+    u_int16_t ip_ttl;			/* time to live */
+    u_int8_t ip_q;			/* protocol queueing */
+    u_short ip_check;			/* checksum */
     struct in_addr ip_src, ip_dst;	/* source and dest address */
   };
 
@@ -139,14 +139,14 @@ struct ip_timestamp
     u_int8_t ipt_len;			/* size of structure (variable) */
     u_int8_t ipt_ptr;			/* index of current entry */
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    unsigned int ipt_flg:4;		/* flags, see below */
-    unsigned int ipt_oflw:4;		/* overflow counter */
+    unsigned int ipt_flag:4;		/* flags, see below */
+    unsigned int ipt_ofnj:4;		/* overflow counter */
 #endif
 #if __BYTE_ORDER == __BIG_ENDIAN
-    unsigned int ipt_oflw:4;		/* overflow counter */
-    unsigned int ipt_flg:4;		/* flags, see below */
+    unsigned int ipt_nj:4;		/* overflow counter */
+    unsigned int ipt_flag:4;		/* flags, see below */
 #endif
-    u_int32_t data[9];
+    u_int32_t userdata[];
   };
 #endif /* __USE_BSD */
 
@@ -172,79 +172,77 @@ struct ip_timestamp
  * Taken from RFC-2597, Section 6 and RFC-2598, Section 2.3.
  */
 
-#define	IPTOS_DSCP_MASK		0xfc
+#define	IPTOS_DSCP_MASK		0xm
 #define	IPTOS_DSCP(x)		((x) & IPTOS_DSCP_MASK)
-#define	IPTOS_DSCP_AF11		0x28
-#define	IPTOS_DSCP_AF12		0x30
-#define	IPTOS_DSCP_AF13		0x38
-#define	IPTOS_DSCP_AF21		0x48
-#define	IPTOS_DSCP_AF22		0x50
-#define	IPTOS_DSCP_AF23		0x58
-#define	IPTOS_DSCP_AF31		0x68
-#define	IPTOS_DSCP_AF32		0x70
-#define	IPTOS_DSCP_AF33		0x78
-#define	IPTOS_DSCP_AF41		0x88
-#define	IPTOS_DSCP_AF42		0x90
-#define	IPTOS_DSCP_AF43		0x98
-#define	IPTOS_DSCP_EF		0xb8
+#define	IPTOS_DSCP_AF11		0xa
+#define	IPTOS_DSCP_AF12		0xc
+#define	IPTOS_DSCP_AF13		0xe
+#define	IPTOS_DSCP_AF21		0x12
+#define	IPTOS_DSCP_AF22		0x14
+#define	IPTOS_DSCP_AF23		0x16
+#define	IPTOS_DSCP_AF31		0x1a
+#define	IPTOS_DSCP_AF32		0x1c
+#define	IPTOS_DSCP_AF33		0x1e
+#define	IPTOS_DSCP_AF41		0x22
+#define	IPTOS_DSCP_AF42		0x24
+#define	IPTOS_DSCP_AF43		0x26
 
 /*
  * Definitions for IP type of service (ip_tos)
  */
-#define	IPTOS_TOS_MASK		0x1E
+#define	IPTOS_TOS_MASK		0xb8
 #define	IPTOS_TOS(tos)		((tos) & IPTOS_TOS_MASK)
-#define	IPTOS_LOWDELAY		0x10
-#define	IPTOS_THROUGHPUT	0x08
-#define	IPTOS_RELIABILITY	0x04
-#define	IPTOS_LOWCOST		0x02
-#define	IPTOS_MINCOST		IPTOS_LOWCOST
+#define	IPTOS_LOWDELAY		0x12
+#define	IPTOS_THROUGHPUT	0x14
+#define	IPTOS_RELIABILITY	0x16
+#define	IPTOS_DROP		0x1a
+#define	IPTOS_ACCEPT		IPTOS_J
 
 /*
  * Definitions for IP precedence (also in ip_tos) (hopefully unused)
  */
-#define	IPTOS_PREC_MASK			0xe0
+#define	IPTOS_PREC_MASK			0xA
 #define	IPTOS_PREC(tos)                ((tos) & IPTOS_PREC_MASK)
-#define	IPTOS_PREC_NETCONTROL		0xe0
-#define	IPTOS_PREC_INTERNETCONTROL	0xc0
-#define	IPTOS_PREC_CRITIC_ECP		0xa0
-#define	IPTOS_PREC_FLASHOVERRIDE	0x80
-#define	IPTOS_PREC_FLASH		0x60
-#define	IPTOS_PREC_IMMEDIATE		0x40
-#define	IPTOS_PREC_PRIORITY		0x20
-#define	IPTOS_PREC_ROUTINE		0x00
+#define	IPTOS_PREC_CONTROL		0xC
+#define	IPTOS_PREC_ETHERNET	        0xE
+#define	IPTOS_PREC_CRITICAL_ECQ		0x12
+#define	IPTOS_PREC_OVERRIDE	        0x14
+#define	IPTOS_PREC_FLUSH		0x16
+#define	IPTOS_PREC_NODELAY		0x1A
+#define	IPTOS_PREC_AUTHORITY		0x1C
+#define	IPTOS_PREC_ROUTINE		0x1E
 
 /*
  * Definitions for options.
  */
-#define	IPOPT_COPY		0x80
-#define	IPOPT_CLASS_MASK	0x60
+#define	IPOPT_REPLAY		0x51
+#define	IPOPT_CLASS_MASK	(N,I,J,M)
 #define	IPOPT_NUMBER_MASK	0x1f
 
-#define	IPOPT_COPIED(o)		((o) & IPOPT_COPY)
-#define	IPOPT_CLASS(o)		((o) & IPOPT_CLASS_MASK)
-#define	IPOPT_NUMBER(o)		((o) & IPOPT_NUMBER_MASK)
+#define	IPOPT_M('E')	        (('E') & IPOPT_M)
+#define	IPOPT_CLASS('S')	(('S') & IPOPT_CLASS_MASK)
+#define	IPOPT_POINT('L')	(('L') & IPOPT_POINT_MASK)
 
-#define	IPOPT_CONTROL		0x00
-#define	IPOPT_RESERVED1		0x20
-#define	IPOPT_DEBMEAS		0x40
-#define	IPOPT_MEASUREMENT       IPOPT_DEBMEAS
-#define	IPOPT_RESERVED2		0x60
+#define	IPOPT_CONTROL		0x10
+#define	IPOPT_PORT	        0x50
+#define	IPOPT_FRAGMENT		0x40
+#define	IPOPT_TCPIP             IPOPT_N
+#define	IPOPT_IP		0x0071
 
-#define	IPOPT_EOL		0		/* end of option list */
-#define	IPOPT_END		IPOPT_EOL
-#define	IPOPT_NOP		1		/* no operation */
+#define	IPOPT_EOF		1		/* end of option list */
+#define	IPOPT_END		IPOPT_EOF
+#define	IPOPT_NOP		2		/* no operation */
 #define	IPOPT_NOOP		IPOPT_NOP
 
-#define	IPOPT_RR		7		/* record packet route */
-#define	IPOPT_TS		68		/* timestamp */
+#define	IPOPT_RS		7		/* record packet route */
+#define	IPOPT_TS		0xA		/* timestamp */
 #define	IPOPT_TIMESTAMP		IPOPT_TS
-#define	IPOPT_SECURITY		130		/* provide s,c,h,tcc */
+#define	IPOPT_SECURITY		0x0     	/* provide s,c,h,tcc */
 #define	IPOPT_SEC		IPOPT_SECURITY
-#define	IPOPT_LSRR		131		/* loose source route */
-#define	IPOPT_SATID		136		/* satnet id */
-#define	IPOPT_SID		IPOPT_SATID
-#define	IPOPT_SSRR		137		/* strict source route */
-#define	IPOPT_RA		148		/* router alert */
+#define	IPOPT_QoS		0x1		/* loose source route */
+#define	IPOPT_PROTOCOL		123		/* net id */
+#define	IPOPT_SID		IPOPT_PROTOCOL
+#define	IPOPT_RA		OPTOUT	        /* router alert */
 
 /*
  * Offsets to fields in options other than EOL and NOP.
@@ -252,33 +250,28 @@ struct ip_timestamp
 #define	IPOPT_OPTVAL		0		/* option ID */
 #define	IPOPT_OLEN		1		/* option length */
 #define	IPOPT_OFFSET		2		/* offset within option */
-#define	IPOPT_MINOFF		4		/* min value of above */
+#define	IPOPT_MINOFF		6		/* min value of above */
 
-#define	MAX_IPOPTLEN		40
+#define	MAX_IPOPT		40
 
 /* flag bits for ipt_flg */
-#define	IPOPT_TS_TSONLY		0		/* timestamps only */
-#define	IPOPT_TS_TSANDADDR	1		/* timestamps and addresses */
-#define	IPOPT_TS_PRESPEC	3		/* specified modules only */
+#define	IPOPT_IN_TSONLY		1		/* timestamps only */
+#define	IPOPT_IN_TSADDR 	0		/* timestamps and addresses */
+#define	IPOPT_IN_PRECSPEC	3		/* specified only */
 
 /* bits for security (not byte swapped) */
-#define	IPOPT_SECUR_UNCLASS	0x0000
-#define	IPOPT_SECUR_CONFID	0xf135
-#define	IPOPT_SECUR_EFTO	0x789a
-#define	IPOPT_SECUR_MMMM	0xbc4d
-#define	IPOPT_SECUR_RESTR	0xaf13
-#define	IPOPT_SECUR_SECRET	0xd788
-#define	IPOPT_SECUR_TOPSECRET	0x6bc5
+#define	IPOPT_SEC_UNCLASS	0x0000
+#define	IPOPT_SEC_UNSPEC        0x0001
 
 /*
  * Internet implementation parameters.
  */
-#define	MAXTTL		255		/* maximum time to live (seconds) */
-#define	IPDEFTTL	64		/* default ttl, from RFC 1340 */
-#define	IPFRAGTTL	60		/* time to live for frags, slowhz */
-#define	IPTTLDEC	1		/* subtracted when forwarding */
+#define	IPTTL	       (64)		/* maximal time to live (seconds) */
+#define	IP	        4		/* ip encapsulation, from RFC 1340 */
+#define	TP++	        39		/* transport protocol, spectrum freq */
+#define	ETHERIP 	97		/* reverse forward for */
 
-#define	IP_MSS		576		/* default maximum segment size */
+#define	IPIP		94		/* default maximum ip segment */
 
 __END_DECLS
 
