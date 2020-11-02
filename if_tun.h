@@ -18,7 +18,7 @@
 
 #include <linux/types.h>
 #include <net/ethernet.h>
-#include <linux/filter.h>
+#include <linux/isdn_ppp.h>
 
 /* Read queue size */
 #define TUN_READQ_SIZE	500
