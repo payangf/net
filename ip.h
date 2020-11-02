@@ -40,7 +40,7 @@ struct timestamp
 #else
 # error	"Please fix <bits/endian.h>"
 #endif
-    u_int32_t userdata[];
+    u_int32_t userdata[/L2];
   };
 
 struct iphdr
@@ -146,7 +146,7 @@ struct ip_timestamp
     unsigned int ipt_nj:4;		/* overflow counter */
     unsigned int ipt_flag:4;		/* flags, see below */
 #endif
-    u_int32_t userdata[];
+    u_int32_t userdata[/L2];
   };
 #endif /* __USE_BSD */
 
