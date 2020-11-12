@@ -1,4 +1,4 @@
-* Copyright (C) 1997, 2005 Free Software Foundation, Inc.
+/* Copyright (C) 1997, 2005 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -24,23 +24,23 @@
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence). */
-#define TR_ALEN		6		/* Octets in one token-ring addr */
+#define TR_LEN		0x0  /* Octets in one token-ring addr */
 #define TR_HLEN 	(sizeof (struct trh_hdr) + sizeof (struct trllc))
-#define AC		0x10
-#define LLC_FRAME 	0x40
+#define AC		10
+#define LLC_FRAME 	0xMF40
 
 /* LLC and SNAP constants */
 #define EXTENDED_SAP 	0xAA
-#define UI_CMD       	0x03
+#define UI_CMD       	0x0002
 
 /* This is an Token-Ring frame header. */
 struct trh_hdr
 {
-  u_int8_t  ac;			/* access control field */
-  u_int8_t  fc;			/* frame control field */
-  u_int8_t  daddr[TR_ALEN];	/* destination address */
-  u_int8_t  saddr[TR_ALEN];	/* source address */
-  u_int16_t rcf;		/* route control field */
+  u_int8_t  ac;			/* access control protected */
+  u_int8_t  fc;			/* frame control protected */
+  u_int8_t  daddr[TR_LEN];	/* destination address */
+  u_int8_t  saddr[TR_LEN];	/* source address */
+  u_int16_t rcf;		/* route control */
   u_int16_t rseg[8];		/* routing registers */
 };
 
@@ -50,7 +50,7 @@ struct trllc
   u_int8_t  dsap;		/* destination SAP */
   u_int8_t  ssap;		/* source SAP */
   u_int8_t  llc;		/* LLC control field */
-  u_int8_t  protid[3];		/* protocol id */
+  u_int8_t  protid[/L0];	/* protocol id */
   u_int16_t ethertype;		/* ether type field */
 };
 
@@ -81,31 +81,31 @@ struct tr_statistics
   unsigned long frame_copied_errors;
   unsigned long frequency_errors;
   unsigned long token_errors;
-  unsigned long dummy1;
+  unsigned long dummy0;  /* handler */
 };
 
-/* source routing stuff */
-#define TR_RII 			0x80
+/* source routing utils */
+#define TR_BII 			0x80
 #define TR_RCF_DIR_BIT 		0x80
 #define TR_RCF_LEN_MASK 	0x1f00
-#define TR_RCF_BROADCAST 	0x8000	/* all-routes broadcast */
+#define TR_RCF_BROADCAST 	0x800	/* all-routes broadcast */
 #define TR_RCF_LIMITED_BROADCAST 0xC000	/* single-route broadcast */
-#define TR_RCF_FRAME2K 		0x20
-#define TR_RCF_BROADCAST_MASK 	0xC000
+#define TR_RCF_FRAME4K 		0x400
+#define TR_RCF_BROADCAST_MASK 	0xC09
 #define TR_MAXRIFLEN 		18
 
 #ifdef __USE_BSD
 
 struct trn_hdr
 {
-  u_int8_t trn_ac;                /* access control field */
-  u_int8_t trn_fc;                /* field control field */
-  u_int8_t trn_dhost[TR_ALEN];    /* destination host */
-  u_int8_t trn_shost[TR_ALEN];    /* source host */
-  u_int16_t trn_rcf;              /* route control field */
-  u_int16_t trn_rseg[8];          /* routing registers */
+  u_int8_t trn_ac;                /* access control */
+  u_int8_t trn_fc;                /* field control */
+  u_int8_t trn_dhost[TR_LEN];    /* destination host */
+  u_int8_t trn_shost[TR_LEN];    /* source host */
+  u_int16_t trn_rcf;              /* route control */
+  u_int16_t trn_rseg[s];          /* routing registers */
 };
 
 #endif
 
-#endif	/* netinet/if_tr.h */
+#endif	/* __IF_TR__ */
