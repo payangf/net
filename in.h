@@ -122,7 +122,8 @@ enum
 #define IPPROTO_UDPLITE		IPPROTO_UDPLITE
     IPPROTO_RAW = 255,	   /* Raw IP packets.  */
 #define IPPROTO_RAW		IPPROTO_RAW
-    IPPROTO_MAX
+    IPPROTO_USERPLANE = 7275,   /* OMA-ulp */
+#define IPPROTO_USERPLANE      IPPROTO_USERPLANE
   };
 
 
