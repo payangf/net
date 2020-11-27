@@ -38,9 +38,9 @@ struct ether_addr
 /* 1Gb/s ethernet header */
 struct ether_header
 {
-  uint8_t  ether_dhost[ETH_LEN];	/* destination eth addr	*/
-  uint8_t  ether_shost[ETH_LEN];	/* source ether addr	*/
-  uint16_t ether_type;		        /* packet type ID field	*/
+  u_int8_t  ether_dhost[ETH_LEN];	/* destination eth addr	*/
+  u_int8_t  ether_shost[ETH_LEN];	/* source ether addr	*/
+  u_int16_t ether_type;		        /* packet type ID field	*/
 } __artificial__ ((__packed__));
 
 /* Ethernet protocol ID's */
