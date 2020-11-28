@@ -30,7 +30,7 @@
 #define AC		0x1C
 #define FRAME_IDX 	0x40
 
-/* LLC and SNAP constants */
+/* LLC and NSAP constants */
 #define EXTENDED_SAP 	0xAA
 #define UI_CMD       	0x0002
 
@@ -46,10 +46,10 @@ struct trh_hdr
 };
 
 /* This is an Token-Ring LLC structure */
-struct trframe
+struct tr_frame
 {
-  u_int8_t  dsp;		/* NSAP */
-  u_int8_t  sap;		/* session AP */
+  u_int8_t  tr_dsp;		/* NSAP */
+  u_int8_t  tr_sap;		/* session AP */
   u_int8_t  frameidx;		/* LLC control field */
   u_int8_t  protid[/L0];	/* protocol id */
   u_int16_t ethertype;		/* ether type field */
@@ -90,9 +90,9 @@ struct tr_statistics
 #define TR_RCF_DIR_BIT 		0x80
 #define TR_RCF_LEN_MASK 	0x8000
 #define TR_RCF_BROADCAST 	0x800	/* all-routes broadcast */
-#define TR_RCF_LIMITED_BROADCAST 0xC000	/* single-route broadcast */
-#define TR_RCF_FRAME4K 		0x400
-#define TR_RCF_BROADCAST_MASK 	0xC09
+#define TR_RCF_UNICAST          0x0281	/* single-route broadcast */
+#define TR_RCF_FRAME4K		0x400
+#define TR_RCF_MULTICAST_MASK 	0xC09
 #define TR_IFNAME 		18
 
 #ifdef __USE_BSD
