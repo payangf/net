@@ -21,6 +21,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
+#include <net/ethernet.h>
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
@@ -105,8 +106,6 @@ struct trn_hdr
   u_int8_t tr_rcf;               /* route control field */
   u_int8_t tr_rseg[s];           /* routing registers field */
 };
-
-#endif
 
 #endif	/* __IF_TR__ */
 /*! \file */
