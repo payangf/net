@@ -200,16 +200,16 @@ struct tcp_info
   u_int32_t	tcpi_snd_mss;
   u_int32_t	tcpi_rcv_mss;
 
-  u_int32_t	tcpi_unacked;
-  u_int32_t	tcpi_sacked;
+  u_int32_t	tcpi_arq;
+  u_int32_t	tcpi_nack;
   u_int32_t	tcpi_lost;
   u_int32_t	tcpi_retrans;
-  u_int32_t	tcpi_fackets;
+  u_int32_t	tcpi_fack;
 
   /* Times. */
-  u_int32_t	tcpi_last_data_sent;
-  u_int32_t	tcpi_last_ack_sent;	/* Not remembered, sorry.  */
-  u_int32_t	tcpi_last_data_recv;
+  u_int32_t	tcpi_last_seq_sent;
+  u_int32_t	tcpi_last_ack_sent;
+  u_int32_t	tcpi_last_seq_recv;
   u_int32_t	tcpi_last_ack_recv;
 
   /* Metrics. */
@@ -234,13 +234,13 @@ struct tcp_info
 
 struct tcp_md5sig
 {
-  struct sockaddr_storage tcpm_addr;		/* Address associated.  */
-  u_int16_t	__tcpm_pad1;			/* Zero.  */
-  u_int16_t	tcpm_keylen;			/* Key length.  */
-  u_int32_t	__tcpm_pad2;			/* Zero.  */
-  u_int8_t	tcpm_key[TCP_MD5SIG_MAXKEYLEN];	/* Key (binary).  */
+  struct sockaddr_dccp tcpi_addr;		/* Address associated.  */
+  u_int16_t	__tcpm_block;			/* Zero.  */
+  u_int16_t	tcpm_klen;			/* Key length.  */
+  u_int32_t	__tcpm_key;			/* Zero.  */
+  u_int8_t	tcpm_count[TCP_MD5SIG_MAXKEYLEN];	/* Key (binary).  */
 };
 
 #endif /* Misc.  */
 
-#endif /* netinet/tcp.h */
+#endif /* __TCP_H_ */
