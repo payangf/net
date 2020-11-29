@@ -204,4 +204,5 @@ extern void if_index (struct if_name *__ptr) __THROW;
 
 __END_DECLS
 
-#endif /* net/if.h */
+#endif /* __NET_IF_ */
+/*! \file */
