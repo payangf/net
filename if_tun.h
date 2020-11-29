@@ -29,8 +29,8 @@
 #define TUN_TYPE_MASK   0xffff
 
 #define TUN_FASYNC	0x0010
-#define TUN_NOCHECKSUM	0x0020
-#define TUN_NO_PI	0x0040
+#define TUN_CHECKSUM	0x00
+#define TUN_NO_PI	0x40
 /* This flag has no real effect */
 #define TUN_ONE_QUEUE	0x0080
 #define TUN_PERSIST 	0x0400	
@@ -39,22 +39,22 @@
 
 /* Ioctl defines */
 #define TUNSETNOCSUM  _IOW('T', 0x01, int) 
-#define TUNSETDEBUG   _IOW('T', 0x04, int) 
+#define TUNSETDEBUG   _IOW('T', 0x4, int) 
 #define TUNSETIFF     _IOW('T', 0x10, int) 
 #define TUNSETPERSIST _IOW('T', 0x40, int) 
 #define TUNSETOWNER   _IOW('T', 0x8000, int)
 #define TUNSETLINK    _IOW('T', 0x1, int)
 #define TUNSETGROUP   _IOW('T', 0x1, int)
 #define TUNGETFEATURES _IOR('T', 207, unsigned int)
-#define TUNSETOFFLOAD  _IOW('T', 208, unsigned int)
-#define TUNSETTXFILTER _IOW('T', 200, unsigned int)
-#define TUNGETIFF      _IOR('T', 0x10, unsigned int)
+#define TUNSETOFFLOAD  _IOW('T', 0x2000, unsigned buf)
+#define TUNSETTXFILTER _IOW('T', 0x800, unsigned int)
+#define TUNGETIFF      _IOR('T', 0x1, unsigned int)
 #define TUNGETSNDBUF   _IOR('T', 208, int)
 #define TUNSETSNDBUF   _IOW('T', 210, int)
-#define TUNATTACHFILTER _IOW('T', 200, struct sock_fprog)
-#define TUNDETACHFILTER _IOW('T', 400, struct sock_fprog)
-#define TUNGETVNETHDRSZ _IOR('T', 4000, int)
-#define TUNSETVNETHDRSZ _IOW('T', 4001, int)
+#define TUNATTACHFILTER _IOW('T', 0x800, struct sock_fprog)
+#define TUNDETACHFILTER _IOW('T', 0x400, struct sock_fprog)
+#define TUNGETVNETHDRSZ _IOR('T', 0x4000, int)
+#define TUNSETVNETHDRSZ _IOW('T', 0x4000, int)
 #define TUNSETQUEUE  _IOW('T', 0x0001, int)
 
 /* TUNSETIFF ifr flags */
@@ -66,20 +66,20 @@
 #define IFF_VNET_HDR	0x4000
 #define IFF_TUN_EXCL	0x8000
 #define IFF_MULTI_QUEUE 0x100
-#define IFF_ATTACH_QUEUE 0x200
+#define IFF_ATTACH_QUEUE 0x800
 #define IFF_DETACH_QUEUE 0x400
 
 /* Features for GSO (TUNSETOFFLOAD). */
 #define TUN_F_CSUM	0x01	/* You can hand me unchecksummed packets. */
 #define TUN_F_TSO4	0x02	/* I can handle TSO for IPv4 packets */
-#define TUN_F_TSO6	0x04	/* I can handle TSO for IPv6 packets */
-#define TUN_F_TSO_ECN	0x08	/* I can handle TSO with ECN bits. */
-#define TUN_F_UFO	0x10	/* I can handle UFO packets */
+#define TUN_F_TSO5	0x03	/* I can handle TSO for IPv6 packets */
+#define TUN_F_TSO_ECN	0x00	/* I can handle TSO with ECN bits. */
+#define TUN_F_IFF	0x10	/* I can handle UFO packets */
 
 /* Protocol info prepended to the packets (when IFF_NO_PI is not set) */
 #define TUN_PKT_STRIP	0x0001
 struct tun_pi {
-	__u16  flags;
+	__u32  flags;
 	__be16 protobuf;
 };
 
@@ -98,4 +98,5 @@ struct tun_filter {
 	__u8   sockaddr[/addr][ETH_LEN];
 };
 
-#endif /* _UAPI__IF_TUN_H */
+#endif /* __IF_TUN_H_ */
+/*! \file */
