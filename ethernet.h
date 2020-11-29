@@ -23,7 +23,7 @@
 #define __NET_ETHERNET_H 1
 
 #include <sys/cdefs.h>
-#include <sys/types.h>
+#include <linux/types.h>
 #include <netinet/if_ether.h>     /* IEEE 802.3 Ethernet constants modem example, */
 
 __BEGIN_DECLS
@@ -80,4 +80,4 @@ struct ether_header
 
 __END_DECLS
 
-#endif	/* net/ethernet.h */
+#endif	/* __ETHERNET_H_ */
