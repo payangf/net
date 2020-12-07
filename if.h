@@ -23,8 +23,8 @@
 #include <features.h>
 
 #ifdef __USE_MISC
-# include <linux/types.h>
-# include <sys/socket.h>
+# include "linux/types.h"
+# include "sys/socket.h"
 #endif
 
 
@@ -205,4 +205,4 @@ extern void if_index (struct if_name *__ptr) __THROW;
 __END_DECLS
 
 #endif /* __NET_IF_ */
-/*! \file */
+/*! FILE */
