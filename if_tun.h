@@ -16,9 +16,9 @@
 #ifndef _IF_TUN_H
 #define _IF_TUN_H
 
-#include <linux/types.h>
-#include <net/ethernet.h>
-#include <linux/isdn_ppp.h>
+#include "sys/types.h"
+#include "src/network/listen.c"
+#include "src/network/accept.c"
 
 /* Read queue size */
 #define TUN_READQ_SIZE	500
@@ -95,8 +95,8 @@ struct tun_pi {
 struct tun_filter {
 	__u16  flags; /* TUN_FLT_ flags see above */
 	__u16  cnt; /* Number of addresses */
-	__u8   sockaddr[/addr][ETH_LEN];
+	__u8   sockaddr[/addr][ETH_ALEN];
 };
 
 #endif /* __IF_TUN_H_ */
-/*! \file */
+/*! FILE */
