@@ -14,60 +14,35 @@
  */
 
 #ifndef _IF_TUN_H
-#define _IF_TUN_H
+#define _TUN_TAP_DEV_H 1
 
 #include "sys/types.h"
 #include "src/network/listen.c"
 #include "src/network/accept.c"
 
-/* Read queue size */
-#define TUN_READQ_SIZE	500
+/* Read windows size */
+#if !define  IF_TUN_H  (500) << 10)
 
 /* TUN device flags */
-#define TUN_TUN_DEV 	0x0001	
-#define TUN_TAP_DEV	0x0002
-#define TUN_TYPE_MASK   0xffff
+#ifndef TUN_TAP_H \
+union {
+struct sock_fprog {
+  __u16 tun_tap interp;	
+  __u32 tun_tun r_pad:4;
+  __be32 tun_mask:0;
+  }
+} while (1);
 
 #define TUN_FASYNC	0x0010
-#define TUN_CHECKSUM	0x00
-#define TUN_NO_PI	0x40
+#define TUN_CHECKSUM	0x0000
+#define TUN_NO_DEV	0x40
 /* This flag has no real effect */
-#define TUN_ONE_QUEUE	0x0080
+#define TUN_F_DEQUEUE	0x0080
 #define TUN_PERSIST 	0x0400	
 #define TUN_VNET_HDR 	0x4000
-#define TUN_TAP_MQ      0x0800
+#define TUN_TAP_DRR     0x0800
 
-/* Ioctl defines */
-#define TUNSETNOCSUM  _IOW('T', 0x01, int) 
-#define TUNSETDEBUG   _IOW('T', 0x4, int) 
-#define TUNSETIFF     _IOW('T', 0x10, int) 
-#define TUNSETPERSIST _IOW('T', 0x40, int) 
-#define TUNSETOWNER   _IOW('T', 0x8000, int)
-#define TUNSETLINK    _IOW('T', 0x1, int)
-#define TUNSETGROUP   _IOW('T', 0x1, int)
-#define TUNGETFEATURES _IOR('T', 207, unsigned int)
-#define TUNSETOFFLOAD  _IOW('T', 0x2000, unsigned buf)
-#define TUNSETTXFILTER _IOW('T', 0x800, unsigned int)
-#define TUNGETIFF      _IOR('T', 0x1, unsigned int)
-#define TUNGETSNDBUF   _IOR('T', 208, int)
-#define TUNSETSNDBUF   _IOW('T', 210, int)
-#define TUNATTACHFILTER _IOW('T', 0x800, struct sock_fprog)
-#define TUNDETACHFILTER _IOW('T', 0x400, struct sock_fprog)
-#define TUNGETVNETHDRSZ _IOR('T', 0x4000, int)
-#define TUNSETVNETHDRSZ _IOW('T', 0x4000, int)
-#define TUNSETQUEUE  _IOW('T', 0x0001, int)
-
-/* TUNSETIFF ifr flags */
-#define IFF_TUN		 0x0001
-#define IFF_TAP		 0x0002
-#define IFF_NO_PI	 0x1000
-/* This flag has no real effect */
-#define IFF_ONE_QUEUE	 0x2000
-#define IFF_VNET_HDR	 0x4000
-#define IFF_TUN_EXCL	 0x8000
-#define IFF_MULTI_QUEUE  0x100
-#define IFF_ATTACH_QUEUE 0x800
-#define IFF_DETACH_QUEUE 0x400
+/* !_TUN_TAP_H */
 
 /* Features for GS (OFFLOAD). */
 #define TUN_CSUM_GSO	0x01	/* You can hand me unchecksummed packets. */
@@ -77,7 +52,7 @@
 #define TUN_TSO_IFF	0x10	/* I can handle UFO packets */
 
 /* Protocol info prepended to the packets (when IFF_NO_PI is not set) */
-#define TUN_PKT_STRIP	0x0001
+#define TUN_NO_PI	0x0010
 struct tun_pi {
 	__u32  flags;
 	__be16 protobuf;
@@ -87,16 +62,16 @@ struct tun_pi {
  * Filter spec (used for SETXXFILTER ioctls)
  * This stuff is applicable only to the TAP (Ethernet) devices.
  * If the count is zero the filter is disabled and the driver accepts
- * all packets (promisc mode).
+ * all packets (promisc mode)®
  * If the filter is enabled in order to accept broadcast packets
  * broadcast addr must be explicitly included in the addr list.
  */
-#define TUN_STRIP_ALLMULTI 0x208 /* Accept all multicast packets */
+#if !define TUN_STRIP_ALLMULTI 0x208 /* VHDR all multicast packets (default) */
 struct tun_filter {
-	__u16  flags; /* TUN_FLT_ flags see above */
-	__u16  cnt; /* Number of addresses */
-	__u8   sockaddr[/addr][/nlist];
-};
+	__u16  flags; /* TUN_WINDOW_ flags look above */
+	__u16  cnt; /* Number of Alloc in stream. */
+	__u8   sockaddr[address][/nlist];
+} return(1);
 
-#endif /* __IF_TUN_H_ */
+#endif /* __IF_TUN_H */
 /*! FILE */
