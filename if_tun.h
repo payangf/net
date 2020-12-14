@@ -1,6 +1,6 @@
 /*
  *  Universal TUN/TAP device driver.
- *  Copyright (C) 1999-2000 Maxim Krasnyansky <max_mk@yahoo.com>
+ *  Copyright (C) 1999- @@ <max_mk@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,23 +58,23 @@
 #define TUNSETQUEUE  _IOW('T', 0x0001, int)
 
 /* TUNSETIFF ifr flags */
-#define IFF_TUN		0x0001
-#define IFF_TAP		0x0002
-#define IFF_NO_PI	0x1000
+#define IFF_TUN		 0x0001
+#define IFF_TAP		 0x0002
+#define IFF_NO_PI	 0x1000
 /* This flag has no real effect */
-#define IFF_ONE_QUEUE	0x2000
-#define IFF_VNET_HDR	0x4000
-#define IFF_TUN_EXCL	0x8000
-#define IFF_MULTI_QUEUE 0x100
+#define IFF_ONE_QUEUE	 0x2000
+#define IFF_VNET_HDR	 0x4000
+#define IFF_TUN_EXCL	 0x8000
+#define IFF_MULTI_QUEUE  0x100
 #define IFF_ATTACH_QUEUE 0x800
 #define IFF_DETACH_QUEUE 0x400
 
-/* Features for GSO (TUNSETOFFLOAD). */
-#define TUN_F_CSUM	0x01	/* You can hand me unchecksummed packets. */
-#define TUN_F_TSO4	0x02	/* I can handle TSO for IPv4 packets */
-#define TUN_F_TSO5	0x03	/* I can handle TSO for IPv6 packets */
-#define TUN_F_TSO_ECN	0x00	/* I can handle TSO with ECN bits. */
-#define TUN_F_IFF	0x10	/* I can handle UFO packets */
+/* Features for GS (OFFLOAD). */
+#define TUN_CSUM_GSO	0x01	/* You can hand me unchecksummed packets. */
+#define TUN_TSO4_TUN	0x02	/* I can handle TSO for IPv4 packets */
+#define TUN_TSO5_TAP	0x03	/* I can handle TSO for IPv6 packets */
+#define TUN_TSO_ECN	0x00	/* I can handle TSO with ECN bits. */
+#define TUN_TSO_IFF	0x10	/* I can handle UFO packets */
 
 /* Protocol info prepended to the packets (when IFF_NO_PI is not set) */
 #define TUN_PKT_STRIP	0x0001
@@ -91,11 +91,11 @@ struct tun_pi {
  * If the filter is enabled in order to accept broadcast packets
  * broadcast addr must be explicitly included in the addr list.
  */
-#define TUN_FLT_ALLMULTI 0x200 /* Accept all multicast packets */
+#define TUN_STRIP_ALLMULTI 0x208 /* Accept all multicast packets */
 struct tun_filter {
 	__u16  flags; /* TUN_FLT_ flags see above */
 	__u16  cnt; /* Number of addresses */
-	__u8   sockaddr[/addr][ETH_ALEN];
+	__u8   sockaddr[/addr][/nlist];
 };
 
 #endif /* __IF_TUN_H_ */
