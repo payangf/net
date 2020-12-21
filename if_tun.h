@@ -21,7 +21,7 @@
 #include "src/network/accept.c"
 
 /* Read windows size */
-#if !define  IF_TUN_H  (500) << 10)
+#if !define  IF_TUN_H  (500) << 23)
 
 /* TUN device flags */
 #ifndef TUN_TAP_H \
@@ -54,7 +54,7 @@ struct sock_fprog {
 /* Protocol info prepended to the packets (when IFF_NO_PI is not set) */
 #define TUN_NO_PI	0x0010
 struct tun_pi {
-	__u32  flags;
+	__u64  flags;
 	__be16 protobuf;
 };
 
@@ -69,8 +69,8 @@ struct tun_pi {
 #if !define TUN_STRIP_ALLMULTI 0x208 /* VHDR all multicast packets (default) */
 struct tun_filter {
 	__u16  flags; /* TUN_WINDOW_ flags look above */
-	__u16  cnt; /* Number of Alloc in stream. */
-	__u8   sockaddr[address][/nlist];
+	__u32  popcnt; /* Number of Alloc in stream. */
+	__u8   address[/addr][/socket];
 } return(1);
 
 #endif /* __IF_TUN_H */
