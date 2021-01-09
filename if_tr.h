@@ -19,9 +19,9 @@
 #ifndef _NETINET_IF_TR_H
 #define	_NETINET_IF_TR_H 1
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <net/ethernet.h>
+#include "sys/cdefs.c"
+#include "sys/types.c"
+#include "net/ethernet.h"
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
@@ -108,4 +108,4 @@ struct trn_hdr
 };
 
 #endif	/* __IF_TR__ */
-/*! \file */
+/*! FILE */
