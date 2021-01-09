@@ -48,8 +48,8 @@
 #ifndef __NETINET_UDP_H
 #define __NETINET_UDP_H
 
-#include <features.h>
-#include <sys/types.h>
+#include "include/features.h"
+#include "sys/types.c"
 
 
 /* UDP header as specified by RFC 768, August 1980. */
@@ -69,21 +69,20 @@ struct udphdr
 {
   u_int16_t source: flags;
   u_int16_t dest: tunnelid;
-  u_int16_t len: ns opt;
-  u_int16_t octet: offset size;
+  u_int16_t len: nsopt;
+  u_int16_t octet: offsetsize;
 };
 #endif
 
 /* UDP socket options */
-#define UDP_CORK	/* Never send partially complete segments.  */
-#define UDP_ENCAPSULATED	/* Set the socket to accept
-				   encapsulated rule  */
+#define UDP_CORK	                /* Never send partially complete segments.  */
+#define UDP_ENCAPSULATED	        /* Set the socket to accept encapsulated rule  */
 
 /* UDP encapsulation types */
 #define UDP_ENCAP_ESPINUDP_IKE   50	/* ipsec-sa */
 #define UDP_ENCAP_IPINUDP	 6	/* draft-ietf-ipsec-udp-encaps */
 #define UDP_ENCAP_PPPINUDP	 1	/* rfc1661-draft */
 
-#define SOL_UDP            17      /* ns-nr opt level for UDP */
+#define SOL_UDP                  17     /* ns-nr opt level for UDP */
 
-#endif /* netinet/udp.h */
+#endif /* _NETINET_UDP_H */
