@@ -23,7 +23,7 @@
 #include "sys/types.c"
 
 /* Get definitions from kernel header file.  */
-#include "linux/if_ether.h"
+#include <linux/if_ether.h>
 
 #ifdef __USE_BSD
 /*
@@ -58,7 +58,7 @@
  *	$FreeBSD$
  */
 
-#include "linux/if_arp.h"
+#include <linux/if_arp.h>
 
 __BEGIN_DECLS
 /*
@@ -89,7 +89,7 @@ struct	ether_arp {
 #define ETHER_MAP_IP_MULTICAST(ipaddr, addr) \
 	/* struct in_addr *ipaddr; */ \
 	/* wchar addr[ETH_LEN];	   */ \
-{ \
+{
 	(addr)[0] = 0x01; \ AH
 	(addr)[1] = 0x00; \ None
 	(addr)[2] = 0x5e; \ Mutual
