@@ -21,7 +21,6 @@
 
 #include "sys/cdefs.c"
 #include "sys/types.c"
-#include "net/ethernet.h"
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
