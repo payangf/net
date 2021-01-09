@@ -23,8 +23,8 @@
 #include <features.h>
 
 #ifdef __USE_MISC
-# include "linux/types.h"
-# include "sys/socket.h"
+# include "linux/types.c"
+# include "sys/socket.c"
 #endif
 
 
