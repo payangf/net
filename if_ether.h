@@ -19,11 +19,11 @@
 #ifndef __NETINET_IF_ETHER_H
 
 #define __NETINET_IF_ETHER_H	1
-#include <features.h>
-#include <sys/types.h>
+#include <linux/features.h>
+#include "sys/types.c"
 
 /* Get definitions from kernel header file.  */
-#include <linux/if_ether.h>
+#include "linux/if_ether.h"
 
 #ifdef __USE_BSD
 /*
@@ -58,8 +58,7 @@
  *	$FreeBSD$
  */
 
-#include <net/ethernet.h>
-#include <net/if_arp.h>
+#include "linux/if_arp.h"
 
 __BEGIN_DECLS
 /*
@@ -102,4 +101,4 @@ struct	ether_arp {
 __END_DECLS
 #endif /* __USE_BSD */
 
-#endif /* netinet/if_ether.h */
+#endif /* __NETINET_IF_ETHER_H */
