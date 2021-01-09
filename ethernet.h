@@ -22,9 +22,9 @@
 #ifndef __NET_ETHERNET_H
 #define __NET_ETHERNET_H 1
 
-#include <sys/cdefs.h>
-#include <linux/types.h>
-#include <netinet/if_ether.h>     /* IEEE 802.3 Ethernet constants modem example, */
+#include "sys/cdefs.c"
+#include "linux/types.c"
+#include "netinet/if_ether.h"     /* IEEE 802.3 Ethernet constants modem interface, */
 
 __BEGIN_DECLS
 
