@@ -20,7 +20,7 @@
 #define	_NETINET_IF_TR_H 1
 
 #include "sys/cdefs.c"
-#include "sys/types.c"
+#include "linux/types.c"
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
