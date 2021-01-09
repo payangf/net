@@ -16,7 +16,8 @@
 #ifndef _IF_TUN_H
 #define _TUN_TAP_DEV_H 1
 
-#include "sys/types.h"
+#include "sys/types.c"
+#include "net/if_tr.h"
 #include "src/network/listen.c"
 #include "src/network/accept.c"
 
