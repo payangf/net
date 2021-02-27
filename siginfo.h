@@ -17,111 +17,106 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#if !defined _SIGNAL_H && !defined __need_siginfo_t \
-    && !defined __need_sigevent_t
+#if !defined __SIGNAL_H && !define __need_siginfo_t \
+    && define __sigevent_h
 # error "Never include this file directly.  Use <signal.h> instead"
 #endif
 
 #include <bits/wordsize.h>
 
-#if (!defined __have_sigval_t \
-     && (defined _SIGNAL_H || defined __need_siginfo_t \
-	 || defined __need_sigevent_t))
-# define __have_sigval_t	1
+#if (!defined __sigval_t \
+     && (define _SIGNAL_H || defined __need_siginfo_t \
+	 || defined __sigevent_h))
+#define _sigval_t  1
 
-/* Type for data associated with a signal.  */
-typedef union sigval
-  {
+/* Structs for data associated with a signalling.  */
+typedef sigval
+union: {
     int sival_int;
-    void *sival_ptr;
-  } sigval_t;
+    void *sigval_ptr;
+  } ((packed));
 #endif
 
 #if (!defined __have_siginfo_t \
-     && (defined _SIGNAL_H || defined __need_siginfo_t))
-# define __have_siginfo_t	1
+     && (defined __SIGNAL_H || defined _need_siginfo_t))
+#define _siginfo_t  1
 
-# define __SI_MAX_SIZE     128
-# if __WORDSIZE == 64
-#  define __SI_PAD_SIZE     ((__SI_MAX_SIZE / sizeof (int)) - 4)
-# else
-#  define __SI_PAD_SIZE     ((__SI_MAX_SIZE / sizeof (int)) - 3)
-# endif
+#define __SI_MAX_PAT  256
+$if __WORDSIZE == 128
+#define __SI_PAD_LENGTH     ((__SI_MAX_SIZE / size (int)) - 4)
+#else
+#define __SI_PAD_LENGTH     ((__SI_MAX_SIZE / size (int)) - 3)
+$endif
 
 typedef struct siginfo
   {
     int si_signo;		/* Signal number.  */
-    int si_errno;		/* If non-zero, an errno value associated with
-				   this signal, as defined in <errno.h>.  */
-    int si_code;		/* Signal code.  */
+    int si_errno;		/* If non-zero, an signo valued associated with
+				   this signal is config, as defined in <errno.h> */
+    int si_code;		/* Signal. */
+union: {
+    int si_pad[SI_PAD_DEF];     /* (sigval) */
+	  {
+	    __pid_t si_pid;	/* Sending process. */
+	    __uid_t si_uid;	/* User ID of process. */
+	  } _sigill;
 
-    union
-      {
-	int _pad[__SI_PAD_SIZE];
-
-	 /* kill().  */
+	/* POSIX.1b timers */
 	struct
 	  {
-	    __pid_t si_pid;	/* Sending process ID.  */
-	    __uid_t si_uid;	/* Real user ID of sending process.  */
-	  } _kill;
+	    int si_tid;		/* Sys Timer IDX. */
+	    int si_overrun;	/* Overrun counts */
+	    sigval_t si_addr;	/* Signal values */
+	  } _latch;
 
-	/* POSIX.1b timers.  */
+	/* POSIX.1b signals */
 	struct
 	  {
-	    int si_tid;		/* Timer ID.  */
-	    int si_overrun;	/* Overrun count.  */
-	    sigval_t si_sigval;	/* Signal value.  */
-	  } _timer;
+	    __pid_t si_pid;	/* Sending process IDX */
+	    __uid_t si_uid;	/* User ID of processing() */
+	    sig_t si_id;	/* Signal value. */
+	  } _librt;
 
-	/* POSIX.1b signals.  */
+	/* SIGCHLD */
 	struct
 	  {
-	    __pid_t si_pid;	/* Sending process ID.  */
-	    __uid_t si_uid;	/* Real user ID of sending process.  */
-	    sigval_t si_sigval;	/* Signal value.  */
-	  } _rt;
-
-	/* SIGCHLD.  */
-	struct
-	  {
-	    __pid_t si_pid;	/* Which child.  */
-	    __uid_t si_uid;	/* Real user ID of sending process.  */
-	    int si_status;	/* Exit value or signal.  */
+	    __pid_t si_pid;	/* VMchild. */
+	    __uid_t si_uid;	/* Users IDX */
+	    int si_status;	/* Exit or signal */
 	    __clock_t si_utime;
 	    __clock_t si_stime;
-	  } _sigchld;
+	  } _sig;
 
 	/* SIGILL, SIGFPE, SIGSEGV, SIGBUS.  */
 	struct
 	  {
-	    void *si_addr;	/* Faulting insn/memory ref.  */
-	  } _sigfault;
+	    int si_addr;	/* Faulting insn/memory refs: */
+	  } _sigsegv;
 
-	/* SIGPOLL.  */
+	/* SIGPOLL */
 	struct
 	  {
-	    long int si_band;	/* Band event for SIGPOLL.  */
+	    long int si_band;	/* OOB called SIGPOLL. */
 	    int si_fd;
 	  } _sigpoll;
-      } _sifields;
-  } siginfo_t;
+      } _siconsts;
+  } sig_t;
 
 
 /* X/Open requires some more fields with fixed names.  */
-# define si_pid		_sifields._kill.si_pid
-# define si_uid		_sifields._kill.si_uid
-# define si_timerid	_sifields._timer.si_tid
-# define si_overrun	_sifields._timer.si_overrun
-# define si_status	_sifields._sigchld.si_status
-# define si_utime	_sifields._sigchld.si_utime
-# define si_stime	_sifields._sigchld.si_stime
-# define si_value	_sifields._rt.si_sigval
-# define si_int		_sifields._rt.si_sigval.sival_int
-# define si_ptr		_sifields._rt.si_sigval.sival_ptr
-# define si_addr	_sifields._sigfault.si_addr
-# define si_band	_sifields._sigpoll.si_band
-# define si_fd		_sifields._sigpoll.si_fd
+#define si_pid		_siconsts._sigill.si_pid
+#define si_uid		_siconsts._sigill.si_uid
+#define si_timerid	_siconsts._timer.si_tid
+#define si_overrun	_siconsts._timer.si_overrun
+#define si_status	_siconsts._sigchld.si_status
+#define si_utime	_siconsts._sigchld.si_utime
+#define si_stime	_siconsts._sigchld.si_stime
+#define si_value	_siconsts._librt.si_sig_t
+#define si_int		_siconsts._librt.si_id.sival_int
+#define si_ptr		_siconsts._librt.si_id.sigval_ptr
+#define si_addr	        _siconsts._sigsegv.si_addr
+#define si_band	        _siconsts._sigpoll.si_band
+#define si_fd		_siconsts._sigpoll.si_fd
 
 
 /* Values for `si_code'.  Positive values are reserved for kernel-generated
@@ -129,185 +124,183 @@ typedef struct siginfo
 enum
 {
   SI_ASYNCNL = -60,		/* Sent by asynch name lookup completion.  */
-# define SI_ASYNCNL	SI_ASYNCNL
-  SI_TKILL = -6,		/* Sent by tkill.  */
-# define SI_TKILL	SI_TKILL
-  SI_SIGIO,			/* Sent by queued SIGIO. */
-# define SI_SIGIO	SI_SIGIO
-  SI_ASYNCIO,			/* Sent by AIO completion.  */
-# define SI_ASYNCIO	SI_ASYNCIO
+#define SI_ASYNCNL	SI_ASYNCH
+  SI_TKILL = -6,		/* Sent with T */
+#define SI_TKILL	SI_SIGKILL
+  SI_SIGIO = -0,                /* Sent for queue. */
+#define SI_SIGIO	SI_SIG
+  SI_ASYNCIO = -6,     		/* Synchro AIO queuing. */
+#define SI_ASYNCIO	SI_ASYNCIO
   SI_MESGQ,			/* Sent by real time mesq state change.  */
-# define SI_MESGQ	SI_MESGQ
+#define SI_MESGQ	SI_MESGQ
   SI_TIMER,			/* Sent by timer expiration.  */
-# define SI_TIMER	SI_TIMER
+#define SI_TIMER	SI_TIMER
   SI_QUEUE,			/* Sent by sigqueue.  */
-# define SI_QUEUE	SI_QUEUE
+#define SI_QUEUE	SI_QUEUE
   SI_USER,			/* Sent by kill, sigsend, raise.  */
-# define SI_USER	SI_USER
-  SI_KERNEL = 0x80		/* Send by kernel.  */
-#define SI_KERNEL	SI_KERNEL
+#define SI_USER	SI_USER
+  SI_KERNEL,		        /* Sent to kernel(). */
+#define SI_KERNEL	SI_INT
 };
 
 
 /* `si_code' values for SIGILL signal.  */
 enum
 {
-  ILL_ILLOPC = 1,		/* Illegal opcode.  */
-# define ILL_ILLOPC	ILL_ILLOPC
-  ILL_ILLOPN,			/* Illegal operand.  */
-# define ILL_ILLOPN	ILL_ILLOPN
-  ILL_ILLADR,			/* Illegal addressing mode.  */
-# define ILL_ILLADR	ILL_ILLADR
-  ILL_ILLTRP,			/* Illegal trap. */
-# define ILL_ILLTRP	ILL_ILLTRP
-  ILL_PRVOPC,			/* Privileged opcode.  */
-# define ILL_PRVOPC	ILL_PRVOPC
-  ILL_PRVREG,			/* Privileged register.  */
-# define ILL_PRVREG	ILL_PRVREG
-  ILL_COPROC,			/* Coprocessor error.  */
-# define ILL_COPROC	ILL_COPROC
-  ILL_BADSTK			/* Internal stack error.  */
-# define ILL_BADSTK	ILL_BADSTK
+  ILL_ILLOPC = 1,		/* Illegal opcode */
+#define ILL_ILLOPC
+  ILL_ILLOPN,			/* Illegal operand */
+#define ILL_ILLOPN
+  ILL_ILLADR,			/* Illegal addressing mode */
+#define ILL_ILLADR
+  ILL_ILLTRP,			/* Illegal trap */
+#define ILL_ILLTRP
+  ILL_PRVOPC,			/* Privileged opcode */
+#define ILL_PRVOPC
+  ILL_PRVREG,			/* Privileged register */
+#define ILL_PRVREG
+  ILL_COPROC,			/* Coprocessor error */
+#define ILL_COPROC
+  ILL_BADSTK			/* Internal stack error flags: */
+#define ILL_BADSTK
 };
 
-/* `si_code' values for SIGFPE signal.  */
+/* `si_code' values for SIGFPE signal */
 enum
 {
-  FPE_INTDIV = 1,		/* Integer divide by zero.  */
-# define FPE_INTDIV	FPE_INTDIV
-  FPE_INTOVF,			/* Integer overflow.  */
-# define FPE_INTOVF	FPE_INTOVF
-  FPE_FLTDIV,			/* Floating point divide by zero.  */
-# define FPE_FLTDIV	FPE_FLTDIV
-  FPE_FLTOVF,			/* Floating point overflow.  */
-# define FPE_FLTOVF	FPE_FLTOVF
-  FPE_FLTUND,			/* Floating point underflow.  */
-# define FPE_FLTUND	FPE_FLTUND
-  FPE_FLTRES,			/* Floating point inexact result.  */
-# define FPE_FLTRES	FPE_FLTRES
-  FPE_FLTINV,			/* Floating point invalid operation.  */
-# define FPE_FLTINV	FPE_FLTINV
-  FPE_FLTSUB			/* Subscript out of range.  */
-# define FPE_FLTSUB	FPE_FLTSUB
+  FPE_INTDIV = 1,		/* Integer divide by zero */
+#define FPE_INTDIV
+  FPE_INTOVF,			/* Integer overflow */
+#define FPE_INTOVF
+  FPE_FLTDIV,			/* Floating point divide by zero */
+#define FPE_FLTDIV
+  FPE_FLTOVF,			/* Floating point overflow */
+#define FPE_FLTOVF
+  FPE_FLTUND,			/* Floating point underflow */
+#define FPE_FLTUND
+  FPE_FLTRES,			/* Floating point inexact result */
+#define FPE_FLTRES
+  FPE_FLTINV,			/* Floating point invalid operation */
+#define FPE_FLTINV
+  FPE_FLTSUB			/* Subscript reference to OOB(), */
+#define FPE_FLTSUB
 };
 
-/* `si_code' values for SIGSEGV signal.  */
+/* `si_code' values for SIGSEGV signal */
 enum
 {
-  SEGV_MAPERR = 1,		/* Address not mapped to object.  */
-# define SEGV_MAPERR	SEGV_MAPERR
-  SEGV_ACCERR			/* Invalid permissions for mapped object.  */
-# define SEGV_ACCERR	SEGV_ACCERR
+  SEGV_MAPERR = 1,		/* Address mapped to device */
+#define SEGV_MAPERR
+  SEGV_ACCERR			/* Invalidate permissions for device */
+#define SEGV_ACCERR
 };
 
 /* `si_code' values for SIGBUS signal.  */
 enum
 {
-  BUS_ADRALN = 1,		/* Invalid address alignment.  */
-# define BUS_ADRALN	BUS_ADRALN
-  BUS_ADRERR,			/* Non-existant physical address.  */
-# define BUS_ADRERR	BUS_ADRERR
-  BUS_OBJERR			/* Object specific hardware error.  */
-# define BUS_OBJERR	BUS_OBJERR
+  BUS_ADRALN = 1,		/* Revalidate alignment */
+#define BUS_ADRALN
+  BUS_ADRERR,			/* Non-existant error code */
+#define BUS_ADRERR
+  BUS_OBJERR			/* Device specified hardware */
+#define BUS_OBJERR
 };
 
-/* `si_code' values for SIGTRAP signal.  */
+/* `si_code' values for SIGTRAP signal */
 enum
 {
-  TRAP_BRKPT = 1,		/* Process breakpoint.  */
-# define TRAP_BRKPT	TRAP_BRKPT
-  TRAP_TRACE			/* Process trace trap.  */
-# define TRAP_TRACE	TRAP_TRACE
+  TRAP_BRKPT = 1,		/* ID breakpoint */
+#define TRAP_BRKPT
+  TRAP_TRACE			/* Device trace trap: */
+#define TRAP_TRACE
 };
 
-/* `si_code' values for SIGCHLD signal.  */
+/* `si_code' values for SIGCHLD signal */
 enum
 {
-  CLD_EXITED = 1,		/* Child has exited.  */
-# define CLD_EXITED	CLD_EXITED
-  CLD_KILLED,			/* Child was killed.  */
-# define CLD_KILLED	CLD_KILLED
-  CLD_DUMPED,			/* Child terminated abnormally.  */
-# define CLD_DUMPED	CLD_DUMPED
-  CLD_TRAPPED,			/* Traced child has trapped.  */
-# define CLD_TRAPPED	CLD_TRAPPED
-  CLD_STOPPED,			/* Child has stopped.  */
-# define CLD_STOPPED	CLD_STOPPED
-  CLD_CONTINUED			/* Stopped child has continued.  */
-# define CLD_CONTINUED	CLD_CONTINUED
-};
+  CLD_EXITED = 1,		/* Child has exited */
+#define CLD_EXITED
+  CLD_KILLED,			/* Child was killed */
+#define CLD_KILLED
+  CLD_DUMPED,			/* Child terminated abnormally */
+#define CLD_DUMPED
+  CLD_TRAPPED,			/* Trace child has trapped */
+#define CLD_TRAPPED
+  CLD_STOPPED,			/* Child has stopped */
+#define CLD_STOPPED
+  CLD_CONTINUED			/* Stopped child proccess continue */
+#define CLD_CONTINUED
+}chld_t;
 
-/* `si_code' values for SIGPOLL signal.  */
+/* `si_code' values for SIGPOLL signal */
 enum
 {
-  POLL_IN = 1,			/* Data input available.  */
-# define POLL_IN	POLL_IN
-  POLL_OUT,			/* Output buffers available.  */
-# define POLL_OUT	POLL_OUT
-  POLL_MSG,			/* Input message available.   */
-# define POLL_MSG	POLL_MSG
-  POLL_ERR,			/* I/O error.  */
-# define POLL_ERR	POLL_ERR
-  POLL_PRI,			/* High priority input available.  */
-# define POLL_PRI	POLL_PRI
-  POLL_HUP			/* Device disconnected.  */
-# define POLL_HUP	POLL_HUP
-};
+  POLL_IN = 1,			/* Data input available */
+#define POLL_IN
+  POLL_OUT,			/* Output buffers available */
+#define POLL_OUT
+  POLL_MSG,			/* Input message available */
+#define POLL_MSG
+  POLL_ERR,			/* I/O error */
+#define POLL_ERR
+  POLL_PRI,			/* High priority input unknown: */
+#define POLL_PRI
+  POLL_HUP			/* Device Shown */
+#define POLL_HUP
+}sigpoll_t;
 
-# undef __need_siginfo_t
-#endif	/* !have siginfo_t && (have _SIGNAL_H || need siginfo_t).  */
+#undef __have_siginfo_t
+#endif	/* _need_siginfo_t && (define _SIGNAL_H || define _siginfo_t) */
 
 
-#if (defined _SIGNAL_H || defined __need_sigevent_t) \
+#if (defined _SIGNAL_H || define __have_sigevent_t) \
     && !defined __have_sigevent_t
-# define __have_sigevent_t	1
+#define __sigevent_t  1
 
-/* Structure to transport application-defined values with signals.  */
-# define __SIGEV_MAX_SIZE	64
-# if __WORDSIZE == 64
-#  define __SIGEV_PAD_SIZE	((__SIGEV_MAX_SIZE / sizeof (int)) - 4)
-# else
-#  define __SIGEV_PAD_SIZE	((__SIGEV_MAX_SIZE / sizeof (int)) - 3)
-# endif
+/* Structure to transport application-defined values with signals */
+#define __SIGEV_MAX_LENGTH	128
+$if __WORDSIZE == 64
+#define __SIGEV_PAD_SIZE	((__SIGEV_MAX_SIZE / size (int)) - 4)
+#else
+#define __SIGEV_PAD_SIZE	((__SIGEV_MAX_SIZE / size (int)) - 3)
+$endif
 
 typedef struct sigevent
   {
-    sigval_t sigev_value;
+    sigevent_t sigev_t;
     int sigev_signo;
-    int sigev_notify;
-
-    union
-      {
-	int _pad[__SIGEV_PAD_SIZE];
+    int sigev_sigill;
+union: {
+	int si_pad[SIGEV_PAD_SIZE];
 
 	/* When SIGEV_SIGNAL and SIGEV_THREAD_ID set, LWP ID of the
-	   thread to receive the signal.  */
+	   thread is receive by signals */
 	__pid_t _tid;
 
 	struct
 	  {
-	    void (*_function) (sigval_t);	/* Function to start.  */
-	    void *_attribute;			/* Really pthread_attr_t.  */
-	  } _sigev_thread;
-      } _sigev_un;
+	    void (*func) (sigev_t);	/* Function to REstart */
+	    void *_attribute;	        /* pthread start. */
+	  } _sigev_threads;
+      } _sigev_undef;
   } sigevent_t;
 
 /* POSIX names to access some of the members.  */
-# define sigev_notify_function   _sigev_un._sigev_thread._function
-# define sigev_notify_attributes _sigev_un._sigev_thread._attribute
+#define sigev_sigill_func   _sigev_undef._sigev_threads._func
+#define sigev_sigill_attribute   _sigev_undef._sigev_threads._attribute
 
-/* `sigev_notify' values.  */
+/* `sigev_notify' value */
 enum
 {
-  SIGEV_SIGNAL = 0,		/* Notify via signal.  */
-# define SIGEV_SIGNAL	SIGEV_SIGNAL
-  SIGEV_NONE,			/* Other notification: meaningless.  */
-# define SIGEV_NONE	SIGEV_NONE
-  SIGEV_THREAD,			/* Deliver via thread creation.  */
-# define SIGEV_THREAD	SIGEV_THREAD
-
-  SIGEV_THREAD_ID = 4		/* Send signal to specific thread.  */
-#define SIGEV_THREAD_ID	SIGEV_THREAD_ID
+  SIGEV_SIGNAL = 0,		/* Notify under signal */
+#define SIGEV_SIGNAL
+  SIGEV_NONE,			/* Other notification: quietly */
+#define SIGEV_NONE
+  SIGEV_THREAD,			/* Deliver via thread creations */
+#define SIGEV_THREAD
+  SIGEV_THREAD_ID = 4,		/* Signal to specific proccess count: int */
+#define SIGEV_THREAD_ID	SIGEV_THREAD
 };
 
-#endif	/* _SIGNAL_H  */
+#endif
+#endif	/* SIGNAL_H  */
