@@ -50,30 +50,22 @@ proguard/.tst_
 .keystore/pubkey&
 
 # External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild
-.cxx/
+externalNativeBuild/.github.*
+.cxx/*.bug#clang.lint
 
 # Google Services (e.g. APIs or Firebase)
-# google-services.json
+.google-services.xml  //security-exception.
 
 # Freeline
 freeline.py
-freeline/
 freeline_project_description.json
 
-# fastlane
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
-fastlane/test_output
-fastlane/readme.md
+.md5.!
 
 # Version control
-vcs.xml
+vcs.Sony
 
-# lint
-lint/intermediates/
-lint/generated/
-lint/outputs/
-lint/tmp/
-# lint/reports/
+# linker
+lint/freeline.py/
+lint/vcs.unix/
+lint/reports/abrt.WIN32
