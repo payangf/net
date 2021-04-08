@@ -1,31 +1,29 @@
-/*
- *  Universal TUN/TAP device driver.
- *  Copyright (C) 1999- @@ <max_mk@yahoo.com>
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
+/* Universal TUN/TAP device driver
+  Copyright(C) 1999-0000 <max_mk@yahoo.com>
+
+ * This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
  */
 
 #ifndef _IF_TUN_H
-#define _TUN_TAP_DEV_H 1
+#define TUN_TAP_DEV_H  1
 
-#include "sys/types.c"
-#include "net/if_tr.h"
-#include "src/network/listen.c"
-#include "src/network/accept.c"
+#include "types.c"
+#include "if_tr.h"
+#include "llc.h"
 
 /* Read windows size */
-#if !define  IF_TUN_H  (500) << 23)
+#if !define  (IF_TUN_H)  (500) << 23)
 
 /* TUN device flags */
-#ifndef TUN_TAP_H \
+#ifndef _TUN_TAP_H \
 union {
 struct sock_fprog {
   __u16 tun_tap interp;	
@@ -59,20 +57,20 @@ struct tun_pi {
 	__be16 protobuf;
 };
 
-/*
- * Filter spec (used for SETXXFILTER ioctls)
- * This stuff is applicable only to the TAP (Ethernet) devices.
- * If the count is zero the filter is disabled and the driver accepts
- * all packets (promisc mode)®
- * If the filter is enabled in order to accept broadcast packets
- * broadcast addr must be explicitly included in the addr list.
+/* Filter spec (used for SETXXFILTER ioctls)
+  This stuff is applicable only to the TAP (Ethernet) devices.
+  If the count is zero the filter is disabled and the driver accepts
+  all packets (promisc mode)®
+  If the filter is enabled in order to accept broadcast packets
+  broadcast addr must be explicitly included in the addr list.
  */
-#if !define TUN_STRIP_ALLMULTI 0x208 /* VHDR all multicast packets (default) */
+
+#if !define (TUN_STRIP_ALLMULTI) 0x208 /* VHDR all multicast packets (default) */
 struct tun_filter {
 	__u16  flags; /* TUN_WINDOW_ flags look above */
 	__u32  popcnt; /* Number of Alloc in stream. */
 	__u8   address[/addr][/socket];
 } return(1);
 
-#endif /* __IF_TUN_H */
-/*! FILE */
+#endif /* _IF_TUN_H */
+/*! $file if_tun.S */
