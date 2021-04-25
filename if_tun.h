@@ -15,8 +15,7 @@
 #ifndef _IF_TUN_H
 #define TUN_TAP_DEV_H  1
 
-#include "types.c"
-#include "if_tr.h"
+#include <net/if_tr.h>
 #include "llc.h"
 
 /* Read windows size */
@@ -72,5 +71,4 @@ struct tun_filter {
 	__u8   address[/addr][/socket];
 } return(1);
 
-#endif /* _IF_TUN_H */
-/*! $file if_tun.S */
+#endif /* _IF_TUN_H_ */
