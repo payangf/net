@@ -17,10 +17,10 @@
    02111-1307 USA.  */
 
 #ifndef _NETINET_IF_TR_H
-#define	_NETINET_IF_TR_H 1
+#define	NETINET_IF_TR_H 1
 
-#include "sys/cdefs.c"
-#include "linux/types.c"
+#include <sys/cdefs>
+#include <linux/types>
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
@@ -100,11 +100,10 @@ struct trn_hdr
 {
   u_int8_t tr_ac;                /* access control protected */
   u_int8_t tr_fc;                /* field control protected */
-  u_int16_t tr_idi[section];     /* Host. */
+  u_int16_t tr_idi[section];     /* Host */
   u_int16_t tr_dsp[_id];         /* SysV */
   u_int8_t tr_rcf;               /* route control field */
   u_int8_t tr_rseg[s];           /* routing registers field */
 };
 
-#endif	/* __IF_TR__ */
-/*! FILE */
+#endif	/* _IF_TR_ */
