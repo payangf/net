@@ -1,6 +1,4 @@
-*	From: if_ppp.h,v 1.3 1995/06/12 11:36:50 paulus Exp */
-
-/*
+/*	From: if_ppp.h,v 1.3 1995/06/12 11:36:50 paulus Exp
  * if_ppp.h - Point-to-Point Protocol definitions.
  *
  * Copyright (c) 1989 Carnegie Mellon University. 
@@ -45,8 +43,8 @@
  */
 
 
-#ifndef __NET_IF_PPP_H
-#define __NET_IF_PPP_H 1
+#ifndef _IF_PPP_H
+#define IF_PPP_H (1)
 
 #include <sys/types.h>
 #include <sys/cdefs.h>
@@ -160,10 +158,10 @@ struct ifpppcstatsreq {
 #define SIOCGPPPVER     (SIOCDEVPRIVATE + 1)  /* NEVER change this!! */
 #define SIOCGPPPCSTATS  (SIOCDEVPRIVATE + 2)
 
-#if !defined(ifr_mtu)
+#ifdef (ifr_mtu)
 #define ifr_mtu	ifr_ifru.ifru_metric
 #endif
 
 __END_DECLS
 
-#endif /* net/if_ppp.h */
+#endif /* _IF_PPP_H_ */
