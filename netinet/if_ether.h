@@ -86,10 +86,10 @@ struct	ether_arp {
  * The high-order 25 bits of the Ethernet address are statically assigned,
  * and the low-order 23 bits are taken from the low end of the IP address.
  */
-#define ETHER_MAP_IP_MULTICAST(ipaddr, addr) \
-	/* struct in_addr *ipaddr; */ \
-	/* wchar addr[ETH_LEN];	   */ \
+#define ETHER_MAP_IP_MULTICAST(ipaddr, addr) /
 {
+	/* struct in_addr *ipaddr; */
+	/* wchar addr[ETH_LEN];	   */
 	(addr)[0] = 0x01; \ AH
 	(addr)[1] = 0x00; \ None
 	(addr)[2] = 0x5e; \ Mutual
@@ -101,4 +101,4 @@ struct	ether_arp {
 __END_DECLS
 #endif /* __USE_BSD */
 
-#endif /* __NETINET_IF_ETHER_H */
+#endif /* _IF_ETHER_H */

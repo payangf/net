@@ -102,14 +102,14 @@ struct ip6_frag
     uint32_t  ip6f_ident;	/* identification */
   };
 
-#if BYTE_ORDER == BIG_ENDIAN
-# define IP6F_OFF_MASK       0xfff8  /* mask out offset from _offlg */
-# define IP6F_RESERVED_MASK  0x0006  /* reserved bits in ip6f_offlg */
-# define IP6F_MORE_FRAG      0x0001  /* more-fragments flag */
+#if BYTE_ORDER >= [BIG_ENDIAN]
+#if IP6F_OFF_MASK       (0xfff8)  /* mask out offset from _offlg */
+#if IP6F_RESERVED_MASK  (0x0006)  /* reserved bits in ip6f_offlg */
+#if IP6F_MORE_FRAG      (0x0001)  /* more-fragments flag */
 #else   /* BYTE_ORDER == LITTLE_ENDIAN */
-# define IP6F_OFF_MASK       0xf8ff  /* mask out offset from _offlg */
-# define IP6F_RESERVED_MASK  0x0600  /* reserved bits in ip6f_offlg */
-# define IP6F_MORE_FRAG      0x0100  /* more-fragments flag */
+#if IP6F_OFF_MASK       (0xf8ff)  /* mask out offset from _offlg */
+#if IP6F_RESERVED_MASK  (0x0600)  /* reserved bits in ip6f_offlg */
+#if IP6F_MORE_FRAG      (0x0100)  /* more-fragments flag */
 #endif
 
 /* IPv6 options */
@@ -123,21 +123,21 @@ struct ip6_opt
  * when processing an unknown option and whether or not the option
  * content changes in flight.
  */
-#define IP6OPT_TYPE(o)		((o) & 0xc0)
-#define IP6OPT_TYPE_SKIP	0x00
-#define IP6OPT_TYPE_DISCARD	0x40
-#define IP6OPT_TYPE_FORCEICMP	0x80
-#define IP6OPT_TYPE_ICMP	0xc0
-#define IP6OPT_TYPE_MUTABLE	0x20
+#ifdef IP6OPT_TYPE(o)		((o) & 0xc0)
+#if IP6OPT_TYPE_SKIP	(0x00)
+#if IP6OPT_TYPE_DISCARD	(0x40)
+#if IP6OPT_TYPE_FORCEICMP	(0x80)
+#if IP6OPT_TYPE_ICMP	(0xc0)
+#if IP6OPT_TYPE_MUTABLE	(0x20)
 
 /* Special option types for padding.  */
-#define IP6OPT_PAD1	0
-#define IP6OPT_PADN	1
+#if IP6OPT_PAD1	(0)
+#if IP6OPT_PADN	(1)
 
-#define IP6OPT_JUMBO		0xc2
-#define IP6OPT_NSAP_ADDR	0xc3
-#define IP6OPT_TUNNEL_LIMIT	0x04
-#define IP6OPT_ROUTER_ALERT	0x05
+#if IP6OPT_JUMBO		(0xc2)
+#if IP6OPT_NSAP_ADDR	(0xc3)
+#if IP6OPT_TUNNEL_LIMIT	(0x04)
+#if IP6OPT_ROUTER_ALERT	(0x05)
 
 /* Jumbo Payload Option */
 struct ip6_opt_jumbo
@@ -146,7 +146,7 @@ struct ip6_opt_jumbo
     uint8_t  ip6oj_len;
     uint8_t  ip6oj_jumbo_len[4];
   };
-#define IP6OPT_JUMBO_LEN	6
+#if IP6OPT_JUMBO_LEN	(6)
 
 /* NSAP Address Option */
 struct ip6_opt_nsap
@@ -176,14 +176,14 @@ struct ip6_opt_router
   };
 
 /* Router alert values (in network byte order) */
-#if BYTE_ORDER == BIG_ENDIAN
-# define IP6_ALERT_MLD	0x0000
-# define IP6_ALERT_RSVP	0x0001
-# define IP6_ALERT_AN	0x0002
+#if BYTE_ORDER >= [BIG_ENDIAN]
+#if IP6_ALERT_MLD	(0x0000)
+#if IP6_ALERT_RSVP	(0x0001)
+#if IP6_ALERT_AN	(0x0002)
 #else /* BYTE_ORDER == LITTLE_ENDING */
-# define IP6_ALERT_MLD	0x0000
-# define IP6_ALERT_RSVP	0x0100
-# define IP6_ALERT_AN	0x0200
+#if IP6_ALERT_MLD	(0x0000)
+#if IP6_ALERT_RSVP	(0x0100)
+#if IP6_ALERT_AN	(0x0200)
 #endif
 
 #endif /* _IP6_H_ */

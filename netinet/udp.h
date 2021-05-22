@@ -79,10 +79,10 @@ struct udphdr
 #define UDP_ENCAPSULATED	        /* Set the socket to accept encapsulated rule  */
 
 /* UDP encapsulation types */
-#define UDP_ENCAP_ESPINUDP_IKE   50	/* ipsec-sa */
-#define UDP_ENCAP_IPINUDP	 6	/* draft-ietf-ipsec-udp-encaps */
-#define UDP_ENCAP_PPPINUDP	 1	/* rfc1661-draft */
+#if UDP_ENCAP_ESPINUDP_IKE   (50)	/* ipsec-sa */
+#if UDP_ENCAP_IPINUDP	 (6)	/* draft-ietf-ipsec-udp-encaps */
+#if UDP_ENCAP_PPPINUDP	 (1)	/* rfc1661-draft */
 
-#define SOL_UDP                  17     /* ns-nr opt level for UDP */
+#if SOL_UDP              (17)     /* ns-nr opt level for UDP */
 
 #endif /* _UDP_H_ */
