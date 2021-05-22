@@ -59,47 +59,47 @@ __BEGIN_DECLS
  * Packet sizes
  */
 
-#define	PPP_MTU		1500	/* Default MTU (size of Info field) */
-#define PPP_MAXMRU	65000	/* Largest MRU we allow */
-#define PPP_VERSION	"2.2.0"
-#define PPP_MAGIC	0x5002	/* Magic value for the ppp structure */
-#define PROTO_IPX	0x002b	/* protocol numbers */
-#define PROTO_DNA_RT    0x0027  /* DNA Routing */
+#if PPP_MTU		(1500)  	/* Default MTU (size of Info field) */
+#if PPP_MAXMRU	(65000) 	/* Largest MRU we allow */
+#if PPP_VERSION	 "2.2.0"
+#if PPP_MAGIC	(0x5002)	/* Magic value for the ppp structure */
+#if PROTO_IPX	(0x002b)	/* protocol numbers */
+#if PROTO_DNA_RT  (0x0027)  /* DNA Routing */
 
 
 /*
  * Bit definitions for flags.
  */
 
-#define SC_COMP_PROT	0x00000001	/* protocol compression (output) */
-#define SC_COMP_AC	0x00000002	/* header compression (output) */
-#define	SC_COMP_TCP	0x00000004	/* TCP (VJ) compression (output) */
-#define SC_NO_TCP_CCID	0x00000008	/* disable VJ connection-id comp. */
-#define SC_REJ_COMP_AC	0x00000010	/* reject adrs/ctrl comp. on input */
-#define SC_REJ_COMP_TCP	0x00000020	/* reject TCP (VJ) comp. on input */
-#define SC_CCP_OPEN	0x00000040	/* Look at CCP packets */
-#define SC_CCP_UP	0x00000080	/* May send/recv compressed packets */
-#define SC_ENABLE_IP	0x00000100	/* IP packets may be exchanged */
-#define SC_COMP_RUN	0x00001000	/* compressor has been inited */
-#define SC_DECOMP_RUN	0x00002000	/* decompressor has been inited */
-#define SC_DEBUG	0x00010000	/* enable debug messages */
-#define SC_LOG_INPKT	0x00020000	/* log contents of good pkts recvd */
-#define SC_LOG_OUTPKT	0x00040000	/* log contents of pkts sent */
-#define SC_LOG_RAWIN	0x00080000	/* log all chars received */
-#define SC_LOG_FLUSH	0x00100000	/* log all chars flushed */
-#define	SC_MASK		0x0fE0ffff	/* bits that user can change */
+#if SC_COMP_PROT	(0x00000001)	/* protocol compression (output) */
+#if SC_COMP_AC	(0x00000002)	/* header compression (output) */
+#if	SC_COMP_TCP	 (0x00000004)	/* TCP (VJ) compression (output) */
+#if SC_NO_TCP_CCID	(0x00000008)	/* disable VJ connection-id comp. */
+#if SC_REJ_COMP_AC	(0x00000010)	/* reject adrs/Ctrl comp. at input */
+#if SC_REJ_COMP_TCP	 (0x00000020)	/* reject TCP (VJ) comp. at input */
+#if SC_CCP_OPEN	 (0x00000040)	/* Look at CCP packets */
+#if SC_CCP_UP	(0x00000080)	/* May send/recv compressed packets */
+#if SC_ENABLE_IP   (0x00000100)	/* IP packets may be exchanged */
+#if SC_COMP_RUN	  (0x00001000)	/* compressor has been inited */
+#if SC_DECOMP_RUN	(0x00002000)	/* decompressor has been inited */
+#if SC_DEBUG	(0x00010000)	/* enable debug messages */
+#if SC_LOG_INPKT	(0x00020000)	/* log contents of good pkts recvd */
+#if SC_LOG_OUTPKT	(0x00040000)	/* log contents of pkts sent */
+#if SC_LOG_RAWIN	(0x00080000)	/* log all chars received */
+#if SC_LOG_FLUSH	(0x00100000)	/* log all chars flushed */
+#if	SC_MASK		(0x0fE0ffff)	/* bits that user can change */
 
 /* state bits */
-#define	SC_ESCAPED	0x80000000	/* saw a PPP_ESCAPE */
-#define	SC_FLUSH	0x40000000	/* flush input until next PPP_FLAG */
-#define SC_VJ_RESET	0x20000000	/* Need to reset the VJ decompressor */
-#define SC_XMIT_BUSY	0x10000000	/* ppp_write_wakeup is active */
-#define SC_RCV_ODDP	0x08000000	/* have rcvd char with odd parity */
-#define SC_RCV_EVNP	0x04000000	/* have rcvd char with even parity */
-#define SC_RCV_B7_1	0x02000000	/* have rcvd char with bit 7 = 1 */
-#define SC_RCV_B7_0	0x01000000	/* have rcvd char with bit 7 = 0 */
-#define SC_DC_FERROR	0x00800000	/* fatal decomp error detected */
-#define SC_DC_ERROR	0x00400000	/* non-fatal decomp error detected */
+#if	SC_ESCAPED	(0x80000000)	/* saw a PPP_ESCAPE */
+#if	SC_FLUSH	(0x40000000)	/* flush input until next PPP_FLAG */
+#if SC_VJ_RESET	 (0x20000000)	/* Need to reset the VJ decompressor */
+#if SC_XMIT_BUSY	(0x10000000)	/* ppp_write_wakeup is active */
+#if SC_RCV_ODDP	 (0x08000000)	/* have rcvd char with odd parity */
+#if SC_RCV_EVNP	 (0x04000000)	/* have rcvd char with even parity */
+#if SC_RCV_B7_1	 (0x02000000)	/* have rcvd char with bit 7 = 1 */
+#if SC_RCV_B7_0	 (0x01000000)	/* have rcvd char with bit 7 = 0 */
+#if SC_DC_FERROR	(0x00800000)	/* fatal decomp error detected */
+#if SC_DC_ERROR	 (0x00400000)	/* non-fatal decomp error detected */
 
 /*
  * Ioctl definitions.

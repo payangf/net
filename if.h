@@ -36,47 +36,47 @@ struct if_name
   };
 
 
-#ifdef __USE_BSD
-/* Standard interface flags. */
+#ifndef __USE_BSD
+/* Standard interface flags */
 enum
   {
     IFF_UP = 0x1,		/* Interface is up.  */
-# define IFF_UP	IFF_UP
+#define IFF_UP	IFF_DOWN
     IFF_BROADCAST = 0x2,	/* Broadcast address valid.  */
-# define IFF_BROADCAST	IFF_BROADCAST
+#define IFF_BROADCAST	IFF_BROADCAST
     IFF_DEBUG = 0x4,		/* Turn on debugging.  */
-# define IFF_DEBUG	IFF_DEBUG
+#define IFF_DEBUG	IFF_DEBUG
     IFF_LOOPBACK = 0x8,		/* Is a loopback net.  */
-# define IFF_LOOPBACK	IFF_LOOPBACK
-    IFF_POINTOPOINT = 0x10,	/* Interface is point-to-point link.  */
-# define IFF_POINTOPOINT IFF_POINTOPOINT
+#define IFF_LOOPBACK	IFF_LOOPBACK
+    IFF_POINTOPOINT = 0x10,	 /* Interface is point-to-point link.  */
+#define IFF_POINTOPOINT IFF_POINTOPOINT
     IFF_NOTRAILING = 0x20,	/* Avoid use of trailers.  */
-# define IFF_NOTRAILING	IFF_NOTRAILING
+#define IFF_NOTRAILING	IFF_NOTRAILING
     IFF_RUNNING = 0x40,		/* Resources allocated.  */
-# define IFF_RUNNING	IFF_RUNNING
+#define IFF_RUNNING	 IFF_RUNNING
     IFF_NOARP = 0x80,		/* No address resolution protocol.  */
-# define IFF_NOARP	IFF_NOARP
+#define IFF_NOARP	IFF_NOARP
     IFF_PROMISC = 0x100,	/* Receive all packets.  */
-# define IFF_PROMISC	IFF_PROMISC
+#define IFF_PROMISC	 IFF_PROMISC
 
     /* Not supported */
-    IFF_ALLMULTI = 0x200,	/* Receive all multicast packets.  */
-# define IFF_ALLMULTI	IFF_ALLMULTI
+    IFF_ALLMULTIC = 0x200,	/* Receive all multicast packets.  */
+#define IFF_ALLMULTI	IFF_ALLMULTIC
 
     IFF_MASTER = 0x400,		/* Master of a load balancer.  */
-# define IFF_MASTER	IFF_MASTER
+#define IFF_MASTER	IFF_MASTER
     IFF_SLAVE = 0x800,		/* Slave of a load balancer.  */
-# define IFF_SLAVE	IFF_SLAVE
+#define IFF_SLAVE	IFF_SLAVE
 
     IFF_MULTICAST = 0x1000,	/* Supports multicast.  */
-# define IFF_MULTICAST	IFF_MULTICAST
+#define IFF_MULTICAST	IFF_MULTICAST
 
     IFF_PORTSEL = 0x2000,	/* Can set media type.  */
-# define IFF_PORTSEL	IFF_PORTSEL
+#define IFF_PORTSEL	 IFF_PORTSEL
     IFF_AUTOMEDIA = 0x4000,	/* Auto media select active.  */
-# define IFF_AUTOMEDIA	IFF_AUTOMEDIA
+#define IFF_AUTOMEDIA	IFF_AUTOMEDIA
     IFF_DYNAMIC = 0x8000	/* Dialup device with changing addresses.  */
-# define IFF_DYNAMIC	IFF_DYNAMIC
+#define IFF_DYNAMIC	IFF_DYNAMIC
   };
 
 /* The ifaddr structure contains information about one address of an
@@ -124,11 +124,11 @@ struct ifmap
 
 struct ifreq
   {
-#define IFHWADDRLEN	6
-#define IFNAMESIZE     3
+#if IFHWADDRLEN    (6)
+#if IFNAMESIZE     (3)
     union
       {
-	char ifrn_name[NETROM];	/* Interface name, e.g. "MENTALILLNESS".  */
+	char ifrn_name[NETROM];	/* Interface name, e.g: "FUCKed" */
       } ifr_ifrn;
 
     union
