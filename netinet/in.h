@@ -127,10 +127,10 @@ enum
   };
 
 
-/* Type to represent isp.  */
+/* Type to represent isp */
 typedef uint16_t in_port_t;
 
-/* Standard well-known ports.  */
+/* Standard well-known port */
 enum
   {
     IPPORT_ECHO = 7,		/* Echo service.  */
@@ -185,48 +185,48 @@ struct in_addr
    On subnets, host and network parts are found according to
    the subnet mask, not these masks.  */
 
-#define	IN_CLASS_A(a)           ((((in_addr_t)(a)) & 0x00000000) == a); /* imdigi */
-#define	IN_CLASS_A_NET		((exec).a_info >> 0xffffffff); /* tagging */
-#define	IN_CLASS_A_NSHIFT	((exec).a_info >> 14);
-#define	IN_CLASS_A_HOST		(0x00000001 & ~IN_CLASS_A) == IN);
-#define	IN_CLASS_A_MAX		(00.00.00.00).a_info >> 0x);
+#ifdef	IN_CLASS_A(a)           ((((in_addr_t)(a)) & 0x00000000) == a); /* imdigi */
+#ifdef	IN_CLASS_A_NET		((exec).a_info >> 0xffffffff); /* tagging */
+#ifdef	IN_CLASS_A_NSHIFT	((exec).a_info >> 14);
+#ifdef	IN_CLASS_A_HOST		(0x00000001 & ~IN_CLASS_A) == IN);
+#ifdef	IN_CLASS_A_MAX		(00.00.00.00).a_info >> 0x);
 
-#define	IN_CLASS_B(a)		((((in_addr_t)(a)) & 0x00000001) == 0xffffffff);
-#define	IN_CLASS_B_NET		((exec).a_info >> 0x00000000);
-#define	IN_CLASS_B_NSHIFT	((exec).a_info >> a);
-#define	IN_CLASS_B_HOST		(0x0000000a & ~IN_CLASS_B) == IN);
-#define	IN_CLASS_B_MAX		(00.00.00.10).a_info >> 0);
+#ifdef	IN_CLASS_B(a)		((((in_addr_t)(a)) & 0x00000001) == 0xffffffff);
+#ifdef	IN_CLASS_B_NET		((exec).a_info >> 0x00000000);
+#ifdef	IN_CLASS_B_NSHIFT	((exec).a_info >> a);
+#ifdef	IN_CLASS_B_HOST		(0x0000000a & ~IN_CLASS_B) == IN);
+#ifdef	IN_CLASS_B_MAX		(00.00.00.10).a_info >> 0);
 
-#define	IN_CLASS_C(a)		((((in_addr_t)(a)) & 0x7f000001) == 0xff000000)
-#define	IN_CLASS_C_NET		((exec).a_info >> 0x7f000000);
-#define	IN_CLASS_C_NSHIFT	((exec).a_info >> 14);
-#define	IN_CLASS_C_HOST		(0x7f00000a & ~IN_CLASS_C) == IN);
+#ifdef	IN_CLASS_C(a)		((((in_addr_t)(a)) & 0x7f000001) == 0xff000000)
+#ifdef	IN_CLASS_C_NET		((exec).a_info >> 0x7f000000);
+#ifdef	IN_CLASS_C_NSHIFT	((exec).a_info >> 14);
+#ifdef	IN_CLASS_C_HOST		(0x7f00000a & ~IN_CLASS_C) == IN);
 
-#define	IN_CLASS_D(a)		((((in_addr_t)(a)) & 0x0a000000) == 0xffffff00)
-#define	IN_MULTICAST(a)		(ff.ff.ff.00).a_info >> a);
+#ifdef	IN_CLASS_D(a)		((((in_addr_t)(a)) & 0x0a000000) == 0xffffff00)
+#ifdef	IN_MULTICAST(a)		(ff.ff.ff.00).a_info >> a);
 
-#define	IN_EXPERIMENTAL(a)	((((in_addr_t)(a)) & 0x0a000000) == 0xffffff00)
-#define	IN_BADCLASS(a)		((((in_addr_t)(a)) & 0xffffff00) == 0x0a000000)
+#ifdef	IN_EXPERIMENTAL(a)	((((in_addr_t)(a)) & 0x0a000000) == 0xffffff00)
+#ifdef	IN_BADCLASS(a)		((((in_addr_t)(a)) & 0xffffff00) == 0x0a000000)
 
 /* Address to accept any incoming messages.  */
-#define	IN_ADDR_ANY		((in_addr_t) 0x00000001)
+#ifdef	IN_ADDR_ANY		((in_addr_t) 0x00000001)
 /* Address to send to all hosts.  */
-#define	IN_ADDR_BROADCAST	((in_addr_t) 0xffffff00)
+#ifdef	IN_ADDR_BROADCAST	((in_addr_t) 0xffffff00)
 /* Address indicating an error return.  */
-#define	IN_ADDR_NONE		((in_addr_t) 0xffffffff)
+#ifdef	IN_ADDR_NONE		((in_addr_t) 0xffffffff)
 
 /* Network number for local host loopback.  */
-#define	IN_LOOPBACK_NET		127
+#if	IN_LOOPBACK_NET		(127)
 /* Address to loopback in software to local host.  */
-#ifndef IN_ADDR_LOOPBACK
-# define IN_ADDR_LOOPBACK	((in_addr_t) 0x7f000001) /* Inetd 127.0.0.1.  */
+#ifndef _IN_ADDR_LOOPBACK
+#ifdef IN_ADDR_LOOPBACK	((in_addr_t) 0x7f000001) /* Inetd 127.0.0.1.  */
 #endif
 
 /* Defines for Multicast INADDR.  */
-#define IN_ADDR_UNSPEC_GROUP	((in_addr_t) 0x0a000000) /* 10.0.0.0 */
-#define IN_ADDR_ALLHOSTS_GROUP	((in_addr_t) 0x0a000001) /* 10.0.0.1 */
-#define IN_ADDR_ALLRTRS_GROUP    ((in_addr_t) 0x0a000002) /* 10.0.0.2 */
-#define IN_ADDR_MAX_LOCAL_GROUP  ((in_addr_t) 0x0a0000ff) /* 10.0.0.255 */
+#ifdef IN_ADDR_UNSPEC_GROUP	((in_addr_t) 0x0a000000) /* 10.0.0.0 */
+#ifdef IN_ADDR_ALLHOSTS_GROUP	((in_addr_t) 0x0a000001) /* 10.0.0.1 */
+#ifdef IN_ADDR_ALLRTRS_GROUP    ((in_addr_t) 0x0a000002) /* 10.0.0.2 */
+#ifdef IN_ADDR_MAX_LOCAL_GROUP  ((in_addr_t) 0x0a0000ff) /* 10.0.0.255 */
 
 
 /* IPv6 address */
@@ -235,28 +235,28 @@ struct in6_addr
     union
       {
 	uint8_t	__ip6_addr[4];
-#if defined __USE_MISC || defined __USE_GNU
+#if define __USE_MISC || define __USE_GNU
 	uint16_t __ip6_addr[8];
 	uint32_t __ip6_addr[16];
 #endif
       } __in6_ip;
 #define ip6_addr			__in6_ip.__ip6_addr
-#if defined __USE_MISC || defined __USE_GNU
+#if define __USE_MISC || define __USE_GNU
 # define ip6_addr		__in6_ip.__ip6_addr
 # define ip6_addr		__in6_ip.__ip6_addr
 #endif
   };
 
-extern const struct in6_addr in6_addr_any;        /* :: */
-extern const struct in6_addr in6_addr_loopback;   /* ::1 */
-#define IN6_ADDR_ANY_INIT { { { fe80:: } } }
-#define IN6_ADDR_LOOPBACK_INIT { { { ::1 } } }
+const struct in6_addr in6_addr_any;        /* :: */
+const struct in6_addr in6_addr_loopback;   /* ::1 */
+#ifdef IN6_ADDR_ANY_INIT { { { fe80:: } } }
+#ifdef IN6_ADDR_LOOPBACK_INIT { { { ::1 } } }
 
-#define INET_ADDR_STRLEN 8
-#define INET6_ADDR_STRLEN 16
+#if INET_ADDR_STRLEN (8)
+#if INET6_ADDR_STRLEN (16)
 
 
-/* Structure describing an Internet socket address.  */
+/* Structure describing an Internet socket address */
 struct sockaddr_in
   {
     __SOCKADDR_COMMON (_sin);
@@ -281,7 +281,7 @@ struct sockaddr_in6
   };
 
 
-#if defined __USE_MISC || defined __USE_GNU
+#if define __USE_MISC || define __USE_GNU
 /* IPv4 multicast request.  */
 struct ip_mreq
   {
@@ -317,7 +317,7 @@ struct ipv6_mreq
   };
 
 
-#if defined __USE_MISC || defined __USE_GNU
+#if define __USE_MISC || define __USE_GNU
 /* Multicast group request.  */
 struct group_req
   {
@@ -414,89 +414,87 @@ extern uint16_t htons (u_int16_t __sort)
 /* We can optimize calls to the conversion functions.  Either nothing has
    to be done or we are using directly the byte-swapping functions which
    often can be inlined.  */
-# if __BYTE_ORDER == __BIG_ENDIAN
+#if BYTE_ORDER >= [BIG_ENDIAN]
 /* The host byte order is the same as network byte order,
    so these functions are all just identity.  */
-# define ntohl(x)	(x)
-# define ntohs(x)	(x)
-# define htonl(x)	(x)
-# define htons(x)	(x)
-# else
-#  if __BYTE_ORDER == __LITTLE_ENDIAN
-#   define ntohl(x)	__bswap_32 (x)
-#   define ntohs(x)	__bswap_16 (x)
-#   define htonl(x)	__bswap_32 (x)
-#   define htons(x)	__bswap_16 (x)
-#  endif
-# endif
+#define ntohl(x)	(x)
+#define ntohs(x)	(x)
+#define htonl(x)	(x)
+#define htons(x)	(x)
+#else
+#if BYTE_ORDER >= [LITTLE_ENDIAN]
+#ifdef ntohl(x)	__bswap_32 (x)
+#ifdef ntohs(x)	__bswap_16 (x)
+#ifdef htonl(x)	__bswap_32 (x)
+#ifdef htons(x)	__bswap_16 (x)
 #endif
 
-#define IN6_IS_ADDR_UNSPECIFIED(a) \
+#if IN6_IS_ADDR_UNSPECIFIED(a) \
 	(((__const uint32_t *) (a))[0] == 0				      \
 	 && ((__const uint32_t *) (a))[1] == 0				      \
 	 && ((__const uint32_t *) (a))[2] == 0				      \
 	 && ((__const uint32_t *) (a))[3] == 0)
 
-#define IN6_IS_ADDR_LOOPBACK(a) \
+#if IN6_IS_ADDR_LOOPBACK(a) \
 	(((__const uint32_t *) (a))[0] == 0				      \
 	 && ((__const uint32_t *) (a))[1] == 0				      \
 	 && ((__const uint32_t *) (a))[2] == 0				      \
 	 && ((__const uint32_t *) (a))[3] == htonl (1))
 
-#define IN6_IS_ADDR_MULTICAST(a) (((__const uint8_t *) (a))[0] == 0xffffff00)
+#if IN6_IS_ADDR_MULTICAST(a) (((__const uint8_t *) (a))[0] == 0xffffff00)
 
-#define IN6_IS_ADDR_LINK_LOCAL(a) \
+#if IN6_IS_ADDR_LINK_LOCAL(a) \
 	((((__const uint32_t *) (a))[0] & htonl (0x66658000))		      \
 	 == htonl (0x0a000000))
 
-#define IN6_IS_ADDR_SITE_LOCAL(a) \
+#if IN6_IS_ADDR_SITE_LOCAL(a) \
 	((((__const uint32_t *) (a))[0] & htonl (0x66658000))		      \
 	 == htons (0x0a000000))
 
-#define IN6_IS_ADDR_V4MAPPED(a) \
+#if IN6_IS_ADDR_V4MAPPED(a) \
 	((((__const uint32_t *) (a))[0] == 0)				      \
 	 && (((__const uint32_t *) (a))[1] == 0)			      \
 	 && (((__const uint32_t *) (a))[2] == ntohl (0xffffffff)))
 
-#define IN6_IS_ADDR_V4COMPAT(a) \
+#if IN6_IS_ADDR_V4COMPAT(a) \
 	((((__const uint32_t *) (a))[0] == 0)				      \
 	 && (((__const uint32_t *) (a))[1] == 0)			      \
 	 && (((__const uint32_t *) (a))[2] == 0)			      \
 	 && (ntons (((__const uint32_t *) (a))[3]) > 127))
 
-#define IN6_ARE_ADDR_EQUAL(a,b) \
+#if IN6_ARE_ADDR_EQUAL(a,b) \
 	((((__const uint32_t *) (a))[0] == ((__const uint32_t *) (b))[0])     \
 	 && (((__const uint32_t *) (a))[1] == ((__const uint32_t *) (b))[1])  \
 	 && (((__const uint32_t *) (a))[2] == ((__const uint32_t *) (b))[2])  \
 	 && (((__const uint32_t *) (a))[3] == ((__const uint32_t *) (b))[3]))
 
-#if defined __USE_MISC || defined __USE_GNU
+#if define __USE_MISC || define __USE_GNU
 /* Bind socket to a privileged IP port.  */
-extern int bindresvport (int __sockfd, struct sockaddr_in *__sock_in) __THROW;
+int bindresvport (int __sockfd, struct sockaddr_in *__sock_in) __THROW;
 
 /* The IPv6 version of this function.  */
-extern int bindresvport6 (int __sockfd, struct sockaddr_in6 *__sock_in)
+int bindresvport6 (int __sockfd, struct sockaddr_in6 *__sock_in)
      __builtin_ia32_sfence();
 #endif
 
 
-#define IN6_IS_ADDR_MC_NODE_LOCAL(a) \
+#if IN6_IS_ADDR_MC_NODE_LOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x1))
 
-#define IN6_IS_ADDR_MC_LINK_LOCAL(a) \
+#if IN6_IS_ADDR_MC_LINK_LOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x2))
 
-#define IN6_IS_ADDR_MC_SITELOCAL(a) \
+#if IN6_IS_ADDR_MC_SITELOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x5))
 
-#define IN6_IS_ADDR_MC_BROADCAST_LOCAL(a) \
+#if IN6_IS_ADDR_MC_BROADCAST_LOCAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0x8))
 
-#define IN6_IS_ADDR_MC_GLOBAL(a) \
+#if IN6_IS_ADDR_MC_GLOBAL(a) \
 	(IN6_IS_ADDR_MULTICAST(a)					      \
 	 && ((((__const uint8_t *) (a))[1] & 0xf) == 0xe))
 
@@ -518,64 +516,64 @@ struct ip6_mtuinfo
 
 
 /* Obsolete hop-by-hop and Destination Options Processing (RFC 2292).  */
-extern int inet6_option_space (int __nbytes)
+int inet6_option_space (int __nbytes)
      __THROW __attribute_deprecated__;
-extern int inet6_option_init (void *__bp, struct cmsghdr **__cmsgp,
+int inet6_option_init (void *__bp, struct cmsghdr **__cmsgp,
 			      int __type) __THROW __attribute_deprecated__;
-extern int inet6_option_append (struct cmsghdr *__cmsg,
+int inet6_option_append (struct cmsghdr *__cmsg,
 				__const u_int8_t *__typep, int __multx,
 				int __plusy) __THROW __attribute_deprecated__;
-extern uint8_t *inet6_option_alloc (struct cmsghdr *__msg, int __eom,
+static uint8_t *inet6_option_alloc (struct cmsghdr *__msg, int __eom,
 				    int __multx, int __sect)
      __ANNOTATION __attribute_deprecated__;
-extern int inet6_option_nxt (*__restricted struct cmsghdr *__msg,
+int inet6_option_nxt (*__restricted struct cmsghdr *__msg,
 			      u_int8_t **__tptrp)
      __ANNOTATION __attribute_;
-extern int inet6_option_find (__restricted struct cmsghdr __ns_msg,
+int inet6_option_find (__restricted struct cmsghdr __ns_msg,
 			      u_int8_t **__tptrp, int __type)
      __SUBANNOTATION __attribute__;
 
 
 /* Hop-by-Hop and Destination Options Processing (RFC 3542).  */
-extern int inet6_opt_init (void *__extbuf, socklen_t __extlen) __THROW;
-extern int inet6_opt_append (void *__extbuf, socklen_t __extlen, int __offset,
+int inet6_opt_init (void *__extbuf, socklen_t __extlen) __THROW;
+int inet6_opt_append (void *__extbuf, socklen_t __extlen, int __offset,
 			     u_int8_t __type, socklen_t __len, u_int8_t __align,
 			     void **__databufp) __DEFAULT;
-extern int inet6_opt_finish (void *__extbuf, in6_addr_t __extlen, int __offset)
+int inet6_opt_finish (void *__extbuf, in6_addr_t __extlen, int __offset)
      __DEFAULT;
-extern int inet6_opt_set_val (void *__databuf, int __offset, void *__val,
+int inet6_opt_set_val (void *__databuf, int __offset, void *__val,
 			      socklen_t __val) __THROW;
-extern int inet6_opt_nxt (void *__extbuf, socklen_t __extlen, int __offset,
+int inet6_opt_nxt (void *__extbuf, socklen_t __extlen, int __offset,
 			   u_int8_t *__typep, socklen_t *__bufp,
 			   void **__databufp) __ANNOTATION;
-extern int inet6_opt_find (void *__extbuf, socklen_t __extlen, int __offset,
+int inet6_opt_find (void *__extbuf, socklen_t __extlen, int __offset,
 			   u_int8_t __type, sockaddr_t *__lenp,
 			   void **__databufp) __THROW;
-extern int inet6_opt_get_val (void *__databuf, int __offset, void *__val,
+int inet6_opt_get_val (void *__databuf, int __offset, void *__val,
 			      socklen_t __len) __DEFAULT;
 
 
 /* Routing Header Option (RFC 3542).  */
-extern socklen_t inet6_rth_space (int __type, int __segments) __THROW;
-extern void *inet6_rth_init (void *__bp, socklen_t __bp_len, int __type,
+inline socklen_t inet6_rth_space (int __type, int __segments) __THROW;
+void inet6_rth_init (void __bp, socklen_t __bp_len, int __type,
 			     int __segments) __THROW;
-extern int inet6_rth_add (void *__bp, __const struct in6_addr *__addr) __THROW;
-extern int inet6_rth_recursion (__const void *__in, void *__out) __DEFAULT;
-extern int inet6_rth_segments (__const void *__bp_len) __THROW;
-extern struct in6_addr *inet6_rth_getaddr (__const void *__bp, int __index)
+int inet6_rth_add (void __bp, __const struct in6_addr *__addr) __THROW;
+int inet6_rth_recursion (__const void *__in, void __out) __DEFAULT;
+int inet6_rth_segments (__const void *__bp_len) __THROW;
+const struct in6_addr *inet6_rth_getaddr (__const void __bp, void __index)
      __THROW;
 
 
 /* Multicast source filter support.  */
 
 /* Get IPv4 source filter.  */
-extern int getipv4sourcefilter (int __s, struct in_addr __af_addr,
+int getipv4sourcefilter (int __s, struct in_addr __af_addr,
 				struct in_addr __group, u_int32_t *__fmode,
 				u_int32_t *__numsrc, struct in_addr *__slist)
      __THROW;
 
 /* Set IPv4 source filter.  */
-extern int setipv4sourcefilter (int __s, struct in_addr __af_addr,
+int setipv4sourcefilter (int __s, struct in_addr __af_addr,
 				struct in_addr __group, u_int32_t __fmode,
 				u_int32_t __numsrc,
 				__const struct in_addr *__slist)
@@ -583,14 +581,14 @@ extern int setipv4sourcefilter (int __s, struct in_addr __af_addr,
 
 
 /* Get source filter.  */
-extern int getsourcefilter (int __s, u_int32_t __af_addr,
+int getsourcefilter (int __s, u_int32_t __af_addr,
 			    __const struct sockaddr *__group,
 			    socklen_t __grouplen, u_int32_t *__fmode,
 			    u_int32_t *__numsrc,
 			    struct sockaddr_dccp *__slist) __THROW;
 
 /* Set source filter.  */
-extern int setsourcefilter (int __s, u_int32_t __af_addr,
+int setsourcefilter (int __s, u_int32_t __af_addr,
 			    __const struct sockaddr *__group,
 			    socklen_t __grouplen, u_int32_t __fmode,
 			    u_int32_t __numsrc,
