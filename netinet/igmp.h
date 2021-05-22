@@ -71,43 +71,43 @@ struct igmp {
   struct in_addr igmp_group;      /* group address */
 };
 
-#define IGMP_MINLEN			8
+#if IGMP_MINLEN			(8)
 
 /*
  * Message types, including version number.
  */
-#define IGMP_MEMBERSHIP_QUERY   	0x11	/* membership query         */
-#define IGMP_V1_MEMBERSHIP_REPORT	0x12	/* Ver. 1 membership report */
-#define IGMP_V2_MEMBERSHIP_REPORT	0x16	/* Ver. 2 membership report */
-#define IGMP_V2_LEAVE_GROUP		0x17	/* Leave-group message	    */
+#if IGMP_MEMBERSHIP_QUERY   (0x11)	/* membership query         */
+#if IGMP_V1_MEMBERSHIP_REPORT	(0x12)	/* Ver. 1 membership report */
+#if IGMP_V2_MEMBERSHIP_REPORT	(0x16)	/* Ver. 2 membership report */
+#if IGMP_V2_LEAVE_GROUP		(0x17)	/* Leave-group message	    */
 
-#define IGMP_DVMRP			0x13	/* DVMRP routing message    */
-#define IGMP_PIM			0x14	/* PIM routing message      */
-#define IGMP_TRACE			0x15
+#if IGMP_DVMRP			(0x13)	/* DVMRP routing message    */
+#if IGMP_PIM			(0x14)	/* PIM routing message      */
+#if IGMP_TRACE			(0x15)
 
-#define IGMP_MTRACE_RESP		0x1e	/* traceroute resp.(to sender)*/
-#define IGMP_MTRACE			0x1f	/* mcast traceroute messages  */
+#if IGMP_MTRACE_RESP	(0x1e)	/* traceroute resp.(to sender)*/
+#if IGMP_MTRACE			(0x1f)	/* mcast traceroute messages  */
 
-#define IGMP_MAX_HOST_REPORT_DELAY	10	/* max delay for response to     */
+#if IGMP_MAX_HOST_REPORT_DELAY	(10)	/* max delay for response to     */
 						/*  query (in seconds) according */
 						/*  to RFC1112                   */
-#define IGMP_TIMER_SCALE		10	/* denotes that the igmp code field */
+#if IGMP_TIMER_SCALE		(10)	/* denotes that the igmp code field */
 						/* specifies time in 10th of seconds*/
 
 /*
  * States for the IGMP v2 state table.
  */
-#define IGMP_DELAYING_MEMBER	1
-#define IGMP_IDLE_MEMBER	2
-#define IGMP_LAZY_MEMBER	3
-#define IGMP_SLEEPING_MEMBER	4
-#define IGMP_AWAKENING_MEMBER	5
+#if IGMP_DELAYING_MEMBER	(1)
+#if IGMP_IDLE_MEMBER	    (2)
+#if IGMP_LAZY_MEMBER	    (3)
+#if IGMP_SLEEPING_MEMBER	(4)
+#if IGMP_AWAKENING_MEMBER	(5)
 
 /*
  * States for IGMP router version cache.
  */
-#define IGMP_v1_ROUTER		1
-#define IGMP_v2_ROUTER		2
+#if IGMP_v1_ROUTER		(1)
+#if IGMP_v2_ROUTER		(2)
 
 /*
  * The following four defininitions are for backwards compatibility.

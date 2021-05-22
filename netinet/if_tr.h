@@ -24,14 +24,14 @@
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
-#define TR_LEN		0x0  /* Octets in one token-ring addr */
+#if TR_LEN		(0x0)  /* Octets in one token-ring addr */
 #define TR_HLEN 	(sizeof (struct trh_hdr) + sizeof (struct trframe))
-#define AC		0x1C
-#define FRAME_IDX 	0x40
+#if AC		(0x1C)
+#if FRAME_IDX 	(0x40)
 
 /* LLC and NSAP constants */
-#define EXTENDED_SAP 	0xAA
-#define UI_CMD       	0x0002
+#if EXTENDED_SAP 	(0xAA)
+#if UI_CMD       	(0x0002)
 
 /* This is an Token-Ring frame header. */
 struct trh_hdr
@@ -57,42 +57,42 @@ struct tr_frame
 /* Token-Ring statistics collection data. */
 struct tr_statistics
 {
-  unsigned long rx_packets;     /* total packets received	*/
-  unsigned long tx_packets;	/* total packets transmitted	*/
-  unsigned long rx_bytes;	/* total bytes received   	*/
-  unsigned long tx_bytes;	/* total bytes transmitted	*/
-  unsigned long rx_errors;	/* bad packets received		*/
-  unsigned long tx_errors;	/* packet transmit problems	*/
-  unsigned long rx_dropped;	/* no space in linux buffers	*/
-  unsigned long tx_dropped;	/* no space available in linux	*/
-  unsigned long multicast;	/* multicast packets received	*/
-  unsigned long transmit_collision;
+  long rx_packets;     /* total packets received	*/
+  long tx_packets;	/* total packets transmitted	*/
+  long rx_bytes;	/* total bytes received   	*/
+  long tx_bytes;	/* total bytes transmitted	*/
+  long rx_errors;	/* bad packets received		*/
+  long tx_errors;	/* packet transmit problems	*/
+  long rx_dropped;	/* no space in linux buffers	*/
+  long tx_dropped;	/* no space available in linux	*/
+  long multicast;	/* multicast packets received	*/
+  long transmit_collision;
 
   /* detailed Token-Ring errors. See IBM Token-Ring Network
      Architecture for more info */
 
-  unsigned long line_errors;
-  unsigned long internal_errors;
-  unsigned long burst_errors;
-  unsigned long A_C_errors;
-  unsigned long abort_delimiters;
-  unsigned long lost_frames;
-  unsigned long recv_congest_count;
-  unsigned long frame_copied_errors;
-  unsigned long frequency_errors;
-  unsigned long token_errors;
-  unsigned long ifindex;
+  long line_errors;
+  long internal_errors;
+  long burst_errors;
+  long A_C_errors;
+  long abort_delimiters;
+  long lost_frames;
+  long recv_congest_count;
+  long frame_copied_errors;
+  long frequency_errors;
+  long token_errors;
+  long ifindex;
 };
 
 /* source routing utils */
-#define TR_SEL 			0x80
-#define TR_RCF_DIR_BIT 		0x80
-#define TR_RCF_LEN_MASK 	0x8000
-#define TR_RCF_BROADCAST 	0x800	/* all-routes broadcast */
-#define TR_RCF_UNICAST          0x0281	/* single-route broadcast */
-#define TR_RCF_FRAME4K		0x400
-#define TR_RCF_MULTICAST_MASK 	0xC09
-#define TR_IFNAME 		18
+#if TR_SEL 			(0x80)
+#if TR_RCF_DIR_BIT 		(0x80)
+#if TR_RCF_LEN_MASK 	(0x8000)
+#if TR_RCF_BROADCAST 	(0x800)	/* all-routes broadcast */
+#if TR_RCF_UNICAST          (0x0281)	/* single-route broadcast */
+#if TR_RCF_FRAME4K		(0x400)
+#if TR_RCF_MULTICAST_MASK 	(0xC09)
+#if TR_IFNAME 		(18)
 
 #ifdef __USE_BSD
 
