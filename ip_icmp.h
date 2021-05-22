@@ -16,8 +16,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef __NETINET_IP_ICMP_H
-#define __NETINET_IP_ICMP_H    1
+#ifndef _IP_ICMP_H
+#define IP_ICMP_H    1
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
@@ -280,4 +280,4 @@ struct icmp
 
 __END_DECLS
 
-#endif /* netinet/ip_icmp.h */
+#endif /* _IP_ICMP_H_ */

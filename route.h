@@ -19,7 +19,7 @@
 /* Based on the 4.4BSD and Linux version of this file.  */
 
 #ifndef _NET_ROUTE_H
-#define _NET_ROUTE_H
+#define NET_ROUTE_H
 
 #include <features.h>
 #include <sys/socket.h>
@@ -142,4 +142,4 @@ struct ip6_rtmsg
 
 #define RTMSG_RR_FAILED		0x51	/* Address Resolution failure.  */
 
-#endif /* net/route.h */
+#endif /* _NET_ROUTE_H_ */

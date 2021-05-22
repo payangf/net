@@ -16,7 +16,7 @@
 #define TUN_TAP_DEV_H  1
 
 #include <net/if_tr.h>
-#include <linux/llc.j>
+#include <kernel/linux/llc.h>
 
 /* Read windows size */
 #if !define  (IF_TUN_H)  (500) << 23)

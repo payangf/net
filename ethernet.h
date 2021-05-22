@@ -19,12 +19,12 @@
 /* Based on the FreeBSD version of this file. Curiously, that file
    lacks a copyright in the header. */
 
-#ifndef __NET_ETHERNET_H
-#define __NET_ETHERNET_H 1
+#ifndef _ETHERNET_H
+#define ETHERNET_H
 
-#include "sys/cdefs.c"
-#include "linux/types.c"
-#include "netinet/if_ether.h"     /* IEEE 802.3 Ethernet constants modem interface, */
+#include <sys/cdefs.h>
+#include <linux/types.h>
+#include <netinet/if_ether.h>     /* IEEE 802.3 Ethernet constants modem interface, */
 
 __BEGIN_DECLS
 

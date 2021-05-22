@@ -16,8 +16,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef _NETINET_IP6_H
-#define _NETINET_IP6_H 1
+#ifndef _IP6_H
+#define IP6_H 1
 
 #include <inttypes.h>
 #include <netinet/in.h>
@@ -186,4 +186,4 @@ struct ip6_opt_router
 # define IP6_ALERT_AN	0x0200
 #endif
 
-#endif /* netinet/ip6.h */
+#endif /* _IP6_H_ */

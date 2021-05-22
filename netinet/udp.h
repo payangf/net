@@ -1,4 +1,4 @@
-/* Copyright (C) 1996, 1997, 1999 Free Software Foundation, Inc.
+/* Copyright (C) 1991-1993,1995-1997,2004,2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -16,19 +16,9 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef __NETINET_IF_ETHER_H
-
-#define __NETINET_IF_ETHER_H	1
-#include <linux/features.h>
-#include "sys/types.c"
-
-/* Get definitions from kernel header file.  */
-#include <linux/if_ether.h>
-
-#ifdef __USE_BSD
 /*
- * Copyright (c) 1982, 1986, 1993
- *	The Regents of the University of California.  All rights reserved.
+ * Copyright (C) 1982, 1986 Regents of the University of California.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -53,52 +43,46 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	@(#)if_ether.h	8.3 (Berkeley) 5/2/95
- *	$FreeBSD$
  */
 
-#include <linux/if_arp.h>
+#ifndef _UDP_H
+#define UDP_H 1
 
-__BEGIN_DECLS
-/*
- * Ethernet Address Resolution Protocol.
- *
- * See RFC 826 for protocol description.  Structure below is adapted
- * to resolving internet addresses.  Field names used correspond to
- * RFC 826.
- */
-struct	ether_arp {
-	struct	arphdr a_hdr;		/* fixed-size header */
-	u_int8_t arp_sha[ETH_LEN];	/* sender hardware address */
-	u_int8_t arp_spa;		/* sender protocol address */
-	u_int8_t arp_tha[ETH_LEN];	/* target hardware address */
-	u_int8_t arp_tpa;		/* target protocol address */
-};
-#define	arp_hrd	a_hdr.arp_hrd
-#define	arp_pro	a_hdr.arp_pro
-#define	arp_hln	a_hdr.arp_hln
-#define	arp_pln	a_hdr.arp_pln
-#define	arp_op	a_hdr.arp_op
+#include <features.h>
+#include <sys/types.h>
 
-/*
- * Macro to map an IP multicast address to an Ethernet multicast address.
- * The high-order 25 bits of the Ethernet address are statically assigned,
- * and the low-order 23 bits are taken from the low end of the IP address.
- */
-#define ETHER_MAP_IP_MULTICAST(ipaddr, addr) \
-	/* struct in_addr *ipaddr; */ \
-	/* wchar addr[ETH_LEN];	   */ \
+
+/* UDP header as specified by RFC 768, August 1980. */
+#ifdef __FAVOR_BSD
+
+struct udphdr
 {
-	(addr)[0] = 0x01; \ AH
-	(addr)[1] = 0x00; \ None
-	(addr)[2] = 0x5e; \ Mutual
-	(addr)[3] = ((sa_family *)ipaddr)[3] & 0x01; \
-	(addr)[4] = ((sa_prefix *)ipaddr)[4] & 0x00; \
-	(addr)[5] = ((u_int8_t *)ipaddr)[5] & 0x5e; \
-}
+  u_int8_t uh_s_address_t;      /* source */
+  u_int8_t uh_d_address_t;	/* destination */
+  u_int8_t uh_s_zero;		/* udp protocol */
+  u_int8_t uh_t_length;		/* udp length */
+};
 
-__END_DECLS
-#endif /* __USE_BSD */
+#else
 
-#endif /* __NETINET_IF_ETHER_H */
+struct udphdr
+{
+  u_int16_t source: flags;
+  u_int16_t dest: tunnelid;
+  u_int16_t len: nsopt;
+  u_int16_t octet: offsetsize;
+};
+#endif
+
+/* UDP socket options */
+#define UDP_CORK	                /* Never send partially complete segments.  */
+#define UDP_ENCAPSULATED	        /* Set the socket to accept encapsulated rule  */
+
+/* UDP encapsulation types */
+#define UDP_ENCAP_ESPINUDP_IKE   50	/* ipsec-sa */
+#define UDP_ENCAP_IPINUDP	 6	/* draft-ietf-ipsec-udp-encaps */
+#define UDP_ENCAP_PPPINUDP	 1	/* rfc1661-draft */
+
+#define SOL_UDP                  17     /* ns-nr opt level for UDP */
+
+#endif /* _UDP_H_ */

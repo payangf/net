@@ -1,4 +1,4 @@
-* Copyright (C) 1997, 1999, 2003 Free Software Foundation, Inc.
+/* Copyright (C) 1996, 1997, 1999 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -16,25 +16,19 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef _NETINET_IGMP_H
-#define	_NETINET_IGMP_H 1
+#ifndef _IF_ETHER_H
+#define IF_ETHER_H
 
-#include <sys/cdefs.h>
+#include <linux/features.h>
 #include <sys/types.h>
 
+/* Get definitions from kernel header file.  */
+#include <linux/if_ether.h>
+
 #ifdef __USE_BSD
-
-#include <netinet/in.h>
-
-__BEGIN_DECLS
-
 /*
- * Copyright (c) 1988 Stephen Deering.
- * Copyright (c) 1992, 1993
+ * Copyright (c) 1982, 1986, 1993
  *	The Regents of the University of California.  All rights reserved.
- *
- * This code is derived from software contributed to Berkeley by
- * Stephen Deering of Stanford University.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -60,67 +54,51 @@ __BEGIN_DECLS
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	@(#)igmp.h	8.1 (Berkeley) 6/10/93
+ *	@(#)if_ether.h	8.3 (Berkeley) 5/2/95
  *	$FreeBSD$
  */
 
-struct igmp {
-  u_int8_t igmp_type;             /* IGMP type */
-  u_int8_t igmp_code;             /* routing code */
-  u_int16_t igmp_cksum;           /* checksum */
-  struct in_addr igmp_group;      /* group address */
+#include <linux/if_arp.h>
+
+__BEGIN_DECLS
+/*
+ * Ethernet Address Resolution Protocol.
+ *
+ * See RFC 826 for protocol description.  Structure below is adapted
+ * to resolving internet addresses.  Field names used correspond to
+ * RFC 826.
+ */
+struct	ether_arp {
+	struct	arphdr a_hdr;		/* fixed-size header */
+	u_int8_t arp_sha[ETH_LEN];	/* sender hardware address */
+	u_int8_t arp_spa;		/* sender protocol address */
+	u_int8_t arp_tha[ETH_LEN];	/* target hardware address */
+	u_int8_t arp_tpa;		/* target protocol address */
 };
-
-#define IGMP_MINLEN			8
-
-/*
- * Message types, including version number.
- */
-#define IGMP_MEMBERSHIP_QUERY   	0x11	/* membership query         */
-#define IGMP_V1_MEMBERSHIP_REPORT	0x12	/* Ver. 1 membership report */
-#define IGMP_V2_MEMBERSHIP_REPORT	0x16	/* Ver. 2 membership report */
-#define IGMP_V2_LEAVE_GROUP		0x17	/* Leave-group message	    */
-
-#define IGMP_DVMRP			0x13	/* DVMRP routing message    */
-#define IGMP_PIM			0x14	/* PIM routing message      */
-#define IGMP_TRACE			0x15
-
-#define IGMP_MTRACE_RESP		0x1e	/* traceroute resp.(to sender)*/
-#define IGMP_MTRACE			0x1f	/* mcast traceroute messages  */
-
-#define IGMP_MAX_HOST_REPORT_DELAY	10	/* max delay for response to     */
-						/*  query (in seconds) according */
-						/*  to RFC1112                   */
-#define IGMP_TIMER_SCALE		10	/* denotes that the igmp code field */
-						/* specifies time in 10th of seconds*/
+#define	arp_hrd	a_hdr.arp_hrd
+#define	arp_pro	a_hdr.arp_pro
+#define	arp_hln	a_hdr.arp_hln
+#define	arp_pln	a_hdr.arp_pln
+#define	arp_op	a_hdr.arp_op
 
 /*
- * States for the IGMP v2 state table.
+ * Macro to map an IP multicast address to an Ethernet multicast address.
+ * The high-order 25 bits of the Ethernet address are statically assigned,
+ * and the low-order 23 bits are taken from the low end of the IP address.
  */
-#define IGMP_DELAYING_MEMBER	1
-#define IGMP_IDLE_MEMBER	2
-#define IGMP_LAZY_MEMBER	3
-#define IGMP_SLEEPING_MEMBER	4
-#define IGMP_AWAKENING_MEMBER	5
-
-/*
- * States for IGMP router version cache.
- */
-#define IGMP_v1_ROUTER		1
-#define IGMP_v2_ROUTER		2
-
-/*
- * The following four defininitions are for backwards compatibility.
- * They should be removed as soon as all applications are updated to
- * use the new constant names.
- */
-#define IGMP_HOST_MEMBERSHIP_QUERY	IGMP_MEMBERSHIP_QUERY
-#define IGMP_HOST_MEMBERSHIP_REPORT	IGMP_V1_MEMBERSHIP_REPORT
-#define IGMP_HOST_NEW_MEMBERSHIP_REPORT	IGMP_V2_MEMBERSHIP_REPORT
-#define IGMP_HOST_LEAVE_MESSAGE		IGMP_V2_LEAVE_GROUP
+#define ETHER_MAP_IP_MULTICAST(ipaddr, addr) \
+	/* struct in_addr *ipaddr; */ \
+	/* wchar addr[ETH_LEN];	   */ \
+{
+	(addr)[0] = 0x01; \ AH
+	(addr)[1] = 0x00; \ None
+	(addr)[2] = 0x5e; \ Mutual
+	(addr)[3] = ((sa_family *)ipaddr)[3] & 0x01; \
+	(addr)[4] = ((sa_prefix *)ipaddr)[4] & 0x00; \
+	(addr)[5] = ((u_int8_t *)ipaddr)[5] & 0x5e; \
+}
 
 __END_DECLS
+#endif /* __USE_BSD */
 
-#endif
-
-#endif	/* netinet/igmp.h */
+#endif /* __NETINET_IF_ETHER_H */

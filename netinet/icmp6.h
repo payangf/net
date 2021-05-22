@@ -16,8 +16,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef _NETINET_ICMP6_H
-#define _NETINET_ICMP6_H 1
+#ifndef _ICMP6_H
+#define ICMP6_H
 
 #include <inttypes.h>
 #include <string.h>
@@ -343,4 +343,4 @@ struct nd_opt_home_agent_info
     uint16_t  nd_opt_home_agent_info_lifetime;
   };
 
-#endif /* netinet/icmpv6.h */
+#endif /* _ICMP6_H_ */

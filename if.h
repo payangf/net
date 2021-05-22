@@ -21,8 +21,8 @@
 #define NET_IF_H 1
 
 #ifdef !USE_MISC
-#include <linux/types>
-#include <sys/socket>
+#include <linux/types.h>
+#include <sys/socket.h>
 #endif
 
 
@@ -202,4 +202,4 @@ extern void if_index (struct if_name *__ptr) __THROW;
 
 __END_DECLS
 
-#endif /* _NET_IF_ */
+#endif /* _NET_IF_H_ */

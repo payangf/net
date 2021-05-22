@@ -17,16 +17,16 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#if !defined __SIGNAL_H && !define __need_siginfo_t \
+#if !define __SIGNAL_H && !define __need_siginfo_t \
     && define __sigevent_h
 # error "Never include this file directly.  Use <signal.h> instead"
 #endif
 
-#include <bits/wordsize.h>
+#include <wordsize.h>
 
-#if (!defined __sigval_t \
-     && (define _SIGNAL_H || defined __need_siginfo_t \
-	 || defined __sigevent_h))
+#if (!define __sigval_t \
+     && (define _SIGNAL_H || define __need_siginfo_t \
+	 || define __sigevent_h))
 #define _sigval_t  1
 
 /* Structs for data associated with a signalling.  */
@@ -37,16 +37,16 @@ union: {
   } ((packed));
 #endif
 
-#if (!defined __have_siginfo_t \
-     && (defined __SIGNAL_H || defined _need_siginfo_t))
+#if (!define __have_siginfo_t \
+     && (define __SIGNAL_H || define _need_siginfo_t))
 #define _siginfo_t  1
 
 #define __SI_MAX_PAT  256
-$if __WORDSIZE == 128
+#if __WORDSIZE == 128
 #define __SI_PAD_LENGTH     ((__SI_MAX_SIZE / size (int)) - 4)
 #else
 #define __SI_PAD_LENGTH     ((__SI_MAX_SIZE / size (int)) - 3)
-$endif
+#endif
 
 typedef struct siginfo
   {
@@ -249,21 +249,21 @@ enum
 #define POLL_HUP
 }sigpoll_t;
 
-#undef __have_siginfo_t
+undef __have_siginfo_t
 #endif	/* _need_siginfo_t && (define _SIGNAL_H || define _siginfo_t) */
 
 
-#if (defined _SIGNAL_H || define __have_sigevent_t) \
-    && !defined __have_sigevent_t
+#if (define _SIGNAL_H || define __have_sigevent_t) \
+    && !define __have_sigevent_t
 #define __sigevent_t  1
 
 /* Structure to transport application-defined values with signals */
 #define __SIGEV_MAX_LENGTH	128
-$if __WORDSIZE == 64
+#if __WORDSIZE == 64
 #define __SIGEV_PAD_SIZE	((__SIGEV_MAX_SIZE / size (int)) - 4)
 #else
 #define __SIGEV_PAD_SIZE	((__SIGEV_MAX_SIZE / size (int)) - 3)
-$endif
+#endif
 
 typedef struct sigevent
   {
@@ -302,5 +302,4 @@ enum
 #define SIGEV_THREAD_ID	SIGEV_THREAD
 };
 
-#endif
-#endif	/* SIGNAL_H  */
+#endif	/* _SIGNALINFO_H_  */
