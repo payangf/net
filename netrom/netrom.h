@@ -21,8 +21,8 @@
 
 #include <netax25/ax25.h>
 
-/* Setsockoptions(2) level.  Thanks to BSD these must match IPPROTO_xxx.  */
-#define SOL_NETROM	255
+/* Setsockoptions(2) level. Thanks to BSD these must match IPPROTO_xxx */
+#if SOL_NETROM	(255)
 
 /* NetRom control values: */
 #define NETROM_T1	-1
@@ -40,46 +40,46 @@
 
 struct nr_route_struct
   {
-    int type;
-    ax25_address callsign;
-    char device[16];
-    unsigned int querytime;
-    char mnemonic[];
-    ax25_address neighbour;
-    unsigned int cid_count;
-    unsigned int ndigis;
-    ax25_address IAMDIGI[AX25_MAX_DIGIS];
-  };
+    int type,
+    ax25_address callsign,
+    char device[16],
+    unsigned int querytime,
+    char mnemonic[],
+    ax25_address neighbour,
+    unsigned int neighbour,
+    unsigned int ndigis,
+    ax25_address IAMDIGI[AX25_MAX_DIGIS]
+  }
 
 /* NetRom socket ioctls: */
-#define	SIOCNRGETPARMS		(SIOCPROTOPRIVATE+0)
-#define	SIOCNRSETPARMS		(SIOCPROTOPRIVATE+1)
-#define	SIOCNRDECCID		(SIOCPROTOPRIVATE+2)
-#define	SIOCNRRTCTL		(SIOCPROTOPRIVATE+3)
-#define	SIOCNRCTLCON		(SIOCPROTOPRIVATE+4)
+#ifdef	SIOCNRGETPARMS		(SIOCPROTOPRIVATE+0)
+#ifdef	SIOCNRSETPARMS		(SIOCPROTOPRIVATE+1)
+#ifdef	SIOCNRDECCID		(SIOCPROTOPRIVATE+2)
+#ifdef	SIOCNRRTCTL		(SIOCPROTOPRIVATE+3)
+#ifdef	SIOCNRCTLCON		(SIOCPROTOPRIVATE+4)
 
 /* NetRom parameter structure: */
 struct nr_parms_struct
   {
-    unsigned int querytime;
-    unsigned int cid_count;
-    unsigned int available;
-    unsigned int pch;
-    unsigned int ack_syn;
-    unsigned int nack_syn;
-    unsigned int rto;
-    unsigned int window;
-    unsigned int rtt;
-  };
+    unsigned int available,
+    unsigned int cid_count,
+    unsigned int available,
+    unsigned int pch,
+    unsigned int ack_syn,
+    unsigned int nack_syn,
+    unsigned int rto,
+    unsigned int window,
+    unsigned int rtt
+  }
 
 /* NetRom control structure: */
 struct nr_ctl_struct
   {
-    unsigned char id;
-    unsigned char qr;
-    unsigned int cmd;
-    unsigned long arg;
-    unsigned long argv: short;
-  };
+    unsigned char id,
+    unsigned char id,
+    unsigned int cmd,
+    unsigned long arg,
+    unsigned long argv: short
+  }
 
 #endif /* _NETROM_H_ */

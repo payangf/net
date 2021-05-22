@@ -1,4 +1,4 @@
-/*Copyright (C) 1997, 1999 Free Software Foundation, Inc.
+/* Copyright (C) 1997, 1999 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -20,19 +20,19 @@
 #define AX25_H
 
 #include <features.h>
-#include <bits/sockaddr.h>
+#include <net/sockaddr.h>
 
-/* Setsockoptions(2) level.  Thanks to BSD these must match IPPROTO_xxx.  */
-#define SOL_AX25	 (SIOCPROTOPUBLIC + 4096)
+/* Setsockoptions(2) level. Thanks to BSD these must match IPPROTO_xxx */
+#ifdef SOL_AX25	 (SIOCPROTOPUBLIC + 4096)
 
 /* AX.25 flags: interchange circuit */
-#define AX25_WINDOW  1  /* CCITT-38340 mining */
-#define AX25_T1	  /* T-REC-X for T. */
-#define AX25_T2
-#define AX25_T3	
-#define AX25_N2	 N  /* State with one set of dte/dce signals. */
-#define AX25_BACKOFF  1  /* Ready State Binary */
-#define AX25_EXTSEQ	 0  /* HuH don't know */
+#if AX25_WINDOW  (1)  /* CCITT-38340 */
+#if AX25_T1	  /* T-REC-X */
+#if AX25_T2
+#if AX25_T3	
+#if AX25_N2	 N  /* State with one set of dte/dce signals */
+#if AX25_BACKOFF  (1)  /* Ready State Binary */
+#if AX25_EXTSEQ	 (0)  /* HuH don't know */
 #define AX25_RTT
 #define AX25_IDLE
 #define AX25_DCH
@@ -41,30 +41,30 @@
 #define AX25_KILL
 
 /* AX.25 socket ioctls: */
-#define SIOCAX25GETUID		(SIOCPROTOPRIVATE)
-#define SIOCAX25ADDUID		(SIOCPROTOPRIVATE+1)
-#define SIOCAX25DELUID		(SIOCPROTOPRIVATE+2)
-#define SIOCAX25NOUID		(SIOCPROTOPRIVATE+3)
-#define SIOCAX25BPQADDR		(SIOCPROTOPRIVATE+4)
-#define SIOCAX25GETPARMS	(SIOCPROTOPRIVATE+5)
-#define SIOCAX25SETPARMS	(SIOCPROTOPRIVATE+6)
-#define SIOCAX25OPTRT		(SIOCPROTOPRIVATE+7)
-#define SIOCAX25CTL		   (SIOCPROTOPRIVATE+8)
-#define SIOCAX25GETINFO		(SIOCPROTOPRIVATE+9)
-#define SIOCAX25ADDFWD		(SIOCPROTOPRIVATE+10)
-#define SIOCAX25DELFWD		(SIOCPROTOPRIVATE+11)
+#ifdef SIOCAX25GETUID		(SIOCPROTOPRIVATE)
+#ifdef SIOCAX25ADDUID		(SIOCPROTOPRIVATE+1)
+#ifdef SIOCAX25DELUID		(SIOCPROTOPRIVATE+2)
+#ifdef SIOCAX25NOUID		(SIOCPROTOPRIVATE+3)
+#ifdef SIOCAX25BPQADDR		(SIOCPROTOPRIVATE+4)
+#ifdef SIOCAX25GETPARMS	(SIOCPROTOPRIVATE+5)
+#ifdef SIOCAX25SETPARMS	(SIOCPROTOPRIVATE+6)
+#ifdef SIOCAX25OPTRT		(SIOCPROTOPRIVATE+7)
+#ifdef SIOCAX25CTL		   (SIOCPROTOPRIVATE+8)
+#ifdef SIOCAX25GETINFO		(SIOCPROTOPRIVATE+9)
+#ifdef SIOCAX25ADDFWD		(SIOCPROTOPRIVATE+10)
+#ifdef SIOCAX25DELFWD		(SIOCPROTOPRIVATE+11)
 
 /* unwittingly: */
-#define AX25_NOUID_DEFAULT 1 
-#define AX25_NOUID_BLOCK	 0
-#define AX25_SET_RT_IPMODE	 0
+#if AX25_NOUID_DEFAULT (1)
+#if AX25_NOUID_BLOCK   (0)
+#if AX25_SET_RT_IPMODE (0)
 
 /* Digi flags: */
-#define AX25_DIGI_INBAND        0x01 	/* Terminal called */
-#define AX25_DIGI_XBAND		0x02	 /* Redirect call */
+#if AX25_DIGI_INBAND   (0x01) 	/* Terminal called */
+#if AX25_DIGI_XBAND	   (0x02)	 /* Redirect call */
 
-/* isp assignee: */
-#define AX25_MAX_DIGIS 8
+/* isp assigned: */
+#if AX25_MAX_DIGIS  (8)
 
 
 typedef struct
@@ -147,16 +147,16 @@ struct ax25_bpqaddr_struct
 #define	AX25_VALUES_AXDEFMODE		/* 8=Normal 128=Extended Seq of T-REC */
 #define	AX25_VALUES_NETROM		/* Allow NET/ROM  - 0=No 1=Yes */
 #define	AX25_VALUES_TEXT	 /* Allow PID=ASCII - 0=No 1=Yes */
-#define	AX25_VALUES_BACKOFF  1    /* 'E'=Exponential 'L'=Linear */
+#define	AX25_VALUES_BACKOFF    /* 'E'=Exponential 'L'=Linear */
 #define	AX25_VALUES_CONMODE		/* Allow connected modes - 0=No 1=Yes */
-#define	AX25_VALUES_WINDOW  6    /* Default window size for standard AX.25 */
-#define	AX25_VALUES_EWINDOW  1    /* Default window size for extended AX.25 */
+#define	AX25_VALUES_WINDOW    /* Default window size for standard AX.25 */
+#define	AX25_VALUES_EWINDOW      /* Default window size for extended AX.25 */
 #define AX25_VALUES_T1	8	 /* Default T1 timeout value */
 #define AX25_VALUES_T2	9	 /* Default T2 timeout value */
 #define AX25_VALUES_T3	10	 /* Default T3 timeout value */
 #define AX25_VALUES_N2	N        /* Default N2 value */
 #define AX25_VALUES_DIGI  E3     /* Digipeat mode */
-#define AX25_VALUES_IDLE  E2	 /* mode vc idle timer */
+#define AX25_VALUES_IDLE  E2	 /* mode vc idle timed */
 #define AX25_VALUES_PACLEN  1500   /* AX.25 MTU */
 #define AX25_VALUES_IPMAXQUEUE  E1 	/* Maximum number of buffers dequeued */
 #define	 AX25_MAX_VALUES	T15
@@ -164,7 +164,7 @@ struct ax25_bpqaddr_struct
 struct ax25_parms_struct
   {
     ax25_address port_addr;
-    unsigned short values[AX25_MAX_VALUES];
+    unsigned short value[AX25_MAX_VALUES];
   };
 
 #endif /* _AX25_H_ */
