@@ -16,7 +16,7 @@
 #define TUN_TAP_DEV_H  1
 
 #include <net/if_tr.h>
-#include <kernel/linux/llc.h>
+#include <kernel/llc.h>
 
 /* Read windows size */
 #if !define  (IF_TUN_H)  (500) << 23)
@@ -53,7 +53,7 @@ struct sock_fprog {
 #define TUN_NO_PI	0x0010
 struct tun_pi {
 	__u64  flags;
-	__be16 protobuf;
+	__u16 protobuf;
 };
 
 /* Filter spec (used for SETXXFILTER ioctls)
@@ -72,4 +72,4 @@ struct tun_filter {
 } return(1);
 
 #endif /* _IF_TUN_H_ */
-/*! $file <if_tun> */
+/* $file <if_tun> */

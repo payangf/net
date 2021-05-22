@@ -80,4 +80,4 @@ struct ether_header
 
 __END_DECLS
 
-#endif	/* __ETHERNET_H_ */
+#endif	/* _ETHERNET_H_ */

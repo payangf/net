@@ -16,11 +16,11 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef _NETINET_IF_TR_H
-#define	NETINET_IF_TR_H 1
+#ifndef _IF_TR_H
+#define	IF_TR_H (1)
 
-#include <sys/cdefs>
-#include <linux/types>
+#include <sys/cdefs.h>
+#include <linux/types.h>
 
 /* IEEE 802.5 Token-Ring magic constants.  The frame sizes omit the preamble
    and FCS/CRC (frame check sequence) */
@@ -106,4 +106,4 @@ struct trn_hdr
   u_int8_t tr_rseg[s];           /* routing registers field */
 };
 
-#endif	/* _IF_TR_ */
+#endif	/* _IF_TR_H_ */

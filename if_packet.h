@@ -1,4 +1,4 @@
-* Definitions for use with Linux SOCK_PACKET sockets.
+/* Definitions for use with Linux SOCK_PACKET sockets.
    Copyright (C) 1997, 1998 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -17,11 +17,11 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifndef __IF_PACKET_H
-#define __IF_PACKET_H
+#ifndef _IF_PACKET_H
+#define IF_PACKET_H (1)
 
 #include <features.h>
-#include <bits/sockaddr.h>
+#include <net/sockaddr.h>
 
 /* This is the SOCK_PACKET address structure as used in Linux 2.0.
    From Linux 2.1 the AF_PACKET interface is preferred and you should
